@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>POS</display-name>
+  
+  	<!-- Context Params -->
+  	<context-param>
+  		<param-name>BRAND</param-name>
+		<param-value>POS</param-value>
+	</context-param>
+  	
+  	<context-param>
+		<param-name>URL</param-name>
+		<param-value>jdbc:mysql://localhost:3306/pos</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>ID</param-name>
+		<param-value>root</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>PASSWORD</param-name>
+		<param-value>1234</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>CLASSNAME</param-name>
+		<param-value>com.mysql.jdbc.Driver</param-value>
+	</context-param>
+  
+  <!-- Listener -->
+  <listener>
+  	<listener-class>com.dbjina.pos.listener.DbContextListener</listener-class>
+  </listener>
+  
+  <listener>
+  	<listener-class>com.dbjina.pos.listener.CommonContextListener</listener-class>
+  </listener>
+  
+  <!-- Servlet -->
+  <servlet>
+  	<servlet-name>Sign</servlet-name>
+  	<servlet-class>com.dbjina.pos.controller.SignController</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>Management</servlet-name>
+  	<servlet-class>com.dbjina.pos.controller.ManageController</servlet-class>
+  </servlet>
+  
+  
+  <!-- Servlet Mapping -->
+  <servlet-mapping>
+  	<servlet-name>Sign</servlet-name>
+  	<url-pattern>/Sign/SignUp.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>Sign</servlet-name>
+  	<url-pattern>/Sign/SignIn.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>Sign</servlet-name>
+  	<url-pattern>/Sign/CheckValidSignUp.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>Management</servlet-name>
+  	<url-pattern>/Manage/EmpManage.do</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>

@@ -14,6 +14,9 @@ import com.dbjina.pos.dao.EmployeeDAO;
 import com.dbjina.pos.model.EmployeeModel;
 
 public class ManageController extends HttpServlet {
+	EmployeeModel empModel;
+	RequestDispatcher rd;
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doPost(req, resp);
@@ -25,17 +28,23 @@ public class ManageController extends HttpServlet {
 		String servletPath = req.getServletPath();
 		
 		if(servletPath.equals("/Manage/EmpManage.do")) {
-			EmployeeModel empModel = new EmployeeModel(req);
+			empModel = new EmployeeModel(req);
 			List<Employee> listEmp = empModel.findAll();
 			
 			if(listEmp != null) {
 				req.setAttribute("listEmp", listEmp);
 			}
 			
-			RequestDispatcher rd = req.getRequestDispatcher("/empManage.jsp");
+			rd = req.getRequestDispatcher("/empManage.jsp");
 			rd.forward(req, resp);
 		}
-	
+		else if(servletPath.equals("/Manage/SalesManage.do")) {
+			empModel = new EmployeeModel(req);
+			
+			rd = req.getRequestDispatcher("/salesManage.jsp");
+			rd.forward(req, resp);
+			
+		}
 		else {
 			System.out.println("매칭 없음");
 		}

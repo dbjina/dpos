@@ -9,29 +9,29 @@
 		<c:import url="/include/cssLoad.jsp"></c:import>
 	</head>
 	<body>
-		<div class="container-fluid">
+		<div class="container">
 			<div class="table-responsive center-horizontal">
-				<table class="table table-hover table-bordered text-center table-menu">
+				<table class="table table-bordered text-center table-menu">
 					<tr>
 						<td><h4 class="text-info">${ emp["emp_name"] }</h4></td>
 					</tr>
-	  				<tr>
-	  					<td><h4>판매 관리</h4></td>
+	  				<tr onclick="location.href='${ rootPath }/Manage/SalesManage.do'">
+	  					<td><h4>Sales</h4></td>
 	  				</tr>
 	  				<tr onclick="location.href='${ rootPath }/Manage/EmpManage.do'">
-	  					<td><h4>직원 관리</h4></td>
+	  					<td><h4>Employee</h4></td>
 	  				</tr>
 	  				<tr>
-	  					<td><h4>메뉴 관리</h4></td>
+	  					<td><h4>Menu</h4></td>
 	  				</tr>
 	  				<tr>
-	  					<td><h4>재고 관리</h4></td>
+	  					<td><h4>Stock</h4></td>
 	  				</tr>
 	  				<tr>
-	  					<td><h4>공급처 관리</h4></td>
+	  					<td><h4>Supplier</h4></td>
 	  				</tr>
 	  				<tr>
-	  					<td><h4>통계</h4></td>
+	  					<td><h4>Statistics</h4></td>
 	  				</tr>
 	  				<tr>
 	  					<td><h4 id="time"></h4></td>

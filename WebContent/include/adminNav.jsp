@@ -17,7 +17,7 @@
                         <a href="${ rootPath }/mainPOS.jsp">Main</a>
                     </li>
                     <li>
-                        <a href="#">Sales</a>
+                        <a href="${ rootPath }/Manage/SalesManage.do">Sales</a>
                     </li>
                     <li>
                         <a href="${ rootPath }/Manage/EmpManage.do">Employee</a>

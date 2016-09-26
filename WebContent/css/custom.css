@@ -51,6 +51,69 @@ footer {
 	height: 80px;
 }
 
+.border {
+	border: 1px solid black;
+}
+
+.menu {
+	padding-left: 10px;
+}
+
+.menu-category {
+	margin-bottom: 15px;
+	border: 1px solid black;
+	padding-bottom: 10px;
+}
+
+.menu-category button{
+	width: 98px;
+	height: 80px;
+	margin: 15px 0;
+}
+
+.menu-category button + button{
+	margin-left: 15px;
+}
+
+.menu-menus {
+	margin-bottom: 15px;
+	border: 1px solid black;
+	padding-bottom: 10px;
+}
+
+.menu-menus button {
+	width: 98px;
+	height: 80px;
+	margin: 15px 0;	
+}
+
+.menu-menus button + button {
+	margin-left: 15px;
+}
+
+.swiper-pagination {
+	/* top:85%; */
+	transform: translateY(70%);
+}
+
+.table-header-fixed thead {
+  width: 100%;
+}
+.table-header-fixed tbody {
+  height: 230px;
+  overflow-y: auto;
+  width: 100%;
+}
+.table-header-fixed thead, .table-header-fixed tbody, .table-header-fixed tr, .table-header-fixed td, .table-header-fixed th {
+  display: inline-block;
+}
+.table-header-fixed tbody td, .table-header-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0px;
+}
+
+
+
 /* .function-pad ul {
 	list-style: none;
 } */

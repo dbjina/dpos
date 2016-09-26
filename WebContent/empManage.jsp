@@ -17,13 +17,13 @@
 					<table class="table table-responsive">
 						<thead>
 							<tr>
-								<th class="col-xs-1">Seq</th>
-								<th class="col-xs-1">ID</th>
-								<th class="col-xs-2">Name</th>
-								<th class="col-xs-2">Mobile</th>
-								<th class="col-xs-2">Email</th>
-								<th class="col-xs-2">Position</th>
-								<th class="col-xs-2">Memo</th>
+								<th class="col-sm-1">Seq</th>
+								<th class="col-sm-1">ID</th>
+								<th class="col-sm-2 ">Name</th>
+								<th class="col-sm-2">Mobile</th>
+								<th class="col-sm-2">Email</th>
+								<th class="col-sm-2">Position</th>
+								<th class="col-sm-2">Memo</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -130,6 +130,22 @@
 		</div>
 		<c:import url="/include/jsLoad.jsp"></c:import>
 		<script type="text/javascript">
+			$(document).ready(function() {
+				if($(window).width() <= 765) {
+					$("thead").find("tr").find("th:first-child").addClass("hidden-xs");
+					/* $("thead").find("tr").find("th:nth-child(2)").addClass("hidden-xs"); */
+					$("thead").find("tr").find("th:nth-child(4)").addClass("hidden-xs");
+					$("thead").find("tr").find("th:nth-child(5)").addClass("hidden-xs");
+					$("thead").find("tr").find("th:nth-child(7)").addClass("hidden-xs");
+					
+					$("tbody").find("tr").find("td:first-child").addClass("hidden-xs");
+					/* $("tbody").find("tr").find("td:nth-child(2)").addClass("hidden-xs"); */
+					$("tbody").find("tr").find("td:nth-child(4)").addClass("hidden-xs");
+					$("tbody").find("tr").find("td:nth-child(5)").addClass("hidden-xs");
+					$("tbody").find("tr").find("td:nth-child(7)").addClass("hidden-xs");
+				}
+			});
+		
 			function clicked(tr) {
 				if($(tr).hasClass("bg-danger")) {
 					$(tr).removeClass("bg-danger");

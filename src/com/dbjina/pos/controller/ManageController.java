@@ -1,6 +1,7 @@
 package com.dbjina.pos.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -14,8 +15,9 @@ import com.dbjina.pos.dao.EmployeeDAO;
 import com.dbjina.pos.model.EmployeeModel;
 
 public class ManageController extends HttpServlet {
-	EmployeeModel empModel;
-	RequestDispatcher rd;
+	private EmployeeModel empModel;
+	private RequestDispatcher rd;
+	private PrintWriter out;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,9 +28,11 @@ public class ManageController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String rootPath = req.getContextPath();
 		String servletPath = req.getServletPath();
+		empModel = new EmployeeModel(req);
+		out = resp.getWriter();
 		
 		if(servletPath.equals("/Manage/EmpManage.do")) {
-			empModel = new EmployeeModel(req);
+			
 			List<Employee> listEmp = empModel.findAll();
 			
 			if(listEmp != null) {
@@ -38,15 +42,31 @@ public class ManageController extends HttpServlet {
 			rd = req.getRequestDispatcher("/empManage.jsp");
 			rd.forward(req, resp);
 		}
-		else if(servletPath.equals("/Manage/SalesManage.do")) {
-			empModel = new EmployeeModel(req);
+		else if(servletPath.equals("/Manage/EmpManage/DeleteEmp.do")) {
+			int result = empModel.deleteEmpBySeq();
 			
+			resp.sendRedirect(rootPath + "/Manage/EmpManage.do");
+		}
+		else if(servletPath.equals("/Manage/EmpManage/ModifyFormEmp.do")) {
+			List<Employee> listEmp = empModel.findEmployeeBySeq();
+			
+			req.setAttribute("listEmp", listEmp);
+			
+			rd = req.getRequestDispatcher("/empModifyForm.jsp");
+			rd.forward(req, resp);
+		}
+		else if(servletPath.equals("/Manage/EmpManage/ModifyEmp.do")) {
+			empModel.updateEmployeeBySeq();
+			
+			resp.sendRedirect(rootPath + "/Manage/EmpManage.do");
+		}
+		else if(servletPath.equals("/Manage/SalesManage.do")) {
 			rd = req.getRequestDispatcher("/salesManage.jsp");
 			rd.forward(req, resp);
 			
 		}
 		else {
-			System.out.println("매칭 없음");
+			System.out.println("매칭 없음, " + this.getClass());
 		}
 	}
 }

@@ -99,8 +99,9 @@
 						</div> <!-- End Swiper -->
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-3 table-header-fixed">
-					<table class="table">
+				<div class="col-xs-12 col-sm-3">
+					<div class="row table-header-fixed">
+						<table class="table table-orderlist">
 						  <thead>
 							    <tr>
 							        <th class="col-sm-2">Qty</th>
@@ -109,23 +110,21 @@
 							    </tr>
 						    </thead>
 						    <tbody>
-						    	<c:forEach begin="0" end="90" varStatus="status">
+						    	<c:forEach begin="1" end="90" varStatus="status">
 							    	<tr>
-								        <td>${ status.index + 1}</td>
-								        <td>Escort</td>
-								        <td>2000</td>
+								        <td class="col-sm-2">${ status.index}</td>
+								        <td class="col-sm-4">Escort</td>
+								        <td class="col-sm-3">1.33</td>
 								    </tr>
 						    	</c:forEach>
 						    </tbody>
-						    <tfoot>
-						    	<tr>
-						    		<td id="cost">SUM</td>
-						    	</tr>
-						    </tfoot>
 					</table>
+					</div>
+					<div class="row">
+						TOTAL : $ <span id="cost">0</span>
+					</div>
 				</div>	
 			</div>
-			
 		</div>
 	
 		<c:import url="/include/jsLoad.jsp"></c:import>
@@ -137,7 +136,14 @@
 		    });
 		    
 		    $(".swiper-slide").click(function() {
-		    	$("#cost").text("asdf");
+		    	var sum = 0;
+		    	$(".table-orderlist").find("tbody").find("tr td:last-child").each(function() {
+		    		var value = $(this).text();
+		    		if(!isNaN(value) && value.length != 0) {
+		    			sum += parseFloat(value);
+		    		}
+		    	});
+		    	$("#cost").text(sum.toFixed(2));
 		    });
 	    </script>
 	</body>

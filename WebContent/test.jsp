@@ -4,16 +4,19 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Insert title here</title>
+		<title>Test</title>
 	</head>
 	<body>
-		<div style="margin:0 auto; width:100px;">
-		<form>
-			<input type="button" value="list" style="float:left;"/>
+		<form action="" method="get">
+			
 		</form>
-		<form style="float:left">
-			<input type="button" value="update" style="float:left;"/>
-		</form>
-		</div>
+		<button onclick="addBtn()">추가</button>
+		
+		<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+		<script type="text/javascript">
+			function addBtn() {
+				$('<input type="checkbox" />').appendTo('form');
+			}
+		</script>
 	</body>
 </html>

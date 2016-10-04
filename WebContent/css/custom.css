@@ -59,9 +59,9 @@ footer {
 	padding-left: 10px;
 }
 
-.menu-category {
+.menu-category, menu-menus {
 	margin-bottom: 15px;
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	padding-bottom: 10px;
 }
 
@@ -73,12 +73,6 @@ footer {
 
 .menu-category button + button{
 	margin-left: 15px;
-}
-
-.menu-menus {
-	margin-bottom: 15px;
-	border: 1px solid black;
-	padding-bottom: 10px;
 }
 
 .menu-menus button {
@@ -98,30 +92,27 @@ footer {
 
 .table-header-fixed {
 	max-height: 350px;
-	/* overflow-y: auto; */
+	overflow-y: auto;
+	position: relative;
 }
 
 .table-header-fixed table {
-	position: relative;
+	/* position: relative; */
 }
 
 .table-header-fixed thead {
 	position: fixed;
-	max-width: inherit;
-	/* padding: 2px; */
 	background-color: white;
+	width: inherit; /* it doesn't work */
 	z-index: 999;
 }
 .table-header-fixed tbody {
-	transform: translateY(50px);
+	transform: translateY(40px);
 }
 
-.table-header-fixed tfoot {
+#cost {
 	
-	transform: translateY(-100px);
-	z-index: 999;
-	
-} 
+}
 
 /* .table-header-fixed thead, .table-header-fixed tbody, .table-header-fixed tr, .table-header-fixed td, .table-header-fixed th {
   display: inline-table;

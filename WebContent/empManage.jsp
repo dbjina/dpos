@@ -14,7 +14,8 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-12">
-					<table class="table table-responsive">
+
+					<table class="table table-responsive" id="empTable">
 						<thead>
 							<tr>
 								<th class="col-sm-1">Seq</th>
@@ -55,18 +56,18 @@
 								</tr>
 							</c:forEach>
 						</tbody>
-					</table>					
+					</table>	
 				</div>
 			</div>
 		</div>
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-8 center-horizontal text-center center-block function-pad">
-							<button class="col-md-2 btn btn-default">Delete</button>
-							<button class="col-md-2 btn btn-default">Modify</button>
-							<button class="col-md-2 btn btn-default">Punch in</button>
-							<button class="col-md-2 btn btn-default">Punch out</button>
-							<button class="col-md-2 btn btn-default">Register</button>
+					<button class="col-md-2 btn btn-default" onclick="deleteEmp()">Delete</button>
+					<button class="col-md-2 btn btn-default" onclick="modifyEmp()">Modify</button>
+					<button class="col-md-2 btn btn-default">Punch in</button>
+					<button class="col-md-2 btn btn-default">Punch out</button>
+					<button class="col-md-2 btn btn-default">Register</button>
 				</div>
 				<div class="col-xs-4" id="keyPad">
 					<div class="row">
@@ -128,6 +129,9 @@
 				</div>
 			</div>
 		</div>
+		<form action="" method="post" id="empForm">
+			
+		</form>
 		<c:import url="/include/jsLoad.jsp"></c:import>
 		<script type="text/javascript">
 			$(document).ready(function() {
@@ -163,19 +167,68 @@
 				}
 			});
 			
-			$("tbody").find("tr").mouseup(function() {
+			$("tbody").find("tr").find("td:last-child")
+				.mouseup(function() {
 					  // Clear timeout
 					  clearTimeout(pressTimer);
 					  return false;
-					})
-					.mousedown(function(){
+				})
+				.mousedown(function(){
 				  			// Set timeout
 						  pressTimer = window.setTimeout(function() {
-								alert($(this).find("td").find(":nth-child(2)").text()); // TODO 수정해야함 
+								//alert($(this).find("td :last-child").text()); // TODO 수정해야함
+								alert($(this).text())
 							},500);
 						  return false; 
-					});
+				});
+			
+			// Manage Employees Functions
+			function deleteEmp() {
+				var array_name = new Array();
 				
+				$("#empTable").find(".bg-danger").find("td:nth-child(3)").each(function(index) {
+					array_name[index] = $(this).text();
+				})
+				var isContinue = confirm("Would you like to delete below employees?\n" + array_name);
+				
+				if(isContinue == false) {
+					return;
+				}
+				
+				$("#empTable").find(".bg-danger").find("td:first-child").each(function(index) {
+					$("<input type='hidden' value='" + $(this).text() + "' />")
+				     .attr("name", "emp_seqs")
+				     .appendTo("#empForm");
+				})
+				     
+				$("#empForm").attr("action", "${ rootPath }/Manage/EmpManage/DeleteEmp.do");
+				$("#empForm").submit();
+			}
+			
+			function modifyEmp() {
+				var array_name = new Array();
+				
+				$("#empTable").find(".bg-danger").find("td:nth-child(3)").each(function(index) {
+					array_name[index] = $(this).text();
+				})
+
+				var isContinue = confirm("Would you like to modify below employees?\n" + array_name);
+				
+				if(isContinue == false) {
+					return;
+				}
+				
+				$("#empTable").find(".bg-danger").find("td:first-child").each(function(index) {
+					$("<input type='hidden' value='" + $(this).text() + "' />")
+				     .attr("name", "emp_seqs")
+				     .appendTo("#empForm");
+				})
+				
+				$("#empForm").attr("action", "${ rootPath }/Manage/EmpManage/ModifyFormEmp.do");
+				$("#empForm").submit();
+			}
+			
+			
 		</script>
 	</body>
 </html>

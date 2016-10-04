@@ -75,6 +75,21 @@
   	<url-pattern>/Manage/SalesManage.do</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+  	<servlet-name>Management</servlet-name>
+  	<url-pattern>/Manage/EmpManage/DeleteEmp.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>Management</servlet-name>
+  	<url-pattern>/Manage/EmpManage/ModifyFormEmp.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>Management</servlet-name>
+  	<url-pattern>/Manage/EmpManage/ModifyEmp.do</url-pattern>
+  </servlet-mapping>
+  
   
   
   

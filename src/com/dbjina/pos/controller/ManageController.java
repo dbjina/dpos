@@ -29,7 +29,9 @@ public class ManageController extends HttpServlet {
 		String rootPath = req.getContextPath();
 		String servletPath = req.getServletPath();
 		empModel = new EmployeeModel(req);
-		out = resp.getWriter();
+		/*out = resp.getWriter();*/
+		
+		resp.setCharacterEncoding("UTF-8");
 		
 		if(servletPath.equals("/Manage/EmpManage.do")) {
 			
@@ -64,6 +66,12 @@ public class ManageController extends HttpServlet {
 			rd = req.getRequestDispatcher("/salesManage.jsp");
 			rd.forward(req, resp);
 			
+		}
+		else if(servletPath.equals("/Manage/FoodManage.do")) {
+			
+			
+			rd = req.getRequestDispatcher("/foodManage.jsp");
+			rd.forward(req, resp);
 		}
 		else {
 			System.out.println("매칭 없음, " + this.getClass());

@@ -23,7 +23,7 @@
                         <a href="${ rootPath }/Manage/EmpManage.do">Employee</a>
                     </li>
                     <li>
-                        <a href="#">Food Menu</a>
+                        <a href="${ rootPath }/Manage/FoodManage.do">Food Menu</a>
                     </li>
                     <li>
                         <a href="#">Stock</a>

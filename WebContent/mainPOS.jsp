@@ -21,8 +21,8 @@
 	  				<tr onclick="location.href='${ rootPath }/Manage/EmpManage.do'">
 	  					<td><h4>Employee</h4></td>
 	  				</tr>
-	  				<tr>
-	  					<td><h4>Menu</h4></td>
+	  				<tr onclick="location.href='${ rootPath }/Manage/FoodManage.do'">
+	  					<td><h4>Food Menu</h4></td>
 	  				</tr>
 	  				<tr>
 	  					<td><h4>Stock</h4></td>

@@ -7,16 +7,6 @@
 		<title>Test</title>
 	</head>
 	<body>
-		<form action="" method="get">
-			
-		</form>
-		<button onclick="addBtn()">추가</button>
-		
-		<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-		<script type="text/javascript">
-			function addBtn() {
-				$('<input type="checkbox" />').appendTo('form');
-			}
-		</script>
+		테스트
 	</body>
 </html>

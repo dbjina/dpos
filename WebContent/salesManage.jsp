@@ -19,7 +19,7 @@
 						<div class="swiper-container">
 						    <div class="swiper-wrapper text-center">
 						        <div class="swiper-slide">
-						        	<button class="btn btn-default btn-lg">큰분류1</button>
+						        	<button class="btn btn-default btn-lg">테스2</button>
 						        	<button class="btn btn-default btn-lg">큰분류1</button>
 						        	<button class="btn btn-default btn-lg">큰분류1</button>
 						        	<button class="btn btn-default btn-lg">큰분류1</button>

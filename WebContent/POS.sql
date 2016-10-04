@@ -4,7 +4,7 @@ USE pos;
 
 CREATE TABLE employee (
        emp_seq              int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-       emp_id					 int NOT NULL UNIQUE,
+       emp_id				int NOT NULL UNIQUE,
        emp_name             varchar(255) NOT NULL,
        emp_mobile           varchar(10) NOT NULL,
        emp_email            varchar(255) NOT NULL,

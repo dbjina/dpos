@@ -21,7 +21,7 @@ public class Employee {
 	public String getEmp_password() {
 		return emp_password;
 	}
-	public void setEmp_password(String emp_password) {
+	private void setEmp_password(String emp_password) {
 		this.emp_password = emp_password;
 	}
 	public int getEmp_seq() {
@@ -67,7 +67,42 @@ public class Employee {
 		this.emp_position_seq = emp_position_seq;
 	}
 	
-	public void setEmployeeDTO(HttpServletRequest request) {
+   /*public void setEmployeeDTO(HttpServletRequest request) {
+       Map<String, String[]> parameterMap = request.getParameterMap();
+       Field[] fields = this.getClass().getDeclaredFields();
+       for(Field field : fields) {
+           if(Modifier.isStatic(field.getModifiers())) {
+               continue;
+           }
+           
+           if(Modifier.isFinal(field.getModifiers())) {
+               continue;
+           }
+           
+           try {
+        	   System.out.println(field.getName());
+               if(parameterMap.get(field.getName()) != null) {
+            	   field.setAccessible(true);
+                   if(field.getType() == String.class) {
+                       field.set(this, String.valueOf(parameterMap.get(field.getName())[0]));
+                   }
+                   else if(field.getType() == int.class) {
+                       field.set(this, Integer.parseInt(parameterMap.get(field.getName())[0]));
+                   }
+                   else {
+                       System.out.println("매칭 없음");
+                   }
+               }
+           } catch (IllegalArgumentException e) {
+               e.printStackTrace();
+           } catch (IllegalAccessException e) {
+               e.printStackTrace();
+           }
+       }
+   }*/
+
+	
+	/*public void setEmployeeDTO(HttpServletRequest request) {
 	        Map<String, String[]> parameterMap = request.getParameterMap();
 	        Field[] fields = this.getClass().getDeclaredFields();
 	        for(Field field : fields) {
@@ -80,7 +115,7 @@ public class Employee {
 	            }
 	            
 	            try {
-	                field.setAccessible(true);    // If a field of class is private, the accessible must be true
+	                //field.setAccessible(true);    // If a field of class is private, the accessible must be true
 	                if(parameterMap.get(field.getName()) != null) {
 	                	if(field.getType() == String.class) {
 		                    field.set(this, ((parameterMap.get(field.getName()) != null) ? String.valueOf(parameterMap.get(field.getName())[0]) : null ) );
@@ -96,8 +131,7 @@ public class Employee {
 	            } catch (IllegalAccessException e) {
 	                e.printStackTrace();
 	            }
-	            
 	        }
-	    }
+	    }*/
 
 }

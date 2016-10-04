@@ -4,10 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.dbjina.pos.bean.Employee;
 import com.dbjina.pos.dao.SignDAO;
+import com.dbjina.pos.util.Common;
 
 public class SignModel {
-	HttpServletRequest req;
-	SignDAO signDAO;
+	private HttpServletRequest req;
+	private SignDAO signDAO;
 	
 	public SignModel(HttpServletRequest req) {
 		this.req = req;
@@ -26,7 +27,7 @@ public class SignModel {
 		 */
 		
 		Employee emp = new Employee();
-		emp.setEmployeeDTO(req);
+		Common.setDTO(req, emp);
 		
 		int intResult = signDAO.addEmployee(emp);
 		
@@ -53,7 +54,8 @@ public class SignModel {
 		 * ID 유효성 검사
 		 * PASSWORD 유효성 검사
 		 */
-		emp.setEmployeeDTO(req);
+		/*emp.setEmployeeDTO(req);*/
+		Common.setDTO(req, emp);
 		
 		emp = signDAO.findEmployeeByIdAndPassword(emp);
 		

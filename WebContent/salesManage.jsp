@@ -99,149 +99,46 @@
 						</div> <!-- End Swiper -->
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-3">
-					<table class="table table-striped table-header-fixed">
+				<div class="col-xs-12 col-sm-3 table-header-fixed">
+					<table class="table">
 						  <thead>
 							    <tr>
-							        <th>Make</th>
-							        <th>Model</th>
-							        <th>Color</th>
-							        <th>Year</th>
+							        <th class="col-sm-2">Qty</th>
+							        <th class="col-sm-4">Name</th>
+							        <th class="col-sm-3">Price</th>
 							    </tr>
 						    </thead>
 						    <tbody>
-							    <tr>
-							        <td class="filterable-cell">Ford</td>
-							        <td class="filterable-cell">Escort</td>
-							        <td class="filterable-cell">Blue</td>
-							        <td class="filterable-cell">2000</td>
-							    </tr>
-							    <tr>
-							        <td class="filterable-cell">Ford</td>
-							        <td class="filterable-cell">Escort</td>
-							        <td class="filterable-cell">Blue</td>
-							        <td class="filterable-cell">2000</td>
-							    </tr>
-							            <tr>
-							        <td class="filterable-cell">Ford</td>
-							        <td class="filterable-cell">Escort</td>
-							        <td class="filterable-cell">Blue</td>
-							        <td class="filterable-cell">2000</td>
-							    </tr>
-							     <tr>
-							        <td class="filterable-cell">Ford</td>
-							        <td class="filterable-cell">Escort</td>
-							        <td class="filterable-cell">Blue</td>
-							        <td class="filterable-cell">2000</td>
-							    </tr>
-							    <tr>
-							        <td class="filterable-cell">Ford</td>
-							        <td class="filterable-cell">Escort</td>
-							        <td class="filterable-cell">Blue</td>
-							        <td class="filterable-cell">2000</td>
-							    </tr>
-							    <tr>
-							        <td class="filterable-cell">Ford</td>
-							        <td class="filterable-cell">Escort</td>
-							        <td class="filterable-cell">Blue</td>
-							        <td class="filterable-cell">2000</td>
-							    </tr>
-							    <tr>
-							        <td class="filterable-cell">Ford</td>
-							        <td class="filterable-cell">Escort</td>
-							        <td class="filterable-cell">Blue</td>
-							        <td class="filterable-cell">2000</td>
-							    </tr>
-							    <tr>
-							        <td class="filterable-cell">Ford</td>
-							        <td class="filterable-cell">Escort</td>
-							        <td class="filterable-cell">Blue</td>
-							        <td class="filterable-cell">2000</td>
-							    </tr>
-							    <tr>
-							        <td class="filterable-cell">Ford</td>
-							        <td class="filterable-cell">Escort</td>
-							        <td class="filterable-cell">Blue</td>
-							        <td class="filterable-cell">2000</td>
-							    </tr>
-							    <tr>
-							        <td class="filterable-cell">Ford</td>
-							        <td class="filterable-cell">Escort</td>
-							        <td class="filterable-cell">Blue</td>
-							        <td class="filterable-cell">2000</td>
-							    </tr>
-							    <tr>
-							        <td class="filterable-cell">Ford</td>
-							        <td class="filterable-cell">Escort</td>
-							        <td class="filterable-cell">Blue</td>
-							        <td class="filterable-cell">2000</td>
-							    </tr>
+						    	<c:forEach begin="0" end="90" varStatus="status">
+							    	<tr>
+								        <td>${ status.index + 1}</td>
+								        <td>Escort</td>
+								        <td>2000</td>
+								    </tr>
+						    	</c:forEach>
 						    </tbody>
+						    <tfoot>
+						    	<tr>
+						    		<td id="cost">SUM</td>
+						    	</tr>
+						    </tfoot>
 					</table>
 				</div>	
 			</div>
 			
 		</div>
-		<!-- 
-		<div class="container-fluid">
-			Menu start
-			<div class="row">
-				Parent category start
-				<div class="col-md-2 col-sm-12 text-center">
-					<div class="row">
-						<div class="col-xs-3 col-sm-3 col-md-12 ">
-							<button class="btn btn-default btn-lg"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button>
-						</div>
-						<div class="col-xs-3 col-sm-3 col-md-12">
-							<button class="btn btn-default btn-lg">큰분류1</button>
-						</div>
-						<div class="col-xs-3 col-sm-3 col-md-12">
-							<button class="btn btn-default btn-lg">큰분류1</button>
-						</div>
-						<div class="col-xs-3 col-sm-3 col-md-12">
-							<button class="btn btn-default btn-lg">큰분류1</button>
-						</div>
-					</div>
-				</div>	Parent category end
-			</div>
-			<div class="row">
-				Child category start
-				<div class="col-md-9 col-sm-12">
-					<div class="row">
-						<div class="col-md-2">
-							<button class="btn btn-default btn-lg">메뉴</button>
-						</div>
-						<div class="col-md-2">
-							<button class="btn btn-default btn-lg">메뉴</button>
-						</div>
-						<div class="col-md-2">
-							<button class="btn btn-default btn-lg">메뉴</button>
-						</div>
-						<div class="col-md-2">
-							<button class="btn btn-default btn-lg">메뉴</button>
-						</div>
-						<div class="col-md-2">
-							<button class="btn btn-default btn-lg">메뉴</button>
-						</div>
-					</div>
-				</div>	Child category end
-				Ordered list start
-				<div class="col-md-1 col-sm-12">
-					<div class="row">
-						목록
-					</div>
-				</div>	Ordered list end
-			</div>
-		</div>	Menu end
-		 -->
 	
 		<c:import url="/include/jsLoad.jsp"></c:import>
 		 <!-- Initialize Swiper -->
 	    <script>
-	    var swiper = new Swiper('.swiper-container', {
-	        pagination: '.swiper-pagination',
-	        paginationClickable: false
-	    });
+		    var swiper = new Swiper('.swiper-container', {
+		        pagination: '.swiper-pagination',
+		        paginationClickable: false
+		    });
+		    
+		    $(".swiper-slide").click(function() {
+		    	$("#cost").text("asdf");
+		    });
 	    </script>
 	</body>
 </html>

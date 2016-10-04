@@ -8,8 +8,8 @@ import com.dbjina.pos.bean.Employee;
 import com.dbjina.pos.dao.EmployeeDAO;
 
 public class EmployeeModel {
-	HttpServletRequest req;
-	EmployeeDAO empDAO;
+	private HttpServletRequest req;
+	private EmployeeDAO empDAO;
 	
 	public EmployeeModel(HttpServletRequest req) {
 		this.req = req;

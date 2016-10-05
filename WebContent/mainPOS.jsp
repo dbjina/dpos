@@ -27,7 +27,7 @@
 	  				<tr>
 	  					<td><h4>Stock</h4></td>
 	  				</tr>
-	  				<tr>
+	  				<tr onclick="location.href='${ rootPath }/Manage/SupManage.do'">
 	  					<td><h4>Supplier</h4></td>
 	  				</tr>
 	  				<tr>

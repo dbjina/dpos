@@ -95,7 +95,10 @@
   	<url-pattern>/Manage/FoodManage.do</url-pattern>
   </servlet-mapping>
   
-  
+  <servlet-mapping>
+  	<servlet-name>Management</servlet-name>
+  	<url-pattern>/Manage/SupManage.do</url-pattern>
+  </servlet-mapping>
   
   
   <welcome-file-list>

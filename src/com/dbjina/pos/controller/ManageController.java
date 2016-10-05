@@ -73,6 +73,11 @@ public class ManageController extends HttpServlet {
 			rd = req.getRequestDispatcher("/foodManage.jsp");
 			rd.forward(req, resp);
 		}
+		else if(servletPath.equals("/Manage/SupManage.do")) {
+			
+			rd = req.getRequestDispatcher("/supManage.jsp");
+			rd.forward(req, resp);
+		}
 		else {
 			System.out.println("매칭 없음, " + this.getClass());
 		}

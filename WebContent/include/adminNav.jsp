@@ -29,7 +29,7 @@
                         <a href="#">Stock</a>
                     </li>
                     <li>
-                        <a href="#">Supplier</a>
+                         <a href="${ rootPath }/Manage/SupManage.do">Supplier</a>
                     </li>
                     <li>
                         <a href="#">Statistics</a>

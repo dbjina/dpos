@@ -114,6 +114,10 @@ footer {
 	
 }
 
+.table-supplier {
+	min-height: 500px;
+	border: 1px black solid;
+}
 /* .table-header-fixed thead, .table-header-fixed tbody, .table-header-fixed tr, .table-header-fixed td, .table-header-fixed th {
   display: inline-table;
 } */

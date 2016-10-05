@@ -69,7 +69,6 @@ public class ManageController extends HttpServlet {
 		}
 		else if(servletPath.equals("/Manage/FoodManage.do")) {
 			
-			
 			rd = req.getRequestDispatcher("/foodManage.jsp");
 			rd.forward(req, resp);
 		}

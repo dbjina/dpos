@@ -108,7 +108,7 @@ CREATE TABLE payment_type (
 
 CREATE TABLE supplier (
        sup_seq              int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-       sup_name             varchar(255) NULL,
+       sup_name             varchar(255) NOT NULL,
        sup_contact_number   varchar(10) NULL,
        sup_website          varchar(255) NULL,
        sup_email            varchar(255) NULL,
@@ -301,6 +301,8 @@ ALTER TABLE wage_payment
                              REFERENCES employee(emp_seq) ;
                              
 /* Initialize default values */
+
+# Employee_Position
 INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (99, "Standby");
 INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (1, "CEO");
 INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (2, "Manager");
@@ -311,3 +313,13 @@ INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (6, "Juice
 INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (7, "Casher");
 INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (8, "Waiter");
 INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (9, "Waitress");
+
+
+# Supplier_Type
+INSERT INTO supplier_type (sup_type_seq, sup_type) VALUES (1, 'Drink');
+INSERT INTO supplier_type (sup_type_seq, sup_type) VALUES (2, 'Bakery');
+INSERT INTO supplier_type (sup_type_seq, sup_type) VALUES (3, 'Equipment');
+
+# Supplier
+INSERT INTO supplier (sup_name, sup_contact_number, sup_website, sup_email, sup_memo) VALUES ('Milk Man', '0212341234', 'http://wwww.milkman.com', 'milkm@gmail.com', 'Milk man is a good guy');
+INSERT INTO supplier (sup_name, sup_contact_number, sup_website, sup_email, sup_memo) VALUES ('Bread Man', '0243214321', NULL , NULL , NULL);

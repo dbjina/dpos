@@ -321,5 +321,12 @@ INSERT INTO supplier_type (sup_type_seq, sup_type) VALUES (2, 'Bakery');
 INSERT INTO supplier_type (sup_type_seq, sup_type) VALUES (3, 'Equipment');
 
 # Supplier
-INSERT INTO supplier (sup_name, sup_contact_number, sup_website, sup_email, sup_memo) VALUES ('Milk Man', '0212341234', 'http://wwww.milkman.com', 'milkm@gmail.com', 'Milk man is a good guy');
-INSERT INTO supplier (sup_name, sup_contact_number, sup_website, sup_email, sup_memo) VALUES ('Bread Man', '0243214321', NULL , NULL , NULL);
+INSERT INTO supplier (sup_seq, sup_name, sup_contact_number, sup_website, sup_email, sup_memo) VALUES (1, 'Milk Man', '0212341234', 'http://wwww.milkman.com', 'milkm@gmail.com', 'Milk man is a good guy');
+INSERT INTO supplier (sup_seq, sup_name, sup_contact_number, sup_website, sup_email, sup_memo) VALUES (2, 'Bread Man', '0243214321', NULL , NULL , NULL);
+INSERT INTO supplier (sup_seq, sup_name, sup_contact_number, sup_website, sup_email, sup_memo) VALUES (3, 'Metro', '0299998888', NULL , NULL , NULL);
+
+INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (1, 1);
+INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (2, 2);
+INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (3, 1);
+INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (3, 2);
+SELECT * FROM supplier_type_tag;

@@ -11,11 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.dbjina.pos.bean.Employee;
+import com.dbjina.pos.bean.Supplier;
 import com.dbjina.pos.dao.EmployeeDAO;
 import com.dbjina.pos.model.EmployeeModel;
+import com.dbjina.pos.model.SupplierModel;
 
 public class ManageController extends HttpServlet {
 	private EmployeeModel empModel;
+	private SupplierModel supModel;
 	private RequestDispatcher rd;
 	private PrintWriter out;
 	
@@ -29,6 +32,7 @@ public class ManageController extends HttpServlet {
 		String rootPath = req.getContextPath();
 		String servletPath = req.getServletPath();
 		empModel = new EmployeeModel(req);
+		
 		/*out = resp.getWriter();*/
 		
 		resp.setCharacterEncoding("UTF-8");
@@ -73,6 +77,10 @@ public class ManageController extends HttpServlet {
 			rd.forward(req, resp);
 		}
 		else if(servletPath.equals("/Manage/SupManage.do")) {
+			supModel = new SupplierModel(req);
+			List<Supplier> listSup = supModel.findAll();
+			
+			req.setAttribute("listSup", listSup);
 			
 			rd = req.getRequestDispatcher("/supManage.jsp");
 			rd.forward(req, resp);

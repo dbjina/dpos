@@ -42,9 +42,27 @@ public class DBTableDefine {
 	// Table names
 	public static final String EMPLOYEE_POSITION_TABLE = "employee_position";
 	
+	// Columns names in employee_position table
 	// public static final String EMP_POSITION_SEQ_COLUMN = "emp_position_seq";  Already exitst in employee_table
 	public static final String EMP_POSITION_COLUMN = "emp_position";
 	
 	// Group of columns
 	public static final String ALL_EMPLOYEE_POSITION_COLUMNS = EMP_POSITION_SEQ_COLUMN + ", " + EMP_POSITION_COLUMN;
+	
+	/**********************************************************************
+	 * supplier table
+	 ***********************************************************************/
+	// Table names
+	public static final String SUPPLIER_TABLE = "supplier";
+	
+	// Columns names in employee_position table
+	public static final String SUP_SEQ = "sup_seq";
+	public static final String SUP_NAME = "sup_name";
+	public static final String SUP_CONTACT_NUMBER = "sup_contact_number";
+	public static final String SUP_WEBSITE = "sup_website";
+	public static final String SUP_EMAIL = "sup_email";
+	public static final String SUP_MEMO = "sup_memo";
+	
+	// Group of columns
+	public static final String ALL_SUPPLIER_COLUMNS = SUP_SEQ + ", " + SUP_NAME + ", " + SUP_CONTACT_NUMBER + ", " + SUP_WEBSITE + ", " + SUP_EMAIL + ", " + SUP_MEMO;  
 }

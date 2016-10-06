@@ -104,8 +104,8 @@
 				     .appendTo("#supForm");
 				})
 				     
-				$("#supTable").attr("action", "${ rootPath }/Manage/SupManage/DeleteSup.do");
-				$("#supTable").submit();
+				$("#supForm").attr("action", "${ rootPath }/Manage/SupManage/DeleteSup.do");
+				$("#supForm").submit();
 			}
 			
 	    </script>

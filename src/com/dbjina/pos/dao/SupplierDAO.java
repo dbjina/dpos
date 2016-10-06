@@ -38,12 +38,12 @@ public class SupplierDAO {
 			while(rs.next()) {
 				sup = new Supplier();
 				
-				sup.setSup_seq(rs.getInt(DBTableDefine.SUP_SEQ));
-				sup.setSup_name(rs.getString(DBTableDefine.SUP_NAME));
-				sup.setSup_contact_number(rs.getString(DBTableDefine.SUP_CONTACT_NUMBER));
-				sup.setSup_website(rs.getString(DBTableDefine.SUP_WEBSITE));
-				sup.setSup_email(rs.getString(DBTableDefine.SUP_EMAIL));
-				sup.setSup_memo(rs.getString(DBTableDefine.SUP_MEMO));
+				sup.setSup_seq(rs.getInt(DBTableDefine.SUP_SEQ_COLUMN));
+				sup.setSup_name(rs.getString(DBTableDefine.SUP_NAME_COLUMN));
+				sup.setSup_contact_number(rs.getString(DBTableDefine.SUP_CONTACT_NUMBER_COLUMN));
+				sup.setSup_website(rs.getString(DBTableDefine.SUP_WEBSITE_COLUMN));
+				sup.setSup_email(rs.getString(DBTableDefine.SUP_EMAIL_COLUMN));
+				sup.setSup_memo(rs.getString(DBTableDefine.SUP_MEMO_COLUMN));
 				
 				listSup.add(sup);
 			}
@@ -57,7 +57,7 @@ public class SupplierDAO {
 	}
 	public int[] deleteSupBySeq(List<Supplier> suppliers) {
 		int[] result = null;
-		sql = String.format(DBTableDefine.DELETE_TEMPLATE, DBTableDefine.SUPPLIER_TABLE, DBTableDefine.SUP_SEQ, "?");
+		sql = String.format(DBTableDefine.DELETE_TEMPLATE, DBTableDefine.SUPPLIER_TABLE, DBTableDefine.SUP_SEQ_COLUMN, "?");
 		
 		try {
 			pstmt = con.prepareStatement(sql);

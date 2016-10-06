@@ -17,7 +17,7 @@ public class DBTableDefine {
 	// Table names
 	public static final String EMPLOYEE_TABLE = "employee";
 	
-	// Each of column names
+	// Column names
 	public static final String EMP_SEQ_COLUMN = "emp_seq";
 	public static final String EMP_ID_COLUMN = "emp_id";
 	public static final String EMP_NAME_COLUMN = "emp_name";
@@ -33,8 +33,8 @@ public class DBTableDefine {
 	public static final String ID_PASSWORD_EMPLOYEE_COLUMNS = EMP_ID_COLUMN + ", " + EMP_PASSWORD_COLUMN;
 	
 	// Columns names in employee_position table
-	public static final String EMP_POSITION_SEQ = "emp_position_seq";
-	public static final String EMP_POSITION = "emp_position";
+	/*public static final String EMP_POSITION_SEQ = "emp_position_seq";
+	public static final String EMP_POSITION = "emp_position";*/
 	
 	
 	/**********************************************************************
@@ -43,7 +43,7 @@ public class DBTableDefine {
 	// Table names
 	public static final String EMPLOYEE_POSITION_TABLE = "employee_position";
 	
-	// Columns names in employee_position table
+	// Columns names
 	// public static final String EMP_POSITION_SEQ_COLUMN = "emp_position_seq";  Already exitst in employee_table
 	public static final String EMP_POSITION_COLUMN = "emp_position";
 	
@@ -56,14 +56,27 @@ public class DBTableDefine {
 	// Table names
 	public static final String SUPPLIER_TABLE = "supplier";
 	
-	// Columns names in employee_position table
-	public static final String SUP_SEQ = "sup_seq";
-	public static final String SUP_NAME = "sup_name";
-	public static final String SUP_CONTACT_NUMBER = "sup_contact_number";
-	public static final String SUP_WEBSITE = "sup_website";
-	public static final String SUP_EMAIL = "sup_email";
-	public static final String SUP_MEMO = "sup_memo";
+	// Columns names
+	public static final String SUP_SEQ_COLUMN = "sup_seq";
+	public static final String SUP_NAME_COLUMN = "sup_name";
+	public static final String SUP_CONTACT_NUMBER_COLUMN = "sup_contact_number";
+	public static final String SUP_WEBSITE_COLUMN = "sup_website";
+	public static final String SUP_EMAIL_COLUMN = "sup_email";
+	public static final String SUP_MEMO_COLUMN = "sup_memo";
 	
 	// Group of columns
-	public static final String ALL_SUPPLIER_COLUMNS = SUP_SEQ + ", " + SUP_NAME + ", " + SUP_CONTACT_NUMBER + ", " + SUP_WEBSITE + ", " + SUP_EMAIL + ", " + SUP_MEMO;  
+	public static final String ALL_SUPPLIER_COLUMNS = SUP_SEQ_COLUMN + ", " + SUP_NAME_COLUMN + ", " + SUP_CONTACT_NUMBER_COLUMN + ", " + SUP_WEBSITE_COLUMN + ", " + SUP_EMAIL_COLUMN + ", " + SUP_MEMO_COLUMN;
+	
+	/**********************************************************************
+	 * supplier_type table
+	 ***********************************************************************/
+	// Table names
+	public static final String SUPPLIER_TYPE_TABLE = "supplier_type";
+	
+	// Columns names
+	public static final String SUP_TYPE_SEQ_COLUMN = "sup_type_seq";
+	public static final String SUP_TYPE_COLUMN = "sup_type";
+	
+	// Group of columns
+	public static final String ALL_SUPPLIER_TYPE_COLUMNS = SUP_TYPE_SEQ_COLUMN + ", " + SUP_TYPE_COLUMN;
 }

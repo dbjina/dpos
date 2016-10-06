@@ -43,8 +43,8 @@ public class EmployeePositionDAO {
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				empPosition = new EmployeePosition();
-				empPosition.setEmp_position_seq(rs.getInt("emp_position_seq"));
-				empPosition.setEmp_position(rs.getString("emp_position"));
+				empPosition.setEmp_position_seq(rs.getInt(DBTableDefine.EMP_POSITION_SEQ_COLUMN));
+				empPosition.setEmp_position(rs.getString(DBTableDefine.EMP_POSITION_COLUMN));
 				list.add(empPosition);
 			}
 		} catch (SQLException e) {

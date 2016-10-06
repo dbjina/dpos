@@ -117,7 +117,7 @@ CREATE TABLE supplier (
 
 CREATE TABLE supplier_type (
        sup_type_seq         int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-       sup_type             CHAR(18) NULL
+       sup_type             varchar(50) NULL
 );
 
 

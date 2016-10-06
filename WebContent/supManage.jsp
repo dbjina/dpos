@@ -51,6 +51,7 @@
 									<td>
 										<c:choose>
 											<c:when test="${ sup.sup_memo.length() gt 10 }">
+												<span class="hidden">${ sup.sup_memo }</span>
 												${ fn:substring(sup.sup_memo, 0, 10) }...
 											</c:when>
 											<c:otherwise>
@@ -69,7 +70,7 @@
 				    <div class="swiper-wrapper text-center">
 				        <div class="swiper-slide">
 				        	<button class="btn btn-default btn-lg" onclick="deleteSup()">Delete</button>
-				        	<button class="btn btn-default btn-lg">Modify</button>
+				        	<button class="btn btn-default btn-lg" onclick="modifySup()">Modify</button>
 				        	<button class="btn btn-default btn-lg">Register</button>
 				        </div>
 				    </div>
@@ -100,7 +101,7 @@
 				
 				$("#supTable").find(".bg-danger").find("td:nth-child(2)").each(function(index) {
 					array_name[index] = $(this).text();
-				})
+				});
 				var isContinue = confirm("Would you like to delete below suppliers?\n" + array_name);
 				
 				if(isContinue == false) {
@@ -111,12 +112,60 @@
 					$("<input type='hidden' value='" + $(this).text() + "' />")
 				     .attr("name", "sup_seqs")
 				     .appendTo("#supForm");
-				})
+				});
 				
 				
 				     
 				$("#supForm").attr("action", "${ rootPath }/Manage/SupManage/DeleteSup.do");
 				$("#supForm").submit();
+			}
+			
+			function modifySup() {
+				var array_name = new Array();
+				
+				$("#supTable").find(".bg-danger").find("td:nth-child(2)").each(function(index) {
+					array_name[index] = $(this).text();
+					
+				});
+				var isContinue = confirm("Would you like to modify below suppliers?\n" + array_name);
+				
+				if(isContinue == false) {
+					return;
+				}
+				
+				$("#supTable").find(".bg-danger").find("td").each(function(index) {
+					if(index == 7) {
+						index = 0;
+					}
+					var value = $(this).text().replace(/\s+/g, " ");
+					$(this).text("");
+					$("<input type='text' value='" + value + "' />")
+					 .attr("name", function(index) {
+						 if(index == 0) {
+							 return "sup_seq";
+						 }
+						 else if(index == 1) {
+							 return "sup_name";
+						 }
+						 else if(index == 2) {
+							 return "sup_contact_number";
+						 }
+						 else if(index == 3) {
+							 return "sup_website";
+						 }
+						 else if(index == 4) {
+							 return "sup_email";
+						 }
+						 else if(index == 5) {
+							 return "sup_type";
+						 }
+						 else if(index == 6) {
+							 return "sup_memo";
+						 }
+					 })
+				     .appendTo($(this));
+				});
+				
 			}
 			
 	    </script>

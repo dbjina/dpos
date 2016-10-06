@@ -85,6 +85,11 @@ public class ManageController extends HttpServlet {
 			rd = req.getRequestDispatcher("/supManage.jsp");
 			rd.forward(req, resp);
 		}
+		else if(servletPath.equals("/Manage/SupManage/DeleteSup.do")) {
+			int result = supModel.deleteSupBySeq();
+			
+			resp.sendRedirect(rootPath + "/Manage/SupManage.do");
+		}
 		else {
 			System.out.println("매칭 없음, " + this.getClass());
 		}

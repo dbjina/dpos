@@ -89,7 +89,7 @@
 			function deleteSup() {
 				var array_name = new Array();
 				
-				$("#supTable").find(".bg-danger").find("td:nth-child(1)").each(function(index) {
+				$("#supTable").find(".bg-danger").find("td:nth-child(2)").each(function(index) {
 					array_name[index] = $(this).text();
 				})
 				var isContinue = confirm("Would you like to delete below suppliers?\n" + array_name);
@@ -103,6 +103,8 @@
 				     .attr("name", "sup_seqs")
 				     .appendTo("#supForm");
 				})
+				
+				
 				     
 				$("#supForm").attr("action", "${ rootPath }/Manage/SupManage/DeleteSup.do");
 				$("#supForm").submit();

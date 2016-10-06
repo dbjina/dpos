@@ -86,6 +86,7 @@ public class ManageController extends HttpServlet {
 			rd.forward(req, resp);
 		}
 		else if(servletPath.equals("/Manage/SupManage/DeleteSup.do")) {
+			supModel = new SupplierModel(req);
 			int result = supModel.deleteSupBySeq();
 			
 			resp.sendRedirect(rootPath + "/Manage/SupManage.do");

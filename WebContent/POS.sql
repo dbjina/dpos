@@ -248,12 +248,15 @@ ALTER TABLE menu_price
 
 ALTER TABLE supplier_type_tag
        ADD  FOREIGN KEY (sup_type_seq)
-                             REFERENCES supplier_type(sup_type_seq) ;
+                             REFERENCES supplier_type(sup_type_seq)
+									  		ON UPDATE CASCADE
+											ON DELETE CASCADE ;
 
 
 ALTER TABLE supplier_type_tag
        ADD  FOREIGN KEY (sup_seq)
-                             REFERENCES supplier(sup_seq) ;
+                             REFERENCES supplier(sup_seq)
+									  		ON UPDATE CASCADE ;
 
 
 ALTER TABLE table_current_order

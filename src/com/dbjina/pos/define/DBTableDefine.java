@@ -79,4 +79,17 @@ public class DBTableDefine {
 	
 	// Group of columns
 	public static final String ALL_SUPPLIER_TYPE_COLUMNS = SUP_TYPE_SEQ_COLUMN + ", " + SUP_TYPE_COLUMN;
+	
+	/**********************************************************************
+	 * supplier_type_tag table
+	 ***********************************************************************/
+	// Table names
+	public static final String SUPPLIER_TYPE_TAG_TABLE = "supplier_type_tag";
+	
+	// Columns names
+//	public static final String SUP_SEQ_COLUMN = "sup_type_seq";  Already exitst in supplier table 
+//	public static final String SUP_TYPE_SEQ_COLUMN = "sup_type_seq";  Already exitst in supplier_type table
+	
+	// Group of columns
+	public static final String ALL_SUPPLIER_TYPE_TAG_COLUMNS = SUP_SEQ_COLUMN + ", " + SUP_TYPE_SEQ_COLUMN;
 }

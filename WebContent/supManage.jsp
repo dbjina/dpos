@@ -37,7 +37,16 @@
 									<td>${ sup.sup_website }</td>
 									<td>${ sup.sup_email }</td>
 									<td>
-										T
+										<c:forEach var="supTypeTag" items="${ listSupTypeTag }" varStatus="i">
+											<c:if test="${ supTypeTag.sup_seq eq sup.sup_seq }">
+												<c:forEach var="supType" items="${ listSupType }" varStatus="j">
+													<c:if test="${ supType.sup_type_seq eq supTypeTag.sup_type_seq}">
+														${ supType.sup_type }
+													</c:if>
+												</c:forEach>
+											</c:if>
+											
+										</c:forEach>
 									</td>
 									<td>
 										<c:choose>

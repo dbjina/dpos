@@ -12,8 +12,10 @@ import org.apache.catalina.startup.Tomcat;
 
 import com.dbjina.pos.bean.EmployeePosition;
 import com.dbjina.pos.bean.SupplierType;
+import com.dbjina.pos.bean.SupplierTypeTag;
 import com.dbjina.pos.model.EmployeePositionModel;
 import com.dbjina.pos.model.SupplierTypeModel;
+import com.dbjina.pos.model.SupplierTypeTagModel;
 
 public class CommonContextListener implements ServletContextListener {
 
@@ -52,7 +54,16 @@ public class CommonContextListener implements ServletContextListener {
 			System.err.println("Failed to bind the Supplier Type");
 		}
 		
+		// Supplier Type Tag
+		List<SupplierTypeTag> listSupTypeTag = null;
+		listSupTypeTag = new SupplierTypeTagModel(con).findAll();
 		
+		if(listSupTypeTag != null) {
+			sc.setAttribute("listSupTypeTag", listSupTypeTag);
+		}
+		else {
+			System.err.println("Failed to bind the Supplier Type Tag");
+		}
 		
 		
 		System.out.println("END :: Common Context Listener ");

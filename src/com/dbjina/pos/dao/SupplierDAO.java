@@ -55,25 +55,19 @@ public class SupplierDAO {
 		
 		return listSup;
 	}
-	public int deleteSupBySeq(List<Supplier> suppliers) {
-		int result = 0;
+	public int[] deleteSupBySeq(List<Supplier> suppliers) {
+		int[] result = null;
 		sql = String.format(DBTableDefine.DELETE_TEMPLATE, DBTableDefine.SUPPLIER_TABLE, DBTableDefine.SUP_SEQ, "?");
-		
-		if(suppliers.size() > 1) {
-			for(int i=0; i<suppliers.size()-1; i++) {
-				String.format(DBTableDefine.WHERE_OR_TEMPLATE, sql, DBTableDefine.SUP_SEQ, "?");
-			}
-		}
 		
 		try {
 			pstmt = con.prepareStatement(sql);
 			
 			for(int i=0; i<suppliers.size(); i++) {
-				pstmt.setInt(i+1, suppliers.get(i).getSup_seq());
+				pstmt.setInt(1, suppliers.get(i).getSup_seq());
+				pstmt.addBatch();
 			}
 			
-			result = pstmt.executeUpdate();
-			
+			result = pstmt.executeBatch();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

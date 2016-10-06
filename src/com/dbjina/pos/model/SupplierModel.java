@@ -21,7 +21,7 @@ public class SupplierModel {
 		return supDAO.findAll();
 	}
 	
-	public int deleteSupBySeq() {
+	public int[] deleteSupBySeq() {
 		String[] values = req.getParameterValues("sup_seqs");
 		List<Supplier> listSup = new ArrayList<>();
 		Supplier sup = null;

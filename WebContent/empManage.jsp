@@ -12,9 +12,8 @@
 	<body style="height:100%;">
 		<c:import url="/include/adminNav.jsp"></c:import>
 		<div class="container-fluid">
-			<div class="row">
+			<div class="row table-list">
 				<div class="col-xs-12">
-
 					<table class="table table-responsive" id="empTable">
 						<thead>
 							<tr>

@@ -51,11 +51,11 @@ public class SupplierModel {
 			sup.setSup_name(sup_names[i]);
 			sup.setSup_contact_number(sup_contact_numbers[i]);
 			sup.setSup_website(sup_websites[i]);
+			sup.setSup_email(sup_emails[i]);
 			sup.setSup_memo(sup_memos[i]);
 
 			listSup.add(sup);
 		}
 		return supDAO.updateSupBySeq(listSup);
 	}
-	
 }

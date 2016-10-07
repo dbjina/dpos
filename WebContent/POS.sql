@@ -63,10 +63,9 @@ CREATE TABLE ingredient_order (
 CREATE TABLE menu (
        menu_seq             int NOT NULL AUTO_INCREMENT PRIMARY KEY,
        menu_name            varchar(255) NOT NULL,
-       menu_description     varchar(2000) NULL,
-       menu_price_seq       int NOT NULL,
+       menu_description     text NULL,
        menu_recipe          text NULL,
-       menu_type_seq        int NULL
+       menu_type_seq        int NOT NULL
 );
 
 
@@ -303,35 +302,7 @@ ALTER TABLE wage_payment
        ADD  FOREIGN KEY (emp_seq)
                              REFERENCES employee(emp_seq) ;
                              
-/* Initialize default values */
-
-# Employee_Position
-INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (99, "Standby");
-INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (1, "CEO");
-INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (2, "Manager");
-INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (3, "All rounder");
-INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (4, "Chef");
-INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (5, "Kitchen hand");
-INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (6, "Juice maker");
-INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (7, "Casher");
-INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (8, "Waiter");
-INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (9, "Waitress");
-
-
-# Supplier_Type
-INSERT INTO supplier_type (sup_type_seq, sup_type) VALUES (1, 'Drink');
-INSERT INTO supplier_type (sup_type_seq, sup_type) VALUES (2, 'Bakery');
-INSERT INTO supplier_type (sup_type_seq, sup_type) VALUES (3, 'Equipment');
-
-# Supplier
-INSERT INTO supplier (sup_seq, sup_name, sup_contact_number, sup_website, sup_email, sup_memo) VALUES (1, 'Milk Man', '0212341234', 'http://wwww.milkman.com', 'milkm@gmail.com', 'Milk man is a good guy');
-INSERT INTO supplier (sup_seq, sup_name, sup_contact_number, sup_website, sup_email, sup_memo) VALUES (2, 'Bread Man', '0243214321', NULL , NULL , NULL);
-INSERT INTO supplier (sup_seq, sup_name, sup_contact_number, sup_website, sup_email, sup_memo) VALUES (3, 'Metro', '0299998888', NULL , NULL , NULL);
-
-INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (1, 1);
-INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (2, 2);
-INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (3, 1);
-INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (3, 2);
+/* Views */
 
 # Supplier view
 CREATE OR REPLACE VIEW v_supplier AS
@@ -349,3 +320,82 @@ CREATE OR REPLACE VIEW v_supplier AS
 			ON stt.sup_type_seq = st.sup_type_seq
 	ORDER BY s.sup_name, sup_seq;
 	
+	
+/* Initialize default values */
+
+# Employee_Position
+INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (99, "Standby");
+INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (1, "CEO");
+INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (2, "Manager");
+INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (3, "All rounder");
+INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (4, "Chef");
+INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (5, "Kitchen hand");
+INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (6, "Juice maker");
+INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (7, "Casher");
+INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (8, "Waiter");
+INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (9, "Waitress");
+
+# Employee
+INSERT INTO employee (emp_seq, emp_id, emp_name, emp_mobile, emp_email, emp_position_seq, emp_memo, emp_password) VALUES(1, 1111, 'test1', '0431122', 'test1@gmail.com', 1, 'lazy', '1111');
+INSERT INTO employee (emp_seq, emp_id, emp_name, emp_mobile, emp_email, emp_position_seq, emp_memo, emp_password) VALUES(2, 2222, 'test2', '0432233', 'test2@gmail.com', 2, 'good man', '2222');
+INSERT INTO employee (emp_seq, emp_id, emp_name, emp_mobile, emp_email, emp_position_seq, emp_memo, emp_password) VALUES(3, 3333, 'test3', '0433344', 'test3@gmail.com', 3, NULL, '3333');
+INSERT INTO employee (emp_seq, emp_id, emp_name, emp_mobile, emp_email, emp_position_seq, emp_memo, emp_password) VALUES(4, 4444, 'test4', '0434455', 'test4@gmail.com', 4, 'sleepyhead', '4444');
+INSERT INTO employee (emp_seq, emp_id, emp_name, emp_mobile, emp_email, emp_position_seq, emp_memo, emp_password) VALUES(5, 5555, 'test5', '0435566', 'test5@gmail.com', 5, 'slow', '5555');
+INSERT INTO employee (emp_seq, emp_id, emp_name, emp_mobile, emp_email, emp_position_seq, emp_memo, emp_password) VALUES(6, 6666, 'test6', '0436677', 'test6@gmail.com', 99, 'fast learner', '6666');
+
+
+
+# Supplier_Type
+INSERT INTO supplier_type (sup_type_seq, sup_type) VALUES (1, 'Drink');
+INSERT INTO supplier_type (sup_type_seq, sup_type) VALUES (2, 'Bakery');
+INSERT INTO supplier_type (sup_type_seq, sup_type) VALUES (3, 'Equipment');
+
+# Supplier
+INSERT INTO supplier (sup_seq, sup_name, sup_contact_number, sup_website, sup_email, sup_memo) VALUES (1, 'Milk Man', '0212341234', 'http://wwww.milkman.com', 'milkm@gmail.com', 'Milk man is a good guy');
+INSERT INTO supplier (sup_seq, sup_name, sup_contact_number, sup_website, sup_email, sup_memo) VALUES (2, 'Bread Man', '0243214321', NULL , NULL , NULL);
+INSERT INTO supplier (sup_seq, sup_name, sup_contact_number, sup_website, sup_email, sup_memo) VALUES (3, 'Metro', '0299998888', NULL , NULL , NULL);
+
+INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (1, 1);
+INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (2, 2);
+INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (3, 1);
+INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (3, 2);
+
+#Unit
+INSERT INTO unit (unit_seq, unit) VALUES (1, 'kg');
+INSERT INTO unit (unit_seq, unit) VALUES (2, 'g');
+INSERT INTO unit (unit_seq, unit) VALUES (3, 'L');
+INSERT INTO unit (unit_seq, unit) VALUES (4, 'ml');
+INSERT INTO unit (unit_seq, unit) VALUES (5, 'box(s)');
+INSERT INTO unit (unit_seq, unit) VALUES (6, 'bunch(es)');
+INSERT INTO unit (unit_seq, unit) VALUES (7, 'dozen(s)');
+INSERT INTO unit (unit_seq, unit) VALUES (8, 'spoon(s)');
+INSERT INTO unit (unit_seq, unit) VALUES (9, 't-spoon(s)');
+INSERT INTO unit (unit_seq, unit) VALUES (10, 'pack(s)');
+
+# Menu_Type
+INSERT INTO menu_type (menu_type_seq, menu_type) VALUES (1, 'Beverage');
+INSERT INTO menu_type (menu_type_seq, menu_type) VALUES (2, 'Coffee');
+INSERT INTO menu_type (menu_type_seq, menu_type) VALUES (3, 'Breakfast');
+INSERT INTO menu_type (menu_type_seq, menu_type) VALUES (4, 'Burger');
+INSERT INTO menu_type (menu_type_seq, menu_type) VALUES (5, 'Sandwich');
+INSERT INTO menu_type (menu_type_seq, menu_type) VALUES (6, 'Salad');
+INSERT INTO menu_type (menu_type_seq, menu_type) VALUES (7, 'ETC');
+
+# Menu
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (1, 'Latte', 'with milk', '', 2);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (2, 'Flat White', 'without froth', '', 2);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (3, 'Engish Breakfast', '', '', 3);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (4, 'Beef burger', '', '', 4);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (5, 'Green wish', '', '', 3);
+
+
+SELECT * FROM unit;
+SELECT * FROM supplier;
+SELECT * FROM ingredient;
+
+SELECT * FROM menu_type;
+SELECT * FROM menu;
+
+SELECT * FROM menu_ingredients;
+SELECT * FROM menu_price;
+SELECT * FROM menu_price_group;

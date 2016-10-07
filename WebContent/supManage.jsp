@@ -14,7 +14,7 @@
 		<c:import url="/include/adminNav.jsp"></c:import>
 
 		<div class="container-fluid">
-			<div class="row table-supplier">
+			<div class="row table-list">
 				<form method="post" id="supForm">
 				<table class="table" id="supTable">
 					<thead>
@@ -60,7 +60,7 @@
 										</c:choose>
 									</td>
 								</tr>
-							</c:forEach>
+						</c:forEach>
 					</tbody>	
 				</table>		
 				</form>

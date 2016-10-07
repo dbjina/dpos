@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -11,24 +12,76 @@
 	</head>
 	<body>
 		<c:import url="/include/adminNav.jsp"></c:import>
+		
 		<div class="container-fluid">
-			<div class="row">
-				<table class="table table-food-menu">
+			<div class="row table-foodMenu table-list">
+				<form method="post" id="supForm">
+				<table class="table" id="supTable">
 					<thead>
 						<tr>
+							<th class="hidden">Seq</th>
 							<th>Name</th>
 							<th>Description</th>
-							<th>Price</th>
+							<th>Recipe</th>
+							<th>Type</th>
+							<th>Price1</th>
+							<th>Price2</th>
+							<th>Price3</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							
-						</tr>
-					</tbody>
-				</table>
+						<c:forEach var="menu" items="${ listMenu }">
+								<tr>
+									<td class="hidden">${ menu.menu_seq }</td>
+									<td>${ menu.menu_name }</td>
+									<td>
+										<c:choose>
+											<c:when test="${ menu.menu_description gt 10 }">
+												<span class="hidden">${ menu.menu_description }</span>
+												${ fn:substring(menu.menu_description, 0, 10) }...
+											</c:when>
+											<c:otherwise>
+												${ menu.menu_description }
+											</c:otherwise>
+										</c:choose>
+									</td>
+									<td>
+										<c:choose>
+											<c:when test="${ menu.menu_recipe gt 10 }">
+												<span class="hidden">${ menu.menu_recipe }</span>
+												${ fn:substring(menu.menu_recipe, 0, 10) }...
+											</c:when>
+											<c:otherwise>
+												${ menu.menu_recipe }
+											</c:otherwise>
+										</c:choose>
+									</td>
+									<td>${ menu.menu_type_seq }</td>
+									<td>
+										
+									</td>
+									
+								</tr>
+						</c:forEach>
+					</tbody>	
+				</table>		
+				</form>
+			</div>
+			<div class="row functions">
+				<div class="swiper-container">
+				    <div class="swiper-wrapper text-center">
+				        <div class="swiper-slide">
+				        	<button class="btn btn-default btn-lg" onclick="deleteSup()">Delete</button>
+				        	<button class="btn btn-default btn-lg" id="btnModify" onclick="modifySup()">Modify</button>
+				        	<button class="btn btn-default btn-lg">Register</button>
+				        </div>
+				    </div>
+				    <!-- Add Pagination -->
+				    <!-- <div class="swiper-pagination"></div> -->
+				</div> <!-- End Swiper -->
 			</div>
 		</div>
+		
 		<c:import url="/include/jsLoad.jsp"></c:import>
 	</body>
 </html>

@@ -93,6 +93,12 @@ public class ManageController extends HttpServlet {
 			
 			resp.sendRedirect(rootPath + "/Manage/SupManage.do");
 		}
+		else if(servletPath.equals("/Manage/SupManage/ModifySup.do")) {
+			supModel = new SupplierModel(req);
+			int[] result = supModel.updateSupBySeq();
+			
+			resp.sendRedirect(rootPath + "/Manage/SupManage.do");
+		}
 		else {
 			System.out.println("매칭 없음, " + this.getClass());
 		}

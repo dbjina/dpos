@@ -15,7 +15,7 @@
 
 		<div class="container-fluid">
 			<div class="row table-supplier">
-				
+				<form method="post" id="supForm">
 				<table class="table" id="supTable">
 					<thead>
 						<tr>
@@ -63,7 +63,7 @@
 							</c:forEach>
 					</tbody>	
 				</table>		
-					
+				</form>
 			</div>
 			<div class="row functions">
 				<div class="swiper-container">
@@ -79,8 +79,7 @@
 				</div> <!-- End Swiper -->
 			</div>
 		</div>
-		<form method="post" id="supForm">
-		</form>
+		
 		<c:import url="/include/jsLoad.jsp"></c:import>
 		<script type="text/javascript">
 		
@@ -114,7 +113,7 @@
 				
 				$("#supTable").find(".bg-danger").find("td:first-child").each(function(index) {
 					$("<input type='hidden' value='" + $(this).text() + "' />")
-				     .attr("name", "sup_seqs")
+				     .attr("name", "sup_seq")
 				     .appendTo("#supForm");
 				});
 				
@@ -146,30 +145,24 @@
 						return;
 					}
 					
+					var array_columns = new Array();
+					array_columns.push("sup_seq");
+					array_columns.push("sup_name");
+					array_columns.push("sup_contact_number");
+					array_columns.push("sup_website");
+					array_columns.push("sup_email");
+					array_columns.push("sup_type");
+					array_columns.push("sup_memo");
+					
+					
 					$("#supTable").find(".bg-danger").each(function() {
 						$(this).find("td").each(function(index) {
+							var idx = index;
 							if(index != 5) {
 								var value = $(this).text().replace(/\s+/g, " ").trim();
 								$(this).text("");
 								$("<input type='text' value='" + value + "' />")
-								 .attr("name", function(index) {
-									 if(index == 0) {
-										 return "sup_name";
-									 }
-									 else if(index == 1) {
-										 return "sup_contact_number";
-									 }
-									 else if(index == 2) {
-										 return "sup_website";
-									 }
-									 else if(index == 3) {
-										 return "sup_email";
-									 }
-									 else if(index == 5) {
-										 return "sup_memo";
-									 }
-									 index++;
-								 })
+								 .attr("name", array_columns[index])
 							     .appendTo($(this));
 							}
 						});

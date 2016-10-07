@@ -6,7 +6,7 @@ public class DBTableDefine {
 	// Query
 		public static final String INSERT_TEMPLATE = "INSERT INTO %1$s (%2$s) VALUES (%3$s)";
 		public static final String SELECT_TEMPLATE = "SELECT %1$s FROM %2$s WHERE 1=1";
-		public static final String UPDATE_TEMPLATE = "UPDATE %1$s SET %2$s = %3$s WHERE %4$s = %5$s";
+		public static final String UPDATE_TEMPLATE = "UPDATE %1$s SET %2$s WHERE %3$s = ?";
 		public static final String DELETE_TEMPLATE = "DELETE FROM %1$s WHERE %2$s = %3$s";
 		public static final String WHERE_AND_TEMPLATE = "%1$s AND %2$s = %3$s";	// 1번에는 QUERY_TEMPLATE 들어가야함
 		public static final String WHERE_OR_TEMPLATE = "%1$s OR %2$s = %3$s";	// 1번에는 QUERY_TEMPLATE 들어가야함

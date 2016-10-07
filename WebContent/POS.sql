@@ -333,8 +333,7 @@ INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (2, 2);
 INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (3, 1);
 INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (3, 2);
 
-SELECT * FROM supplier_type_tag;
-
+# Supplier view
 CREATE OR REPLACE VIEW v_supplier AS
  SELECT s.sup_seq, s.sup_name,
  		  s.sup_contact_number, 
@@ -349,6 +348,4 @@ CREATE OR REPLACE VIEW v_supplier AS
 		INNER JOIN supplier_type st
 			ON stt.sup_type_seq = st.sup_type_seq
 	ORDER BY s.sup_name, sup_seq;
-
-SELECT * FROM v_supplier;
 	

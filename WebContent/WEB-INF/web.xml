@@ -105,6 +105,12 @@
   	<url-pattern>/Manage/SupManage/DeleteSup.do</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+  	<servlet-name>Management</servlet-name>
+  	<url-pattern>/Manage/SupManage/ModifySup.do</url-pattern>
+  </servlet-mapping>
+  
+  
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>

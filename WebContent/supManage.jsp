@@ -70,7 +70,7 @@
 				    <div class="swiper-wrapper text-center">
 				        <div class="swiper-slide">
 				        	<button class="btn btn-default btn-lg" onclick="deleteSup()">Delete</button>
-				        	<button class="btn btn-default btn-lg" onclick="modifySup()">Modify</button>
+				        	<button class="btn btn-default btn-lg" id="btnModify" onclick="modifySup()">Modify</button>
 				        	<button class="btn btn-default btn-lg">Register</button>
 				        </div>
 				    </div>
@@ -98,6 +98,10 @@
 			
 			function deleteSup() {
 				var array_name = new Array();
+				if(array_name.length <= 0) {
+					alert("Please click at least one supplier on the table");
+					return;
+				}
 				
 				$("#supTable").find(".bg-danger").find("td:nth-child(2)").each(function(index) {
 					array_name[index] = $(this).text();
@@ -121,51 +125,68 @@
 			}
 			
 			function modifySup() {
+				var btnText = $("#btnModify").text();
 				var array_name = new Array();
 				
 				$("#supTable").find(".bg-danger").find("td:nth-child(2)").each(function(index) {
-					array_name[index] = $(this).text();
-					
+					array_name[index] = $(this).text().replace(/\s+/g, " ").trim();
 				});
-				var isContinue = confirm("Would you like to modify below suppliers?\n" + array_name);
 				
-				if(isContinue == false) {
+				if(array_name.length <= 0) {
+					alert("Please click at least one supplier on the table");
 					return;
 				}
 				
-				$("#supTable").find(".bg-danger").find("td").each(function(index) {
-					if(index == 7) {
-						index = 0;
+				if(btnText.toUpperCase() == "MODIFY") {
+					$("#btnModify").text("Save");
+					
+					var isContinue = confirm("Would you like to modify below suppliers?\n" + array_name);
+					
+					if(isContinue == false) {
+						return;
 					}
-					var value = $(this).text().replace(/\s+/g, " ");
-					$(this).text("");
-					$("<input type='text' value='" + value + "' />")
-					 .attr("name", function(index) {
-						 if(index == 0) {
-							 return "sup_seq";
-						 }
-						 else if(index == 1) {
-							 return "sup_name";
-						 }
-						 else if(index == 2) {
-							 return "sup_contact_number";
-						 }
-						 else if(index == 3) {
-							 return "sup_website";
-						 }
-						 else if(index == 4) {
-							 return "sup_email";
-						 }
-						 else if(index == 5) {
-							 return "sup_type";
-						 }
-						 else if(index == 6) {
-							 return "sup_memo";
-						 }
-					 })
-				     .appendTo($(this));
-				});
-				
+					
+					$("#supTable").find(".bg-danger").each(function() {
+						$(this).find("td").each(function(index) {
+							if(index != 5) {
+								var value = $(this).text().replace(/\s+/g, " ").trim();
+								$(this).text("");
+								$("<input type='text' value='" + value + "' />")
+								 .attr("name", function(index) {
+									 if(index == 0) {
+										 return "sup_name";
+									 }
+									 else if(index == 1) {
+										 return "sup_contact_number";
+									 }
+									 else if(index == 2) {
+										 return "sup_website";
+									 }
+									 else if(index == 3) {
+										 return "sup_email";
+									 }
+									 else if(index == 5) {
+										 return "sup_memo";
+									 }
+									 index++;
+								 })
+							     .appendTo($(this));
+							}
+						});
+					});
+				}
+				else {
+					$("#btnModify").text("Modify");
+
+					isContinue = confirm("Would you like to save them?");
+
+					if(isContinue == false) {
+						return;
+					}
+					
+					$("#supForm").attr("action", "${ rootPath }/Manage/SupManage/ModifySup.do");
+					$("#supForm").submit();
+				}
 			}
 			
 	    </script>

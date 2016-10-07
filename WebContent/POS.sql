@@ -332,4 +332,23 @@ INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (1, 1);
 INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (2, 2);
 INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (3, 1);
 INSERT INTO supplier_type_tag (sup_seq, sup_type_seq) VALUES (3, 2);
+
 SELECT * FROM supplier_type_tag;
+
+CREATE OR REPLACE VIEW v_supplier AS
+ SELECT s.sup_seq, s.sup_name,
+ 		  s.sup_contact_number, 
+		  s.sup_website,
+		  s.sup_email, 
+		  s.sup_memo,
+		  st.sup_type,
+		  st.sup_type_seq
+ 	FROM supplier s
+		INNER JOIN supplier_type_tag stt
+			ON s.sup_seq = stt.sup_seq
+		INNER JOIN supplier_type st
+			ON stt.sup_type_seq = st.sup_type_seq
+	ORDER BY s.sup_name, sup_seq;
+
+SELECT * FROM v_supplier;
+	

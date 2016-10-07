@@ -92,4 +92,89 @@ public class DBTableDefine {
 	
 	// Group of columns
 	public static final String ALL_SUPPLIER_TYPE_TAG_COLUMNS = SUP_SEQ_COLUMN + ", " + SUP_TYPE_SEQ_COLUMN;
+	
+	
+	/**********************************************************************
+	 * menu_size table
+	 ***********************************************************************/
+	
+	// Table names
+	public static final String MENU_SIZE_TABLE = "menu_size";
+	
+	// Columns names
+	public static final String MENU_SIZE_SEQ_COLUMN = "menu_size_seq";
+	public static final String MENU_SIZE_COLUMN = "menu_size";
+	 
+	// Group of columns
+	public static final String ALL_MENU_SIZE_COLUMNS = MENU_SIZE_SEQ_COLUMN + ", " + MENU_SIZE_COLUMN;
+	
+	/**********************************************************************
+	 * menu_price_group table
+	 ***********************************************************************/
+	
+	// Table names
+	public static final String MENU_PRICE_GROUP_TABLE = "menu_price_group";
+	
+	// Columns names
+	public static final String MENU_PRICE_GROUP_SEQ_COLUMN = "menu_price_group_seq";
+	public static final String MENU_PRICE_GROUP_NAME_COLUMN = "menu_price_group_name";
+	
+	// Group of columns
+	public static final String ALL_MENU_PRICE_GROUP_COLUMNS = MENU_PRICE_GROUP_SEQ_COLUMN + ", " + MENU_PRICE_GROUP_NAME_COLUMN;
+	
+	/**********************************************************************
+	 * menu_price table
+	 ***********************************************************************/
+	
+	// Table names
+	public static final String MENU_PRICE_TABLE = "menu_price";
+	
+	// Columns names
+	public static final String MENU_PRICE_SEQ_COLUMN = "menu_price_seq";
+	public static final String MENU_SEQ_COLUMN = "menu_seq";
+	public static final String MENU_PRICE_COLUMN = "menu_price";
+//	public static final String MENU_SIZE_SEQ_COLUMN = "menu_price";  Already exist in menu_size table
+//	public static final String MENU_PRICE_GROUP_SEQ_COLUMN = "menu_price";  Already exist in menu_price_group table
+	
+	// Group of columns
+	public static final String ALL_MENU_PRICE_COLUMNS = MENU_PRICE_SEQ_COLUMN + ", " + MENU_SEQ_COLUMN + ", "  + MENU_PRICE_COLUMN + ", "  + MENU_SIZE_SEQ_COLUMN + ", "  + MENU_PRICE_GROUP_SEQ_COLUMN;
+	
+	/**********************************************************************
+	 * menu_type table
+	 ***********************************************************************/
+	
+	// Table names
+	public static final String MENU_TYPE_TABLE = "menu_type";
+	
+	// Columns names
+	public static final String MENU_TYPE_COLUMN = "menu_type";
+	public static final String MENU_TYPE_SEQ_COLUMN = "menu_type_seq";
+	 
+	// Group of columns
+	public static final String ALL_MENU_TYPE_COLUMNS = MENU_TYPE_SEQ_COLUMN + ", " + MENU_TYPE_COLUMN;
+	
+	
+	/**********************************************************************
+	 * menu table
+	 ***********************************************************************/
+	// Table names
+	public static final String MENU_TABLE = "`menu`";
+	
+	// Columns names
+//	public static final String MENU_SEQ_COLUMN = "menu_seq"; Already exist in menu table
+	public static final String MENU_NAME_COLUMN = "menu_name"; 
+	public static final String MENU_DESCRIPTION_COLUMN = "menu_description"; 
+	public static final String MENU_RECIPE_COLUMN = "menu_recipe";
+//	public static final String MENU_TYPE_SEQ_COLUMN = "menu_type_seq"; Already exist in menu_type table
+	
+	// Group of columns
+	public static final String ALL_MENU_COLUMNS = MENU_SEQ_COLUMN + ", " + MENU_NAME_COLUMN + ", " + MENU_DESCRIPTION_COLUMN + ", " + MENU_RECIPE_COLUMN + ", " + MENU_TYPE_SEQ_COLUMN;
+	
+	// Menu View
+	public static final String ALL_JOINED_MENU_COLUMNS = ALL_MENU_COLUMNS + ", " + MENU_TYPE_COLUMN + ", "  + MENU_PRICE_SEQ_COLUMN + ", "  + MENU_PRICE_COLUMN + ", "  + ALL_MENU_SIZE_COLUMNS + ", "  + ALL_MENU_PRICE_GROUP_COLUMNS;
+	
+	public static final String MENU_ALL_VIEW = "v_menu";
+	
+	
+	
 }

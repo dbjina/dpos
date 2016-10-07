@@ -84,7 +84,7 @@
 		<script type="text/javascript">
 		
 			$(function() {
-				$("tbody").find("tr").mouseup(function() {
+				$(".table-list").find("tbody").find("tr").mouseup(function() {
 					if($(this).hasClass("bg-danger")) {
 						$(this).removeClass("bg-danger");
 					}
@@ -92,7 +92,6 @@
 						$(this).addClass("bg-danger");
 					}
 				});
-				
 			});
 			
 			function deleteSup() {
@@ -161,7 +160,7 @@
 							if(index != 5) {
 								var value = $(this).text().replace(/\s+/g, " ").trim();
 								$(this).text("");
-								$("<input type='text' value='" + value + "' />")
+								$("<input type='text' value='" + value + "' class='form-control' />")
 								 .attr("name", array_columns[index])
 							     .appendTo($(this));
 							}

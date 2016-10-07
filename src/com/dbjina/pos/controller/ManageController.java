@@ -13,14 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.dbjina.pos.bean.Employee;
 import com.dbjina.pos.bean.Supplier;
+import com.dbjina.pos.bean.menu.JoinedMenu;
+import com.dbjina.pos.bean.menu.Menu;
 import com.dbjina.pos.dao.EmployeeDAO;
 import com.dbjina.pos.listener.CommonContextListener;
 import com.dbjina.pos.model.EmployeeModel;
+import com.dbjina.pos.model.MenuModel;
 import com.dbjina.pos.model.SupplierModel;
 
 public class ManageController extends HttpServlet {
 	private EmployeeModel empModel;
 	private SupplierModel supModel;
+	private MenuModel menuModel;
 	private RequestDispatcher rd;
 	private PrintWriter out;
 	
@@ -74,6 +78,10 @@ public class ManageController extends HttpServlet {
 			
 		}
 		else if(servletPath.equals("/Manage/FoodManage.do")) {
+			menuModel = new MenuModel(req);
+			List<JoinedMenu> listMenu = menuModel.findAllByJoinTable();
+			
+			req.setAttribute("listMenu", listMenu);
 			
 			rd = req.getRequestDispatcher("/foodManage.jsp");
 			rd.forward(req, resp);

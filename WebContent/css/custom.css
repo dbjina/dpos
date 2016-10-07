@@ -116,6 +116,8 @@ footer {
 
 .table-list {
 	min-height: 500px;
+	max-height: 500px;
+	overflow-y: auto;
 	border: 1px black solid;
 }
 /* .table-header-fixed thead, .table-header-fixed tbody, .table-header-fixed tr, .table-header-fixed td, .table-header-fixed th {

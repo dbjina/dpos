@@ -23,20 +23,19 @@
 							<th>Name</th>
 							<th>Description</th>
 							<th>Recipe</th>
+							<th class="hidden">Type Seq</th>
 							<th>Type</th>
-							<th>Price1</th>
-							<th>Price2</th>
-							<th>Price3</th>
+							<th>Price</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="menu" items="${ listMenu }">
 								<tr>
 									<td class="hidden">${ menu.menu_seq }</td>
-									<td>${ menu.menu_name }</td>
+									<td>${ menu.menu_name } (${ menu.menu_size })</td>
 									<td>
 										<c:choose>
-											<c:when test="${ menu.menu_description gt 10 }">
+											<c:when test="${ menu.menu_description.length() gt 10 }">
 												<span class="hidden">${ menu.menu_description }</span>
 												${ fn:substring(menu.menu_description, 0, 10) }...
 											</c:when>
@@ -47,7 +46,7 @@
 									</td>
 									<td>
 										<c:choose>
-											<c:when test="${ menu.menu_recipe gt 10 }">
+											<c:when test="${ menu.menu_recipe.length() gt 10 }">
 												<span class="hidden">${ menu.menu_recipe }</span>
 												${ fn:substring(menu.menu_recipe, 0, 10) }...
 											</c:when>
@@ -56,11 +55,9 @@
 											</c:otherwise>
 										</c:choose>
 									</td>
-									<td>${ menu.menu_type_seq }</td>
-									<td>
-										
-									</td>
-									
+									<td class="hidden">${ menu.menu_type_seq }</td>
+									<td>${ menu.menu_type }</td>
+									<td>${ menu.menu_price }</td>
 								</tr>
 						</c:forEach>
 					</tbody>	
@@ -83,5 +80,17 @@
 		</div>
 		
 		<c:import url="/include/jsLoad.jsp"></c:import>
+		<script type="text/javascript">
+			$(function() {
+				$(".table-list").find("tbody").find("tr").mouseup(function() {
+					if($(this).hasClass("bg-danger")) {
+						$(this).removeClass("bg-danger");
+					}
+					else {
+						$(this).addClass("bg-danger");
+					}
+				});
+			});
+		</script>
 	</body>
 </html>

@@ -76,13 +76,17 @@ CREATE TABLE menu_ingredients (
        unit_seq             int NOT NULL
 );
 
+CREATE TABLE menu_size (
+		menu_size_seq			 int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		menu_size				 varchar(10) NOT NULL
+);
 
 CREATE TABLE menu_price (
        menu_price_seq       int NOT NULL AUTO_INCREMENT PRIMARY KEY,
        menu_seq             int NOT NULL,
        menu_price           FLOAT NOT NULL,
-       menu_size            varchar(10) NULL,
-       menu_price_group_seq int NULL
+       menu_size_seq            int NOT NULL,
+       menu_price_group_seq int NOT NULL
 );
 
 
@@ -236,6 +240,10 @@ ALTER TABLE menu_ingredients
 
 
 ALTER TABLE menu_price
+       ADD  FOREIGN KEY (menu_size_seq)
+                             REFERENCES menu_size(menu_size_seq);
+
+ALTER TABLE menu_price
        ADD  FOREIGN KEY (menu_price_group_seq)
                              REFERENCES menu_price_group(menu_price_group_seq) ;
 
@@ -302,7 +310,9 @@ ALTER TABLE wage_payment
        ADD  FOREIGN KEY (emp_seq)
                              REFERENCES employee(emp_seq) ;
                              
-/* Views */
+/********************************************
+	Views
+*********************************************/
 
 # Supplier view
 CREATE OR REPLACE VIEW v_supplier AS
@@ -320,8 +330,35 @@ CREATE OR REPLACE VIEW v_supplier AS
 			ON stt.sup_type_seq = st.sup_type_seq
 	ORDER BY s.sup_name, sup_seq;
 	
+# Menu view
+CREATE OR REPLACE VIEW v_menu AS
+	SELECT m.menu_seq,
+			 m.menu_name,
+			 m.menu_description,
+			 m.menu_recipe,			 
+			 m.menu_type_seq,
+			 mt.menu_type,
+			 mp.menu_price_seq,
+			 mp.menu_price,
+			 mp.menu_size_seq,
+			 ms.menu_size,
+			 mp.menu_price_group_seq,
+			 mpg.menu_price_group_name
+		FROM `menu` m
+			INNER JOIN menu_type mt
+				ON m.menu_type_seq = mt.menu_type_seq
+			INNER JOIN menu_price mp
+				ON m.menu_seq = mp.menu_seq
+			INNER JOIN menu_size ms
+				ON mp.menu_size_seq = ms.menu_size_seq
+			INNER JOIN menu_price_group mpg
+				ON mp.menu_price_group_seq = mpg.menu_price_group_seq;
+		
+
 	
-/* Initialize default values */
+/********************************************
+	Initialize default values
+*********************************************/	
 
 # Employee_Position
 INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (99, "Standby");
@@ -388,6 +425,41 @@ INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_typ
 INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (4, 'Beef burger', '', '', 4);
 INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (5, 'Green wish', '', '', 3);
 
+# Menu_Price_Group
+INSERT INTO menu_price_group (menu_price_group_seq, menu_price_group_name) VALUES (1, 'Normal');
+INSERT INTO menu_price_group (menu_price_group_seq, menu_price_group_name) VALUES (2, 'Weekends');
+INSERT INTO menu_price_group (menu_price_group_seq, menu_price_group_name) VALUES (3, 'Public holiday');
+
+# Menu_Size
+INSERT INTO menu_size (menu_size_seq, menu_size) VALUES (1, 'Normal');
+INSERT INTO menu_size (menu_size_seq, menu_size) VALUES (2, 'Kid');
+INSERT INTO menu_size (menu_size_seq, menu_size) VALUES (3, 'Extra');
+INSERT INTO menu_size (menu_size_seq, menu_size) VALUES (4, 'Small');
+INSERT INTO menu_size (menu_size_seq, menu_size) VALUES (5, 'Regular');
+INSERT INTO menu_size (menu_size_seq, menu_size) VALUES (6, 'Large');
+INSERT INTO menu_size (menu_size_seq, menu_size) VALUES (7, 'Venti');
+
+# Menu_Price
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (1, 1, 3.5, 4, 1); # Latte, $3.5, Small size, Normal day
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (2, 1, 4.5, 5, 1); # Latte, $4.5, Regular size, Normal day
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (3, 1, 5.5, 6, 1); # Latte, $5.5, Large size, Normal day
+
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (4, 1, 3.5, 4, 3); # Latte, $4.5, Small size, Public holidday
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (5, 1, 4.5, 5, 3); # Latte, $5.5, Regular size, Public holidday
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (6, 1, 5.5, 6, 3); # Latte, $6.5, Large size, Public holidday
+
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (7, 2, 3.5, 4, 1); # Flat white, $5.5, Small size, Normal day
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (8, 2, 4.5, 5, 1); # Flat white, $5.5, Regular size, Normal day
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (9, 2, 5.5, 6, 1); # Flat white, $5.5, Large size, Normal day
+
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (10, 3, 11.0, 1, 1); # Engish Breakfast, $11.0, Normal size, Normal day
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (11, 3, 12.5, 1, 3); # English Breakfast, $12.5, Normal size, Public holiday
+
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (12, 3, 12.5, 1, 3); # Beef Burger, $13.5, Normal size, Normal day
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (13, 3, 12.5, 1, 3); # Beef Burger, $15.5, Normal size, Public holiday
+
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (14, 3, 12.5, 1, 3); # Greenwish, $8.5, Normal size, Normal day
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (15, 3, 12.5, 1, 3); # Greenwish, $9.5, Normal size, Public holiday
 
 SELECT * FROM unit;
 SELECT * FROM supplier;
@@ -396,6 +468,9 @@ SELECT * FROM ingredient;
 SELECT * FROM menu_type;
 SELECT * FROM menu;
 
-SELECT * FROM menu_ingredients;
-SELECT * FROM menu_price;
 SELECT * FROM menu_price_group;
+SELECT * FROM menu_price;
+
+SELECT * FROM menu_ingredients;
+
+

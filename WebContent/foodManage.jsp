@@ -154,6 +154,9 @@
 				if($("#menuTableDetail").find("tbody").find("tr").hasClass("bg-primary") == true) {
 					deleteItem($("#menuTableDetail"), "bg-primary", 1, 2, $("#menuForm"), "menu_price_seq", "${ rootPath }/Manage/FoodManage/DeleteFoodPrice.do");
 				}
+				else if($("#menuTable").find("tbody").find("tr").hasClass("bg-danger") == false){
+					alert("Please click at least one item on the table");
+				}
 				else {
 					deleteItem($("#menuTable"), "bg-danger", 1, 2, $("#menuForm"), "menu_seq", "${ rootPath }/Manage/FoodManage/DeleteFood.do");
 				}

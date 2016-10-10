@@ -73,9 +73,13 @@ public class ManageController extends HttpServlet {
 			resp.sendRedirect(rootPath + "/Manage/EmpManage.do");
 		}
 		else if(servletPath.equals("/Manage/SalesManage.do")) {
+			menuModel = new MenuModel(req);
+			
+			List<JoinedMenu> list = menuModel.findAllByJoinTable();
+			req.setAttribute("listMenu", list);
+			
 			rd = req.getRequestDispatcher("/salesManage.jsp");
 			rd.forward(req, resp);
-			
 		}
 		else if(servletPath.equals("/Manage/FoodManage.do")) {
 			menuModel = new MenuModel(req);

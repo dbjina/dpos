@@ -55,18 +55,28 @@ footer {
 	border: 1px solid black;
 }
 
-.menu {
+.menu-category .btn-block {
+	margin: 20px 0;
+	/* display:inline-block; */
+	white-space:normal;
+	word-break: keep-all;
+	/* padding: 20px 26px; */
+	width: 110px !important;
+	height: 85px !important;
+}
+
+/* .menu {
 	padding-left: 10px;
 }
 
 .menu-category, menu-menus {
 	margin-bottom: 15px;
-	/* border: 1px solid black; */
+	border: 1px solid black;
 	padding-bottom: 10px;
 }
 
 .menu-category button{
-	width: 98px;
+	width: 120px;
 	height: 80px;
 	margin: 15px 0;
 }
@@ -83,7 +93,7 @@ footer {
 
 .menu-menus button + button {
 	margin-left: 15px;
-}
+} */
 
 .swiper-pagination {
 	/* top:85%; */

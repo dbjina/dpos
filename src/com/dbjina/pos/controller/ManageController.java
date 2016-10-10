@@ -86,6 +86,20 @@ public class ManageController extends HttpServlet {
 			rd = req.getRequestDispatcher("/foodManage.jsp");
 			rd.forward(req, resp);
 		}
+		else if(servletPath.equals("/Manage/FoodManage/DeleteFood.do")) {
+			menuModel = new MenuModel(req);
+			
+			int[] result = menuModel.deleteFoodByMenuSeq();
+			
+			resp.sendRedirect(rootPath + "/Manage/FoodManage.do");
+		}
+		else if(servletPath.equals("/Manage/FoodManage/DeleteFoodPrice.do")) {
+			menuModel = new MenuModel(req);
+			
+			int[] result = menuModel.deleteFoodByMenuPriceSeq();
+			
+			resp.sendRedirect(rootPath + "/Manage/FoodManage.do");
+		}
 		else if(servletPath.equals("/Manage/SupManage.do")) {
 			supModel = new SupplierModel(req);
 			List<Supplier> listSup = supModel.findAll();

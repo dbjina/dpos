@@ -236,7 +236,7 @@ ALTER TABLE menu_ingredients
 
 ALTER TABLE menu_ingredients
        ADD  FOREIGN KEY (menu_seq)
-                             REFERENCES menu(menu_seq) ;
+                             REFERENCES menu(menu_seq);
 
 
 ALTER TABLE menu_price
@@ -250,7 +250,9 @@ ALTER TABLE menu_price
 
 ALTER TABLE menu_price
        ADD  FOREIGN KEY (menu_seq)
-                             REFERENCES menu(menu_seq) ;
+                             REFERENCES menu(menu_seq)
+									  		ON UPDATE CASCADE
+											ON DELETE CASCADE ;
 
 
 ALTER TABLE supplier_type_tag
@@ -345,14 +347,15 @@ CREATE OR REPLACE VIEW v_menu AS
 			 mp.menu_price_group_seq,
 			 mpg.menu_price_group_name
 		FROM `menu` m
-			INNER JOIN menu_type mt
+			LEFT JOIN menu_type mt
 				ON m.menu_type_seq = mt.menu_type_seq
-			INNER JOIN menu_price mp
+			LEFT JOIN menu_price mp
 				ON m.menu_seq = mp.menu_seq
-			INNER JOIN menu_size ms
+			LEFT JOIN menu_size ms
 				ON mp.menu_size_seq = ms.menu_size_seq
-			INNER JOIN menu_price_group mpg
-				ON mp.menu_price_group_seq = mpg.menu_price_group_seq;
+			LEFT JOIN menu_price_group mpg
+				ON mp.menu_price_group_seq = mpg.menu_price_group_seq
+		ORDER BY m.menu_name, m.menu_seq, mp.menu_price;
 		
 
 	
@@ -444,22 +447,22 @@ INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, men
 INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (2, 1, 4.5, 5, 1); # Latte, $4.5, Regular size, Normal day
 INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (3, 1, 5.5, 6, 1); # Latte, $5.5, Large size, Normal day
 
-INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (4, 1, 3.5, 4, 3); # Latte, $4.5, Small size, Public holidday
-INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (5, 1, 4.5, 5, 3); # Latte, $5.5, Regular size, Public holidday
-INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (6, 1, 5.5, 6, 3); # Latte, $6.5, Large size, Public holidday
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (4, 1, 4.5, 4, 3); # Latte, $4.5, Small size, Public holidday
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (5, 1, 5.5, 5, 3); # Latte, $5.5, Regular size, Public holidday
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (6, 1, 6.5, 6, 3); # Latte, $6.5, Large size, Public holidday
 
-INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (7, 2, 3.5, 4, 1); # Flat white, $5.5, Small size, Normal day
-INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (8, 2, 4.5, 5, 1); # Flat white, $5.5, Regular size, Normal day
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (7, 2, 3.5, 4, 1); # Flat white, $3.5, Small size, Normal day
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (8, 2, 4.5, 5, 1); # Flat white, $4.5, Regular size, Normal day
 INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (9, 2, 5.5, 6, 1); # Flat white, $5.5, Large size, Normal day
 
 INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (10, 3, 11.0, 1, 1); # Engish Breakfast, $11.0, Normal size, Normal day
 INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (11, 3, 12.5, 1, 3); # English Breakfast, $12.5, Normal size, Public holiday
 
-INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (12, 3, 12.5, 1, 3); # Beef Burger, $13.5, Normal size, Normal day
-INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (13, 3, 12.5, 1, 3); # Beef Burger, $15.5, Normal size, Public holiday
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (12, 4, 13.5, 1, 1); # Beef Burger, $13.5, Normal size, Normal day
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (13, 4, 15.5, 1, 3); # Beef Burger, $15.5, Normal size, Public holiday
 
-INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (14, 3, 12.5, 1, 3); # Greenwish, $8.5, Normal size, Normal day
-INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (15, 3, 12.5, 1, 3); # Greenwish, $9.5, Normal size, Public holiday
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (14, 5, 8.5, 1, 1); # Greenwish, $8.5, Normal size, Normal day
+INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (15, 5, 9.5, 1, 3); # Greenwish, $9.5, Normal size, Public holiday
 
 SELECT * FROM unit;
 SELECT * FROM supplier;

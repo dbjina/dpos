@@ -170,25 +170,7 @@
 			
 			// Manage Employees Functions
 			function deleteEmp() {
-				var array_name = new Array();
-				
-				$("#empTable").find(".bg-danger").find("td:nth-child(3)").each(function(index) {
-					array_name[index] = $(this).text();
-				})
-				var isContinue = confirm("Would you like to delete below employees?\n" + array_name);
-				
-				if(isContinue == false) {
-					return;
-				}
-				
-				$("#empTable").find(".bg-danger").find("td:first-child").each(function(index) {
-					$("<input type='hidden' value='" + $(this).text() + "' />")
-				     .attr("name", "emp_seqs")
-				     .appendTo("#empForm");
-				})
-				     
-				$("#empForm").attr("action", "${ rootPath }/Manage/EmpManage/DeleteEmp.do");
-				$("#empForm").submit();
+				deleteItem($("#empTable"), "bg-danger", 1, 3, $("#empForm"), "emp_seqs", "${ rootPath }/Manage/EmpManage/DeleteEmp.do");
 			}
 			
 			function modifyEmp() {

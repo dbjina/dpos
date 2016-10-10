@@ -18,7 +18,7 @@ public class SignModel {
 	public boolean addEmployee() {
 		boolean result = false;
 		
-		// TODO
+		// TODO 유효성 검사
 		/* 이메일 유효성 검사
 		 * 이름 유효성 검사(숫자나 특수문자(.만 허용) 제외하기)
 		 * 핸드폰 유효성 검사(호주 번호 체계를 따름)
@@ -49,7 +49,7 @@ public class SignModel {
 	public Employee findEmployeeByIdAndPassword() {
 		Employee emp = new Employee();
 		
-		// TODO
+		// TODO : 유효성 검사
 		/*
 		 * ID 유효성 검사
 		 * PASSWORD 유효성 검사

@@ -175,6 +175,23 @@ public class DBTableDefine {
 	
 	public static final String MENU_ALL_VIEW = "v_menu";
 	
+	// Menu Join Table ( menu + menu_type + menu_price + menu_price_group + menu_size )
+	public static final String  ALL_JOINED_MENU_TABLE = MENU_TABLE + " m"
+	+ " LEFT JOIN " + MENU_TYPE_TABLE + " mt ON m." + MENU_TYPE_SEQ_COLUMN + " = mt." + MENU_TYPE_SEQ_COLUMN 
+	+ " LEFT JOIN " + MENU_PRICE_TABLE + " mp ON m." + MENU_SEQ_COLUMN + " = mp." + MENU_SEQ_COLUMN
+	+ " LEFT JOIN " + MENU_PRICE_GROUP_TABLE + " mpg ON mp." + MENU_PRICE_GROUP_SEQ_COLUMN + " = mpg." + MENU_PRICE_GROUP_SEQ_COLUMN
+	+ " LEFT JOIN " + MENU_SIZE_TABLE + " ms ON mp." + MENU_SIZE_SEQ_COLUMN + " = ms." + MENU_SIZE_SEQ_COLUMN ;
 	
-	
+	/* SELECT *
+	FROM menu m
+		LEFT JOIN menu_type mt
+			ON m.menu_type_seq = mt.menu_type_seq
+		LEFT JOIN menu_price mp
+			ON m.menu_seq = mp.menu_seq
+		LEFT JOIN menu_price_group mpg
+			ON mp.menu_price_group_seq = mpg.menu_price_group_seq
+		LEFT JOIN menu_size ms
+			ON mp.menu_size_seq = ms.menu_size_seq
+	WHERE m.menu_seq = 1;
+*/
 }

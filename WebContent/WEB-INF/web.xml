@@ -48,6 +48,11 @@
   	<servlet-class>com.dbjina.pos.controller.ManageController</servlet-class>
   </servlet>
   
+  <servlet>
+  	<servlet-name>Util</servlet-name>
+  	<servlet-class>com.dbjina.pos.controller.UtilController</servlet-class>
+  </servlet>
+  
   
   <!-- Servlet Mapping -->
   <servlet-mapping>
@@ -97,6 +102,16 @@
   
   <servlet-mapping>
   	<servlet-name>Management</servlet-name>
+  	<url-pattern>/Manage/FoodManage/DeleteFood.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>Management</servlet-name>
+  	<url-pattern>/Manage/FoodManage/DeleteFoodPrice.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>Management</servlet-name>
   	<url-pattern>/Manage/SupManage.do</url-pattern>
   </servlet-mapping>
   
@@ -108,6 +123,11 @@
   <servlet-mapping>
   	<servlet-name>Management</servlet-name>
   	<url-pattern>/Manage/SupManage/ModifySup.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>Util</servlet-name>
+  	<url-pattern>/Util/SayNum.do</url-pattern>
   </servlet-mapping>
   
   

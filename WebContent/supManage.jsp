@@ -84,14 +84,9 @@
 		<script type="text/javascript">
 		
 			$(function() {
-				$(".table-list").find("tbody").find("tr").mouseup(function() {
-					if($(this).hasClass("bg-danger")) {
-						$(this).removeClass("bg-danger");
-					}
-					else {
-						$(this).addClass("bg-danger");
-					}
-				});
+				
+				makeTableHightlightByClick($(".table-list"), "bg-danger");
+				
 			});
 			
 			function deleteSup() {

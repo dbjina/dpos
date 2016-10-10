@@ -148,14 +148,7 @@
 					$("tbody").find("tr").find("td:nth-child(7)").addClass("hidden-xs");
 				}
 				
-				$("tbody").find("tr").mouseup(function() {
-					if($(this).hasClass("bg-danger")) {
-						$(this).removeClass("bg-danger");
-					}
-					else {
-						$(this).addClass("bg-danger");
-					}
-				});
+				makeTableHightlightByClick($(".table-list"), "bg-danger");
 				
 				$("tbody").find("tr").find("td:last-child")
 				.mouseup(function() {

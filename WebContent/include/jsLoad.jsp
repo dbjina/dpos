@@ -9,3 +9,4 @@
 		<script src="${ rootPath }/vendor/jquery.easing/jquery.easing.1.3.js"></script>
 		<script src="${ rootPath }/vendor/creative/js/creative.min.js"></script>
 		<script src="${ rootPath }/vendor/Swiper-3.3.1/dist/js/swiper.min.js"></script>
+		<script src="${ rootPath }/js/custom.js"></script>

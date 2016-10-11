@@ -101,7 +101,7 @@ footer {
 }
 
 .table-header-fixed {
-	max-height: 350px;
+	height: 350px;
 	overflow-y: auto;
 	position: relative;
 }
@@ -130,6 +130,17 @@ footer {
 	overflow-y: auto;
 	border: 1px black solid;
 }
+
+.dpos-btn-menu-size {
+	width: 110px !important;
+	height: 85px !important;
+	font-weight: bold;
+}
+
+.dpos-btn-menu-size + .dpos-btn-menu-size {
+	margin-left: 15px;	
+}
+
 /* .table-header-fixed thead, .table-header-fixed tbody, .table-header-fixed tr, .table-header-fixed td, .table-header-fixed th {
   display: inline-table;
 } */

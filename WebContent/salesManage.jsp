@@ -46,13 +46,7 @@
 							    </tr>
 						    </thead>
 						    <tbody>
-						    	<c:forEach begin="1" end="90" varStatus="status">
-							    	<tr>
-								        <td class="col-sm-2">${ status.index}</td>
-								        <td class="col-sm-4">Escort</td>
-								        <td class="col-sm-3">1.33</td>
-								    </tr>
-						    	</c:forEach>
+						    	
 						    </tbody>
 					</table>
 					</div>
@@ -62,58 +56,20 @@
 				</div>	
 			</div>
 		</div>
-	
+		<c:import url="/include/menuOrderModalForm.jsp"></c:import>
 		<c:import url="/include/jsLoad.jsp"></c:import>
 		 
 	    <script type="text/javascript">
 	    	$(function() {
 	    		
+	    		// Field
+			    var menu_category = new Array();	// the names of menu category without duplication
+	    		var menus = new Array();			// it stores menu objects
+			    var menu = null;					// Menu object (ref /js/Menu.js)
+			    var swiper = null;					// Swiper object (ref /vendor/Swiper-3.3.1)
+			    var menu_names_by_category;			// the menu names without duplication
+			    var str = "";
 			    
-			    function Menu() {
-			    	var menu_seq;
-			    	var menu_name;
-			    	var menu_description;
-			    	var menu_recipe;
-			    	var menu_type_seq;
-			    	var menu_type;
-			    	var menu_price_seq;
-			    	var menu_price;
-			    	var menu_size_seq;
-			    	var menu_size;
-			    	var menu_price_group_seq;
-			    	var menu_price_group_name;
-			    	
-			    	this.getMenu_seq = function() { return this.menu_seq; };
-				    this.getMenu_name = function() { return this.menu_name; };
-				    this.getMenu_description = function() { return this.menu_description; };
-				    this.getMenu_recipe = function() { return this.menu_recipe; };
-				    this.getMenu_type_seq = function() { return this.menu_type_seq; };
-				    this.getMenu_type = function() { return this.menu_type; };
-				    this.getMenu_price_seq = function() { return this.menu_price_seq; };
-				    this.getMenu_price = function() { return this.menu_price; };
-				    this.getMenu_size_seq = function() { return this.menu_size_seq; };
-				    this.getMenu_size = function() { return this.menu_size; };
-				    this.getMenu_price_group_seq = function() { return this.menu_price_group_seq; };
-				    this.getMenu_price_group_name = function() { return this.menu_price_group_name; };
-				    
-				    this.setMenu_seq = function(value) { this.menu_seq = value; };
-				    this.setMenu_name = function(value) { this.menu_name = value; };
-				    this.setMenu_description = function(value) { this.menu_description = value; };
-				    this.setMenu_recipe = function(value) { this.menu_recipe = value; };
-				    this.setMenu_type_seq = function(value) { this.menu_type_seq = value; };
-				    this.setMenu_type = function(value) { this.menu_type = value; };
-				    this.setMenu_price_seq = function(value) { this.menu_price_seq = value; };
-				    this.setMenu_price = function(value) { this.menu_price = value; };
-				    this.setMenu_size_seq = function(value) { this.menu_size_seq = value; };
-				    this.setMenu_size = function(value) { this.menu_size = value; };
-				    this.setMenu_price_group_seq = function(value) { this.menu_price_group_seq = value; };
-				    this.setMenu_price_group_name = function(value) { this.menu_price_group_name = value; };
-			    }
-			    
-			    var menus = new Array();
-			    var menu_category = new Array();
-			    
-			    var menu = null;
 			    <c:forEach var="m" items="${ listMenu }">
 			    	menu = new Menu();
 
@@ -140,7 +96,6 @@
 			    }
 			    
 			    // Write menu categories
-			    var str = "";
 			    for(var i=0, j=0; i<menu_category.length; i++, j++) {
 			    	if(i % 5 == 0) {
 			    		str = str + '<div class="swiper-slide">';
@@ -150,7 +105,7 @@
 			    	else {
 			    				str = str + '<div class="col-sm-2">';
 			    	}
-			    					str = str + '<button class="btn btn-default btn-lg btn-block">' + menu_category[i] + '</button>';
+			    					str = str + '<button class="btn btn-default btn-lg btn-block" data-toggle="button">' + menu_category[i] + '</button>';
 					    		str = str + '</div>';
 				    		
 					
@@ -163,18 +118,22 @@
 				$(".menu-category-parent").html(str);
 			    
 			 	
-			 
-			 
-			    
-			    			
 				/* Initialize Swiper */
-				var swiper = new Swiper('.swiper-container', {
+				swiper = new Swiper('.swiper-container', {
 			        pagination: '.swiper-pagination',
 			        paginationClickable: false
 			    });
 			    
-				var menu_names_by_category;
-				$(".menu-category-parent").find("button").click(function() {
+				
+				$(".menu-category-parent").on('click', 'button', function() {
+					var current_category = $(this).text();
+					$(this).addClass("active");
+					$(".menu-category-parent").find("button").each(function() {
+						if(current_category != $(this).text()) {
+							
+							$(this).removeClass("active");
+						}
+					});
 					var menu_category_name = $(this).text();
 					menu_names_by_category = new Array();
 					
@@ -185,6 +144,29 @@
 					    	}	
 						}
 				    }
+				
+				// .on 으로 대체 중
+				// .on 이 .click에 비해서 메모리 적게 먹고, 네임스페이스 이용가능하고, 등등
+				// 크롬 디버깅 툴로 메모리 용량 확인해보기
+				/* $(".menu-category-parent").find("button").click(function() {
+					var current_category = $(this).text();
+					$(this).addClass("active");
+					$(".menu-category-parent").find("button").each(function() {
+						if(current_category != $(this).text()) {
+							
+							$(this).removeClass("active");
+						}
+					});
+					var menu_category_name = $(this).text();
+					menu_names_by_category = new Array();
+					
+					for(var i=0; i<menus.length; i++) {
+						if(menus[i].getMenu_type() == menu_category_name) {
+							if(!menu_names_by_category.includes(menus[i].getMenu_name())) {
+								menu_names_by_category.push(menus[i].getMenu_name());
+					    	}	
+						}
+				    } */
 					
 					// Write menu names
 					var str = "";
@@ -201,7 +183,7 @@
 				    	else {
 				    				str = str + '<div class="col-sm-2">';
 				    	}
-				    					str = str + '<button class="btn btn-default btn-lg btn-block">' + menu_names_by_category[i] + '</button>';
+				    					str = str + '<button class="btn btn-default btn-lg btn-block" data-toggle="modal" data-target="#menuOrderModalForm">' + menu_names_by_category[i] + '</button>';
 						    		str = str + '</div>';
 					    		
 						if(k == 4 && k != 0) {
@@ -222,6 +204,49 @@
 				        paginationClickable: false
 				    });
 					
+					// .on 대신에 .click 써야함
+					$(".menu-category-child").find("button").click(function() {
+						var menuOrderModalForm = $("#menuOrderModalForm"); 
+						var menuSizes = new Array();
+						var menuName = $(this).text();
+						str = "";
+
+						
+						$(menuOrderModalForm).find(".modal-title").text(menuName);
+						for(var i=0; i<menus.length; i++) {
+							if(menus[i].getMenu_name() == menuName) {
+								if(menuSizes.includes(menus[i].getMenu_size()) == false) {
+									menuSizes.push(menus[i].getMenu_size());
+								}
+							}
+						}
+						
+						$(menuOrderModalForm).find(".modal-body").find(".form-group").text("");
+						
+						for(var i=0; i<menuSizes.length; i++) {
+							str = str + '<button class="btn btn-default dpos-btn-menu-size">' + menuSizes[i] + '</button>'; 								
+						}
+						
+						$(menuOrderModalForm).find(".modal-body").find(".form-group").append(str);
+						$(menuOrderModalForm).on('click','button',function() {
+							// TODO 코드 작성 중 2016-10-11 5:27 PM 여기서부터 하기
+							$(".table-orderlist")
+						});
+						// 아래 코드는 사이즈 선택후에 실행되야 함
+						/* var str = "";
+						str = str + "<tr>";
+							str = str + "<td>";
+								str = str + "1";						
+							str = str + "</td>";
+							str = str + "<td>";
+								str = str + $(this).text();							
+							str = str + "</td>";
+							str = str + "<td>";
+								str = str + "0.99";							
+							str = str + "</td>";
+						str = str + "</tr>";
+						$(".table-orderlist").find("tbody").prepend(str);	 */		    	
+			    	});
 			    });
 				
 				/* $(".swiper-slide").click(function() {
@@ -234,7 +259,6 @@
 			    	});
 			    	$("#cost").text(sum.toFixed(2));
 			    }); */
-			    
 			    
 	    	});
 	    </script>

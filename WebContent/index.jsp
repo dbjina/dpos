@@ -137,8 +137,8 @@
         <div class="container text-center">
             <div class="call-to-action">
                 <h2 class="text-uppercase">Staff only</h2>
-                <a href="#" class="btn btn-default btn-xl sr-button"  data-toggle="modal" data-target="#signUpModalForm">Sign Up</a>
-                <a href="#" class="btn btn-default btn-xl sr-button"  data-toggle="modal" data-target="#signInModalForm">Sign in</a>
+                <a href="#" class="btn btn-default btn-xl sr-button" data-toggle="modal" data-target="#signUpModalForm">Sign Up</a>
+                <a href="#" class="btn btn-default btn-xl sr-button" data-toggle="modal" data-target="#signInModalForm">Sign in</a>
             </div>
         </div>
     	</section>

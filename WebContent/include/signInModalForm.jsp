@@ -7,7 +7,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title text-center" id="myModalLabel">Sign In</h4>
       </div>
-      <form class="form-horizontal" action="${ rootPath }/Sign/SignIn.do" method="post" name="signUpModalForm" id="signUpModalForm">
+      <form class="form-horizontal" action="${ rootPath }/Sign/SignIn.do" method="post" name="signInModalForm" id="signInModalForm">
       <div class="modal-body">
 		  <div class="form-group">
 		    <label for="emp_id" class="col-sm-2 control-label">ID</label>

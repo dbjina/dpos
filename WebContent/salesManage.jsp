@@ -36,12 +36,12 @@
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<div class="row table-header-fixed">
+					<div class="row dpos-table-fixed-header">
 						<table class="table table-orderlist">
-						  <thead>
+						  	<thead>
 							    <tr>
 							        <th class="col-sm-2">Qty</th>
-							        <th class="col-sm-4">Name</th>
+							        <th class="col-sm-7">Name</th>
 							        <th class="col-sm-3">Price</th>
 							    </tr>
 						    </thead>
@@ -63,8 +63,8 @@
 	    	$(function() {
 	    		
 	    		// Field
-			    var menu_category = new Array();	// the names of menu category without duplication
-	    		var menus = new Array();			// it stores menu objects
+			    var menu_category = [];	// the names of menu category without duplication
+	    		var menus = [];			// it stores menu objects
 			    var menu = null;					// Menu object (ref /js/Menu.js)
 			    var swiper = null;					// Swiper object (ref /vendor/Swiper-3.3.1)
 			    var menu_names_by_category;			// the menu names without duplication
@@ -135,7 +135,7 @@
 						}
 					});
 					var menu_category_name = $(this).text();
-					menu_names_by_category = new Array();
+					menu_names_by_category = [];
 					
 					for(var i=0; i<menus.length; i++) {
 						if(menus[i].getMenu_type() == menu_category_name) {
@@ -207,7 +207,7 @@
 					// .on 대신에 .click 써야함
 					$(".menu-category-child").find("button").click(function() {
 						var menuOrderModalForm = $("#menuOrderModalForm"); 
-						var menuSizes = new Array();
+						var menuSizes = [];
 						var menuName = $(this).text();
 						str = "";
 
@@ -228,9 +228,23 @@
 						}
 						
 						$(menuOrderModalForm).find(".modal-body").find(".form-group").append(str);
-						$(menuOrderModalForm).on('click','button',function() {
-							// TODO 코드 작성 중 2016-10-11 5:27 PM 여기서부터 하기
-							$(".table-orderlist")
+						
+						// TODO 주문된 목록에 객체 어떻게 넣을지 고민하기
+						$(menuOrderModalForm).find("button").click(function() {
+							str = "";
+							str = str + "<tr>";
+								str = str + "<td class='col-sm-2'>";
+									str = str + "1";						
+								str = str + "</td>";
+								str = str + "<td class='col-sm-7'>";
+									str = str + menuName;							
+								str = str + "</td>";
+								str = str + "<td class='col-sm-3'>";
+									str = str + "0.99";							
+								str = str + "</td>";
+							str = str + "</tr>";
+							$(".table-orderlist").find("tbody").prepend(str);
+							$("#menuOrderModalForm").modal('toggle');
 						});
 						// 아래 코드는 사이즈 선택후에 실행되야 함
 						/* var str = "";

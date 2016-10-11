@@ -100,24 +100,35 @@ footer {
 	transform: translateY(70%);
 }
 
-.table-header-fixed {
-	height: 350px;
+.dpos-table-fixed-header {
+	/* height: 350px;
 	overflow-y: auto;
-	position: relative;
+	position: relative; */
 }
 
-.table-header-fixed table {
-	/* position: relative; */
+.dpos-table-fixed-header tr {
+	width: 100%;
+	display: inline-table;
+	/* table-layout: fixed; */
 }
 
-.table-header-fixed thead {
-	position: fixed;
+.dpos-table-fixed-header table {
+	height:350px;
+	display: -moz-groupbox; /* Firefox Bad Effect */ 
+}
+
+/* .dpos-table-fixed-header thead {
+	position: absolute;
 	background-color: white;
-	width: inherit; /* it doesn't work */
+	width: 100%;
+	width: inherit; it doesn't work
 	z-index: 999;
-}
-.table-header-fixed tbody {
-	transform: translateY(40px);
+} */
+.dpos-table-fixed-header tbody {
+	overflow-y: auto;      
+	height: 200px;	/* Select the height of the body */
+	width: 100%;
+	position: absolute;
 }
 
 #cost {

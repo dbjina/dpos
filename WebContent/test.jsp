@@ -6,12 +6,24 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Test</title>
+		
 	</head>
 	<body>
-		<c:forEach var="val" begin="1" end="10" varStatus="loop">
-			<c:if test="${ not loop.last }">
-				${ val }<br>
-			</c:if>			
-		</c:forEach>
+		<script>
+			var map = new Map();
+			var map2 = new Map();
+			
+			var set1 = new Set();
+			
+			set1.add(1);
+			set1.add(2);
+			set1.add(1);
+			
+			set1.forEach(function(value) {
+				  alert(value);
+				});
+		
+		</script>
+		
 	</body>
 </html>

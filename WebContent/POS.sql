@@ -362,9 +362,6 @@ CREATE OR REPLACE VIEW v_menu AS
 /*************************************************************************************************************
 	Initialize default values
 *************************************************************************************************************/
-
-	Views
-
 # Employee_Position
 INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (99, "Standby");
 INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (1, "CEO");
@@ -491,5 +488,7 @@ SELECT * FROM menu_price_group;
 SELECT * FROM menu_price;
 
 SELECT * FROM menu_ingredients;
+
+SELECT * FROM v_menu;
 
 

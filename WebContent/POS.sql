@@ -422,11 +422,25 @@ INSERT INTO menu_type (menu_type_seq, menu_type) VALUES (6, 'Salad');
 INSERT INTO menu_type (menu_type_seq, menu_type) VALUES (7, 'ETC');
 
 # Menu
-INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (1, 'Latte', 'with milk', '', 2);
-INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (2, 'Flat White', 'without froth', '', 2);
-INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (3, 'Engish Breakfast', '', '', 3);
-INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (4, 'Beef burger', '', '', 4);
-INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (5, 'Green wish', '', '', 3);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (1, 'Latte', 'with milk', NULL, 2);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (2, 'Flat White', 'without froth', NULL, 2);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (3, 'Engish Breakfast', NULL, NULL, 3);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (4, 'Beef burger', NULL, NULL, 4);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (5, 'Green wish', NULL, NULL, 3);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (6, 'Coca Cola', NULL, NULL, 1);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (7, 'Chicken salad', NULL, NULL, 6);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (8, 'Chicken sandwich', NULL, NULL, 5);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (9, 'Ice', NULL, NULL, 7);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (10, 'Doppio', NULL, NULL, 2);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (11, 'Espresso', NULL, NULL, 2);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (12, 'Cappuccino', NULL, NULL, 2);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (13, 'Machiato', NULL, NULL, 2);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (14, 'Vienna', NULL, NULL, 2);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (15, 'Moka', NULL, NULL, 2);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (16, 'Long black', NULL, NULL, 2);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (17, 'White coffee', NULL, NULL, 2);
+INSERT INTO `menu` (menu_seq, menu_name, menu_description, menu_recipe, menu_type_seq) VALUES (18, 'Caramel machiato', NULL, NULL, 2);
+
 
 # Menu_Price_Group
 INSERT INTO menu_price_group (menu_price_group_seq, menu_price_group_name) VALUES (1, 'Normal');

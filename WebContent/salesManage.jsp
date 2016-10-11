@@ -17,26 +17,8 @@
 					<div class="row">
 						<!-- Swiper -->
 						<div class="swiper-container">
-						    <div class="swiper-wrapper">
-						        <div class="swiper-slide">
-						        	<div class="row menu-category-parent">
-						        		<div class="col-sm-2 col-sm-offset-1">
-						        			<button class="btn btn-default btn-lg btn-block">Sweet chili</button>
-							        	</div>
-							        	<div class="col-sm-2">
-							        		<button class="btn btn-default btn-lg btn-block">테스2</button>
-							        	</div>
-							        	<div class="col-sm-2">
-							        		<button class="btn btn-default btn-lg btn-block">테스2</button>
-							        	</div>
-							        	<div class="col-sm-2">
-							        		<button class="btn btn-default btn-lg btn-block">테스2</button>
-							        	</div>
-							        	<div class="col-sm-2">
-							        		<button class="btn btn-default btn-lg btn-block">테스2</button>
-							        	</div>
-						        	</div>
-						        </div>
+						    <div class="swiper-wrapper menu-category-parent">
+						        
 						    </div>
 						    <!-- Add Pagination -->
 						    <div class="swiper-pagination"></div>
@@ -45,43 +27,8 @@
 					<div class="row">
 						<!-- Swiper -->
 						<div class="swiper-container">
-						    <div class="swiper-wrapper">
-						        <div class="swiper-slide">
-						        	<div class="row">
-						        		<div class="col-sm-2 col-sm-offset-1">
-						        			<button class="btn btn-default btn-lg btn-block">테스2</button>
-							        	</div>
-							        	<div class="col-sm-2">
-							        		<button class="btn btn-default btn-lg btn-block">테스2</button>
-							        	</div>
-							        	<div class="col-sm-2">
-							        		<button class="btn btn-default btn-lg btn-block">테스2</button>
-							        	</div>
-							        	<div class="col-sm-2">
-							        		<button class="btn btn-default btn-lg btn-block">테스2</button>
-							        	</div>
-							        	<div class="col-sm-2">
-							        		<button class="btn btn-default btn-lg btn-block">테스2</button>
-							        	</div>
-						        	</div>
-						        	<div class="row">
-						        		<div class="col-sm-2 col-sm-offset-1">
-						        			<button class="btn btn-default btn-lg btn-block">테스2</button>
-							        	</div>
-							        	<div class="col-sm-2">
-							        		<button class="btn btn-default btn-lg btn-block">테스2</button>
-							        	</div>
-							        	<div class="col-sm-2">
-							        		<button class="btn btn-default btn-lg btn-block">테스2</button>
-							        	</div>
-							        	<div class="col-sm-2">
-							        		<button class="btn btn-default btn-lg btn-block">테스2</button>
-							        	</div>
-							        	<div class="col-sm-2">
-							        		<button class="btn btn-default btn-lg btn-block">테스2</button>
-							        	</div>
-						        	</div>
-						        </div>
+						    <div class="swiper-wrapper menu-category-child">
+						        
 						    </div>
 						    <!-- Add Pagination -->
 						    <div class="swiper-pagination"></div>
@@ -117,24 +64,10 @@
 		</div>
 	
 		<c:import url="/include/jsLoad.jsp"></c:import>
-		 <!-- Initialize Swiper -->
+		 
 	    <script type="text/javascript">
 	    	$(function() {
-	    		var swiper = new Swiper('.swiper-container', {
-			        pagination: '.swiper-pagination',
-			        paginationClickable: false
-			    });
-			    
-			    $(".swiper-slide").click(function() {
-			    	var sum = 0;
-			    	$(".table-orderlist").find("tbody").find("tr td:last-child").each(function() {
-			    		var value = $(this).text();
-			    		if(!isNaN(value) && value.length != 0) {
-			    			sum += parseFloat(value);
-			    		}
-			    	});
-			    	$("#cost").text(sum.toFixed(2));
-			    });
+	    		
 			    
 			    function Menu() {
 			    	var menu_seq;
@@ -183,7 +116,20 @@
 			    var menu = null;
 			    <c:forEach var="m" items="${ listMenu }">
 			    	menu = new Menu();
+
+			    	menu.setMenu_seq("${ m.menu_seq }");
+			    	menu.setMenu_name("${ m.menu_name }");
+			    	menu.setMenu_description("${ m.menu_description }");
+			    	menu.setMenu_recipe("${ m.menu_recipe }");
+			    	menu.setMenu_type_seq("${ m.menu_type_seq }");
 			    	menu.setMenu_type("${ m.menu_type }");
+			    	menu.setMenu_price_seq("${ m.menu_price_seq }");
+			    	menu.setMenu_price("${ m.menu_price }");
+			    	menu.setMenu_size_seq("${ m.menu_size_seq }");
+			    	menu.setMenu_size("${ m.menu_size }");
+			    	menu.setMenu_price_group_seq("${ m.menu_price_group_seq }");
+			    	menu.setMenu_price_group_name("${ m.menu_price_group_name }");
+
 			    	menus.push(menu);
 			    </c:forEach>
 			    
@@ -193,13 +139,101 @@
 			    	}
 			    }
 			    
-			    $(".menu-category-parent").find("button").each(function(index) {
-			    	$(this).text(menu_category[index]);
+			    // Write menu categories
+			    var str = "";
+			    for(var i=0, j=0; i<menu_category.length; i++, j++) {
+			    	if(i % 5 == 0) {
+			    		str = str + '<div class="swiper-slide">';
+			    			str = str + '<div class="row">';
+			    				str = str + '<div class="col-sm-2 col-sm-offset-1">';
+			    	}
+			    	else {
+			    				str = str + '<div class="col-sm-2">';
+			    	}
+			    					str = str + '<button class="btn btn-default btn-lg btn-block">' + menu_category[i] + '</button>';
+					    		str = str + '</div>';
+				    		
+					
+		    		if(j == 4 && j != 0) {
+		    			j = 0;
+		    				str = str + '</div>';
+			    		str = str + '</div>';
+		    		}
+			    }
+				$(".menu-category-parent").html(str);
+			    
+			 	
+			 
+			 
+			    
+			    			
+				/* Initialize Swiper */
+				var swiper = new Swiper('.swiper-container', {
+			        pagination: '.swiper-pagination',
+			        paginationClickable: false
 			    });
 			    
-			    /* for(var menu in menus) {
-			    	alert(menu.getMenu_type);
-			    }; */
+				var menu_names_by_category;
+				$(".menu-category-parent").find("button").click(function() {
+					var menu_category_name = $(this).text();
+					menu_names_by_category = new Array();
+					
+					for(var i=0; i<menus.length; i++) {
+						if(menus[i].getMenu_type() == menu_category_name) {
+							if(!menu_names_by_category.includes(menus[i].getMenu_name())) {
+								menu_names_by_category.push(menus[i].getMenu_name());
+					    	}	
+						}
+				    }
+					
+					// Write menu names
+					var str = "";
+				    for(var i=0, j=0, k=0; i<menu_names_by_category.length; i++, j++, k++) {
+				    	if(i % 10 == 0) {
+				    		str = str + '<div class="swiper-slide">';
+				    			
+				    	}
+				    	
+				    	if(i % 5 == 0) {
+				    			str = str + '<div class="row">';
+		    						str = str + '<div class="col-sm-2 col-sm-offset-1">';
+				    	}
+				    	else {
+				    				str = str + '<div class="col-sm-2">';
+				    	}
+				    					str = str + '<button class="btn btn-default btn-lg btn-block">' + menu_names_by_category[i] + '</button>';
+						    		str = str + '</div>';
+					    		
+						if(k == 4 && k != 0) {
+							k = -1;
+								str = str + '</div>';
+						}
+						    		
+			    		if(j == 9 && j != 0) {
+			    			j = 0;
+				    		str = str + '</div>';
+			    		}
+				    }
+					$(".menu-category-child").html(str);
+					
+					/* Initialize Swiper */
+					swiper = new Swiper('.swiper-container', {
+				        pagination: '.swiper-pagination',
+				        paginationClickable: false
+				    });
+					
+			    });
+				
+				/* $(".swiper-slide").click(function() {
+			    	var sum = 0;
+			    	$(".table-orderlist").find("tbody").find("tr td:last-child").each(function() {
+			    		var value = $(this).text();
+			    		if(!isNaN(value) && value.length != 0) {
+			    			sum += parseFloat(value);
+			    		}
+			    	});
+			    	$("#cost").text(sum.toFixed(2));
+			    }); */
 			    
 			    
 	    	});

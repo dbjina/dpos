@@ -39,14 +39,17 @@ function Menu() {
     this.setMenu_price_group_name = function(value) { this.menu_price_group_name = value; };
 }
 
-function MenuOrder() {
+function OrderMenu() {
+	
 	var menu_order_seq;
 	var menu_order_quantity;
 	var menu_order_table;
+	var menu;
 	
 	this.getMenu_order_seq = function() { return this.menu_order_seq; };
 	this.getMenu_order_quantity = function() { return this.menu_order_quantity; };
 	this.getMenu_order_table = function() { return this.menu_order_table; };
+	this.getMenu = function() { return this.menu; };
 	
     this.setMenu_order_seq = function(value) { this.menu_order_seq = value; };
     this.setMenu_order_quantity = function(value) {
@@ -56,6 +59,12 @@ function MenuOrder() {
     	this.menu_order_quantity = value;
     };
     this.setMenu_order_table = function(value) { this.menu_order_table = value; };
+    this.setMenu = function(value) { this.menu = value; };
 }
 
-MenuOrder.prototype = new Menu();
+OrderMenu.prototype = new Menu();
+OrderMenu.prototype.constructor = OrderMenu;
+OrderMenu.prototype.sum = function() {
+	return this.getMenu_order_quantity() * this.getMenu().getMenu_price();
+}
+

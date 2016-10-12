@@ -48,12 +48,64 @@
 						    <tbody>
 						    	
 						    </tbody>
-					</table>
-					</div>
-					<div class="row">
-						TOTAL : $ <span id="cost">0</span>
+						</table>
 					</div>
 				</div>	
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-8">
+					<div class="row text-center bg-info dpos-cost-info">
+						<p>Cost</p>
+					</div>
+					<div class="row dpos-function-pad">
+						<button class="col-md-2 btn btn-default">Table</button>
+						<button class="col-md-2 btn btn-default">Pre print</button>
+						<button class="col-md-2 btn btn-default">Re print</button>
+						<button class="col-md-2 btn btn-default">Discount</button>
+						<button class="col-md-2 btn btn-default">Surcharge</button>
+					</div>
+				</div>
+				<!-- Ten keys UI start -->
+				<div class="col-xs-12 col-sm-4">
+					<div class="table table-bordered">
+						<table class="table">
+							<tr>
+								<td><button class="btn btn-default">Void</button></td>
+					    		<td><button class="btn btn-default">Void All</button></td>
+					    		<td><button class="btn btn-default">Cancel</button></td>
+					    		<td><button class="btn btn-default">Recall</button></td>
+					    		<td><button class="btn btn-default">Send Order</button></td>
+							</tr>
+							<tr>
+								<td><button class="btn btn-default btn-block">$ 5</button></td>
+								<td><button class="btn btn-default btn-block">7</button></td>
+								<td><button class="btn btn-default btn-block">8</button></td>
+								<td><button class="btn btn-default btn-block">9</button></td>
+								<td><button class="btn btn-default btn-block">Clear</button></td>
+							</tr>
+							<tr>
+								<td><button class="btn btn-default btn-block">$ 10</button></td>
+								<td><button class="btn btn-default btn-block">4</button></td>
+								<td><button class="btn btn-default btn-block">5</button></td>
+								<td><button class="btn btn-default btn-block">6</button></td>
+								<td><button class="btn btn-default btn-block">Card</button></td>
+							</tr>
+							<tr>
+								<td><button class="btn btn-default btn-block">$ 20</button></td>
+								<td><button class="btn btn-default btn-block">1</button></td>
+								<td><button class="btn btn-default btn-block">2</button></td>
+								<td><button class="btn btn-default btn-block">3</button></td>
+								<td rowspan="2"><button class="btn btn-default btn-block">Cash</button></td>
+							</tr>
+							<tr>
+								<td><button class="btn btn-default btn-block">$ 50</button></td>
+								<td><button class="btn btn-default btn-block">X</button></td>
+								<td><button class="btn btn-default btn-block">0</button></td>
+								<td><button class="btn btn-default btn-block">.</button></td>
+							</tr>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 		<c:import url="/include/menuOrderModalForm.jsp"></c:import>
@@ -63,37 +115,15 @@
 	    	$(function() {
 	    		
 	    		// Field
+	    		var ordered_menu = [];
 			    var menu_category = [];	// the names of menu category without duplication
 	    		var menus = [];			// it stores menu objects
-			    var menu = null;					// Menu object (ref /js/Menu.js)
 			    var swiper = null;					// Swiper object (ref /vendor/Swiper-3.3.1)
-			    var menu_names_by_category;			// the menu names without duplication
+			    var menu_names_by_category = [];			// the menu names without duplication
 			    var str = "";
 			    
-			    <c:forEach var="m" items="${ listMenu }">
-			    	menu = new Menu();
-
-			    	menu.setMenu_seq("${ m.menu_seq }");
-			    	menu.setMenu_name("${ m.menu_name }");
-			    	menu.setMenu_description("${ m.menu_description }");
-			    	menu.setMenu_recipe("${ m.menu_recipe }");
-			    	menu.setMenu_type_seq("${ m.menu_type_seq }");
-			    	menu.setMenu_type("${ m.menu_type }");
-			    	menu.setMenu_price_seq("${ m.menu_price_seq }");
-			    	menu.setMenu_price("${ m.menu_price }");
-			    	menu.setMenu_size_seq("${ m.menu_size_seq }");
-			    	menu.setMenu_size("${ m.menu_size }");
-			    	menu.setMenu_price_group_seq("${ m.menu_price_group_seq }");
-			    	menu.setMenu_price_group_name("${ m.menu_price_group_name }");
-
-			    	menus.push(menu);
-			    </c:forEach>
-			    
-			    for(var i=0; i<menus.length; i++) {
-			    	if(!menu_category.includes(menus[i].getMenu_type())) {
-			    		menu_category.push(menus[i].getMenu_type());
-			    	}
-			    }
+			    menus = loadAllMenu();
+			    menu_names_by_category = loadMenuCategoryName(menus);
 			    
 			    // Write menu categories
 			    for(var i=0, j=0; i<menu_category.length; i++, j++) {
@@ -124,7 +154,6 @@
 			        paginationClickable: false
 			    });
 			    
-				
 				$(".menu-category-parent").on('click', 'button', function() {
 					var current_category = $(this).text();
 					$(this).addClass("active");
@@ -134,6 +163,7 @@
 							$(this).removeClass("active");
 						}
 					});
+					
 					var menu_category_name = $(this).text();
 					menu_names_by_category = [];
 					
@@ -205,16 +235,18 @@
 				    });
 					
 					// .on 대신에 .click 써야함
+					 
 					$(".menu-category-child").find("button").click(function() {
 						var menuOrderModalForm = $("#menuOrderModalForm"); 
 						var menuSizes = [];
+						var tempMenu = [];	// it stores clicked menus temporarily
 						var menuName = $(this).text();
 						str = "";
-
 						
 						$(menuOrderModalForm).find(".modal-title").text(menuName);
 						for(var i=0; i<menus.length; i++) {
 							if(menus[i].getMenu_name() == menuName) {
+								tempMenu.push(menus[i]);
 								if(menuSizes.includes(menus[i].getMenu_size()) == false) {
 									menuSizes.push(menus[i].getMenu_size());
 								}
@@ -231,19 +263,50 @@
 						
 						// TODO 주문된 목록에 객체 어떻게 넣을지 고민하기
 						$(menuOrderModalForm).find("button").click(function() {
+							
+							var menuSize = $(this).text();
+							for(var i=0; i<tempMenu.length; i++) {
+								// FIXME price group name 동적으로 맞게끔 수정하기
+								if(menuSize == tempMenu[i].getMenu_size() && menuName == tempMenu[i].getMenu_name() && tempMenu[i].getMenu_price_group_name() == "Normal") {
+									var orderMenu = new OrderMenu();
+									orderMenu.setMenu_order_quantity(1);
+									orderMenu.setMenu(tempMenu[i]);
+									ordered_menu.push(orderMenu);
+									// break;
+								}
+							}
+							
+							var om = ordered_menu[ordered_menu.length - 1];
+							
 							str = "";
 							str = str + "<tr>";
 								str = str + "<td class='col-sm-2'>";
 									str = str + "1";						
 								str = str + "</td>";
 								str = str + "<td class='col-sm-7'>";
-									str = str + menuName;							
+									str = str + om.getMenu().getMenu_name();							
 								str = str + "</td>";
 								str = str + "<td class='col-sm-3'>";
-									str = str + "0.99";							
+									str = str + om.sum();
+								str = str + "</td>";
+							str = str + "</tr>";
+							str = str + "<tr>";
+								str = str + "<td class='col-sm-2'>";
+								str = str + "</td>";
+								
+								str = str + "<td class='col-sm-7'>";
+									str = str + " - " + om.getMenu().getMenu_size();
+								str = str + "</td>";
+								str = str + "<td class='col-sm-3'>";
+									if(om.getMenu_order_quantity() != 1) {
+										str = str + om.getMenu().getMenu_price();	
+									}
 								str = str + "</td>";
 							str = str + "</tr>";
 							$(".table-orderlist").find("tbody").prepend(str);
+							
+							
+							
 							$("#menuOrderModalForm").modal('toggle');
 						});
 						// 아래 코드는 사이즈 선택후에 실행되야 함
@@ -274,6 +337,38 @@
 			    	$("#cost").text(sum.toFixed(2));
 			    }); */
 			    
+			    /* Return an array of the menu */
+			    function loadAllMenu() {
+			    	var menus = [];
+			    	var menu = null;
+			    	<c:forEach var="m" items="${ listMenu }">
+			        	menu = new Menu();
+
+			        	menu.setMenu_seq("${ m.menu_seq }");
+			        	menu.setMenu_name("${ m.menu_name }");
+			        	menu.setMenu_description("${ m.menu_description }");
+			        	menu.setMenu_recipe("${ m.menu_recipe }");
+			        	menu.setMenu_type_seq("${ m.menu_type_seq }");
+			        	menu.setMenu_type("${ m.menu_type }");
+			        	menu.setMenu_price_seq("${ m.menu_price_seq }");
+			        	menu.setMenu_price("${ m.menu_price }");
+			        	menu.setMenu_size_seq("${ m.menu_size_seq }");
+			        	menu.setMenu_size("${ m.menu_size }");
+			        	menu.setMenu_price_group_seq("${ m.menu_price_group_seq }");
+			        	menu.setMenu_price_group_name("${ m.menu_price_group_name }");
+
+			        	menus.push(menu);
+			    	</c:forEach>
+			    	return menus;
+			    }
+			    
+			    function loadMenuCategoryName(menus) {
+			    	for(var i=0; i<menus.length; i++) {
+				    	if(!menu_category.includes(menus[i].getMenu_type())) {
+				    		menu_category.push(menus[i].getMenu_type());
+				    	}
+				    }	
+			    }
 	    	});
 	    </script>
 	</body>

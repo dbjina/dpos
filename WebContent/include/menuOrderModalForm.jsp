@@ -4,7 +4,8 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      	<!-- FIXME span 부분 수정해야 함 -->
+        <input type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
         <h4 class="modal-title text-center" id="myModalLabel"></h4>
       </div>
       <div class="modal-body">
@@ -13,7 +14,7 @@
 		  </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <input type="button" class="btn btn-default" data-dismiss="modal" value="Close" />
       </div>
     </div>
   </div>

@@ -9,21 +9,12 @@
 		
 	</head>
 	<body>
-		<script>
-			var map = new Map();
-			var map2 = new Map();
+		<script type="text/javascript">
+			alert(test());
 			
-			var set1 = new Set();
-			
-			set1.add(1);
-			set1.add(2);
-			set1.add(1);
-			
-			set1.forEach(function(value) {
-				  alert(value);
-				});
-		
+			function test() {
+				return 1;
+			}
 		</script>
-		
 	</body>
 </html>

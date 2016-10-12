@@ -61,7 +61,7 @@
 		</div>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-xs-8 center-horizontal text-center center-block function-pad">
+				<div class="col-xs-8 center-horizontal text-center center-block dpos-function-pad">
 					<button class="col-md-2 btn btn-default" onclick="deleteEmp()">Delete</button>
 					<button class="col-md-2 btn btn-default" onclick="modifyEmp()">Modify</button>
 					<button class="col-md-2 btn btn-default">Punch in</button>

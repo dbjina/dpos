@@ -25,15 +25,13 @@
 }*/
 
 function makeTableHightlightByClick(table, cls) {
-	$(function() {
-		$(table).find("tbody").on('click', 'tr', function() {
-			if($(this).hasClass(cls)) {
-				$(this).removeClass(cls);
-			}
-			else {
-				$(this).addClass(cls);
-			}
-		});
+	$(table).find("tbody").on('click', 'tr', function() {
+		if($(this).hasClass(cls)) {
+			$(this).removeClass(cls);
+		}
+		else {
+			$(this).addClass(cls);
+		}
 	});
 }
 

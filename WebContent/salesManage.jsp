@@ -137,7 +137,7 @@
 			    menu_category = loadMenuCategoryName(menus);
 			    menu_names_by_category = loadMenuName(menus, menu_category);
 			    
-			    makeTableHightlightByClick($(".table-orderlist"),"bg-danger");
+			    makeOrderHightlightByClick($(".table-orderlist"),"bg-danger");
 			    
 			    loadTenkeysFunc($(".table-orderlist"), $(".dpos-tenkeys-pad"));
 			    writeMenuCategories(".menu-category-parent", menu_category);
@@ -273,7 +273,30 @@
 				    		$(display_th).text("0");
 				    	}
 				    	else if(key_input == "$ 5" || key_input == "$ 10" || key_input == "$ 20" || key_input == "$ 50" || key_input.toLowerCase() == "cash") {
-				    		alert(1);
+				    		alert("the function hasn't been made");
+				    	}
+				    	else if(key_input.toLowerCase() == "void") {
+				    		$(order_table).find(".bg-danger").each(function() {
+				    			// TODO
+				    			deleteOrder(target_table, display_th);
+				    			$(this).fadeOut(500);
+				    			$(this).next().fadeOut(500);
+				    		});
+				    	}
+				    	else if(key_input.toLowerCase() == "void all") {
+							alert("the function hasn't been made");
+						}
+				    	else if(key_input.toLowerCase() == "cancel") {
+				    		alert("the function hasn't been made");
+				    	}
+						else if(key_input.toLowerCase() == "recall") {
+							alert("the function hasn't been made");
+				    	}
+						else if(key_input.toLowerCase() == "send order") {
+							alert("the function hasn't been made");
+				    	}
+						else if(key_input.toLowerCase() == "card") {
+							alert("the function hasn't been made");
 				    	}
 					});
 			    }
@@ -414,10 +437,16 @@
 		    		$(display_th).text("0");
 		    		$(target_table).find("tbody").find(".bg-danger").each(function() {
 		    			$(this).removeClass("bg-danger").fadeOut(100).fadeIn(600);
+		    			$(this).next().fadeOut(100).fadeIn(600);
 		    		});
 		    		
 		    		writeTotalCost($("#dpos-cost"));
-				}			    
+				}			  
+				
+				// TODO
+				function deleteOrder(target_table, display_th) {
+					
+				}
 			    
 				// TODO 세금, 할인 금액 등 다른 정보도 표시
 			    function writeTotalCost(target) {
@@ -428,6 +457,23 @@
 			    	});
 			    	
 			    	$(target).text("$ " + cost);
+			    }
+				
+			    function makeOrderHightlightByClick(table, cls) {
+
+			    	
+		    		$(table).find("tbody").on('click', 'tr', function() {
+		    			var order_seq = $(this).find("td:nth-child(1)").text();
+		    			
+		    			if(order_seq) {
+		    				if($(this).hasClass(cls)) {
+			    				$(this).removeClass(cls);
+			    			}
+			    			else {
+			    				$(this).addClass(cls);
+			    			}	
+		    			}
+		    		});
 			    }
 	    	});
 	    </script>

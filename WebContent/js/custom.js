@@ -9,9 +9,24 @@
  * @param table a table object
  * @param cls a class name that will be attached to each of tr of the table object
  */
-function makeTableHightlightByClick(table, cls) {
+
+// XXX mouseup 이벤트 보다는 .on 메소드로 대체하여 click 이벤트 적용, 테스트 중
+/*function makeTableHightlightByClick(table, cls) {
 	$(function() {
 		$(table).find("tbody").find("tr").mouseup(function() {
+			if($(this).hasClass(cls)) {
+				$(this).removeClass(cls);
+			}
+			else {
+				$(this).addClass(cls);
+			}
+		});
+	});
+}*/
+
+function makeTableHightlightByClick(table, cls) {
+	$(function() {
+		$(table).find("tbody").on('click', 'tr', function() {
 			if($(this).hasClass(cls)) {
 				$(this).removeClass(cls);
 			}

@@ -10,11 +10,19 @@
 	</head>
 	<body>
 		<script type="text/javascript">
-			alert(test());
+			var map = new Map();
 			
-			function test() {
-				return 1;
-			}
+			alert(map.get("k1"));
+			
+			map.set("k1", "c1");
+			map.set("k2", "c2");
+			map.set("k3", "c3");
+			
+			alert(map.size);
+			
+			map.delete("k1");
+			
+			alert(map.size);
 		</script>
 	</body>
 </html>

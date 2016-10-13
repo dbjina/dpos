@@ -40,6 +40,7 @@
 						<table class="table table-orderlist">
 						  	<thead>
 							    <tr>
+							    	<th class="hidden">Order Seq</th>
 							        <th class="col-sm-2">Qty</th>
 							        <th class="col-sm-7">Name</th>
 							        <th class="col-sm-3">Price</th>
@@ -67,42 +68,49 @@
 				</div>
 				<!-- Ten keys UI start -->
 				<div class="col-xs-12 col-sm-4">
-					<div class="table table-bordered">
-						<table class="table">
-							<tr>
-								<td><button class="btn btn-default">Void</button></td>
-					    		<td><button class="btn btn-default">Void All</button></td>
-					    		<td><button class="btn btn-default">Cancel</button></td>
-					    		<td><button class="btn btn-default">Recall</button></td>
-					    		<td><button class="btn btn-default">Send Order</button></td>
-							</tr>
-							<tr>
-								<td><button class="btn btn-default btn-block">$ 5</button></td>
-								<td><button class="btn btn-default btn-block">7</button></td>
-								<td><button class="btn btn-default btn-block">8</button></td>
-								<td><button class="btn btn-default btn-block">9</button></td>
-								<td><button class="btn btn-default btn-block">Clear</button></td>
-							</tr>
-							<tr>
-								<td><button class="btn btn-default btn-block">$ 10</button></td>
-								<td><button class="btn btn-default btn-block">4</button></td>
-								<td><button class="btn btn-default btn-block">5</button></td>
-								<td><button class="btn btn-default btn-block">6</button></td>
-								<td><button class="btn btn-default btn-block">Card</button></td>
-							</tr>
-							<tr>
-								<td><button class="btn btn-default btn-block">$ 20</button></td>
-								<td><button class="btn btn-default btn-block">1</button></td>
-								<td><button class="btn btn-default btn-block">2</button></td>
-								<td><button class="btn btn-default btn-block">3</button></td>
-								<td rowspan="2"><button class="btn btn-default btn-block">Cash</button></td>
-							</tr>
-							<tr>
-								<td><button class="btn btn-default btn-block">$ 50</button></td>
-								<td><button class="btn btn-default btn-block">X</button></td>
-								<td><button class="btn btn-default btn-block">0</button></td>
-								<td><button class="btn btn-default btn-block">.</button></td>
-							</tr>
+					<div class="row">
+						<table class="table table-bordered dpos-tenkeys-pad">
+							<thead>
+								<tr>
+									<th colspan="5" class="text-right">0</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><button class="btn btn-default btn-block">Void</button></td>
+						    		<td><button class="btn btn-default btn-block">Void All</button></td>
+						    		<td><button class="btn btn-default btn-block">Cancel</button></td>
+						    		<td><button class="btn btn-default btn-block">Recall</button></td>
+						    		<td><button class="btn btn-default btn-block">Send Order</button></td>
+								</tr>
+								<tr>
+									<td><button class="btn btn-default btn-block">$ 5</button></td>
+									<td><button class="btn btn-default btn-block">7</button></td>
+									<td><button class="btn btn-default btn-block">8</button></td>
+									<td><button class="btn btn-default btn-block">9</button></td>
+									<td><button class="btn btn-default btn-block">Clear</button></td>
+								</tr>
+								<tr>
+									<td><button class="btn btn-default btn-block">$ 10</button></td>
+									<td><button class="btn btn-default btn-block">4</button></td>
+									<td><button class="btn btn-default btn-block">5</button></td>
+									<td><button class="btn btn-default btn-block">6</button></td>
+									<td><button class="btn btn-default btn-block">Card</button></td>
+								</tr>
+								<tr>
+									<td><button class="btn btn-default btn-block">$ 20</button></td>
+									<td><button class="btn btn-default btn-block">1</button></td>
+									<td><button class="btn btn-default btn-block">2</button></td>
+									<td><button class="btn btn-default btn-block">3</button></td>
+									<td rowspan="2"><button class="btn btn-default btn-block">Cash</button></td>
+								</tr>
+								<tr>
+									<td><button class="btn btn-default btn-block">$ 50</button></td>
+									<td><button class="btn btn-default btn-block">X</button></td>
+									<td><button class="btn btn-default btn-block">0</button></td>
+									<td><button class="btn btn-default btn-block">.</button></td>
+								</tr>
+							</tbody>
 						</table>
 					</div>
 				</div>
@@ -116,38 +124,21 @@
 	    		
 	    		// Field
 	    		var ordered_menu = [];
-			    var menu_category = [];	// the names of menu category without duplication
-	    		var menus = [];			// it stores menu objects
+	    		var menus = [];						// it stores all menu objects
 			    var swiper = null;					// Swiper object (ref /vendor/Swiper-3.3.1)
-			    var menu_names_by_category = [];			// the menu names without duplication
+			    var menu_category = [];				// the names of menu category without duplication
+			    var menu_names_by_category = new Map();	// the menu names without duplication ("menu category name", Set({[], []}) )
 			    var str = "";
 			    
 			    menus = loadAllMenu();
-			    menu_names_by_category = loadMenuCategoryName(menus);
+			    menu_category = loadMenuCategoryName(menus);
+			    menu_names_by_category = loadMenuName(menus, menu_category);
 			    
-			    // Write menu categories
-			    for(var i=0, j=0; i<menu_category.length; i++, j++) {
-			    	if(i % 5 == 0) {
-			    		str = str + '<div class="swiper-slide">';
-			    			str = str + '<div class="row">';
-			    				str = str + '<div class="col-sm-2 col-sm-offset-1">';
-			    	}
-			    	else {
-			    				str = str + '<div class="col-sm-2">';
-			    	}
-			    					str = str + '<button class="btn btn-default btn-lg btn-block" data-toggle="button">' + menu_category[i] + '</button>';
-					    		str = str + '</div>';
-				    		
-					
-		    		if(j == 4 && j != 0) {
-		    			j = 0;
-		    				str = str + '</div>';
-			    		str = str + '</div>';
-		    		}
-			    }
-				$(".menu-category-parent").html(str);
+			    makeTableHightlightByClick($(".table-orderlist"),"bg-danger");
 			    
-			 	
+			    loadTenkeysFunc();
+			    writeMenuCategories(".menu-category-parent", menu_category);
+			    
 				/* Initialize Swiper */
 				swiper = new Swiper('.swiper-container', {
 			        pagination: '.swiper-pagination',
@@ -155,55 +146,22 @@
 			    });
 			    
 				$(".menu-category-parent").on('click', 'button', function() {
-					var current_category = $(this).text();
+					var current_category_name = $(this).text();
 					$(this).addClass("active");
+					
 					$(".menu-category-parent").find("button").each(function() {
-						if(current_category != $(this).text()) {
-							
+						if(current_category_name != $(this).text()) {
 							$(this).removeClass("active");
 						}
 					});
-					
-					var menu_category_name = $(this).text();
-					menu_names_by_category = [];
-					
-					for(var i=0; i<menus.length; i++) {
-						if(menus[i].getMenu_type() == menu_category_name) {
-							if(!menu_names_by_category.includes(menus[i].getMenu_name())) {
-								menu_names_by_category.push(menus[i].getMenu_name());
-					    	}	
-						}
-				    }
-				
-				// .on 으로 대체 중
-				// .on 이 .click에 비해서 메모리 적게 먹고, 네임스페이스 이용가능하고, 등등
-				// 크롬 디버깅 툴로 메모리 용량 확인해보기
-				/* $(".menu-category-parent").find("button").click(function() {
-					var current_category = $(this).text();
-					$(this).addClass("active");
-					$(".menu-category-parent").find("button").each(function() {
-						if(current_category != $(this).text()) {
-							
-							$(this).removeClass("active");
-						}
-					});
-					var menu_category_name = $(this).text();
-					menu_names_by_category = new Array();
-					
-					for(var i=0; i<menus.length; i++) {
-						if(menus[i].getMenu_type() == menu_category_name) {
-							if(!menu_names_by_category.includes(menus[i].getMenu_name())) {
-								menu_names_by_category.push(menus[i].getMenu_name());
-					    	}	
-						}
-				    } */
 					
 					// Write menu names
 					var str = "";
-				    for(var i=0, j=0, k=0; i<menu_names_by_category.length; i++, j++, k++) {
+				    var current_menu_names = menu_names_by_category.get(current_category_name);
+				    var arr = Array.from(current_menu_names);
+				    for(var i=0, j=0, k=0; i<arr.length; i++, j++, k++) {
 				    	if(i % 10 == 0) {
 				    		str = str + '<div class="swiper-slide">';
-				    			
 				    	}
 				    	
 				    	if(i % 5 == 0) {
@@ -213,7 +171,7 @@
 				    	else {
 				    				str = str + '<div class="col-sm-2">';
 				    	}
-				    					str = str + '<button class="btn btn-default btn-lg btn-block" data-toggle="modal" data-target="#menuOrderModalForm">' + menu_names_by_category[i] + '</button>';
+				    					str = str + '<button class="btn btn-default btn-lg btn-block" data-toggle="modal" data-target="#menuOrderModalForm">' + arr[i] + '</button>';
 						    		str = str + '</div>';
 					    		
 						if(k == 4 && k != 0) {
@@ -226,7 +184,8 @@
 				    		str = str + '</div>';
 			    		}
 				    }
-					$(".menu-category-child").html(str);
+					
+				    $(".menu-category-child").html(str);
 					
 					/* Initialize Swiper */
 					swiper = new Swiper('.swiper-container', {
@@ -238,104 +197,85 @@
 					 
 					$(".menu-category-child").find("button").click(function() {
 						var menuOrderModalForm = $("#menuOrderModalForm"); 
-						var menuSizes = [];
+						var menuSizes = new Set();
 						var tempMenu = [];	// it stores clicked menus temporarily
 						var menuName = $(this).text();
 						str = "";
 						
 						$(menuOrderModalForm).find(".modal-title").text(menuName);
-						for(var i=0; i<menus.length; i++) {
-							if(menus[i].getMenu_name() == menuName) {
-								tempMenu.push(menus[i]);
-								if(menuSizes.includes(menus[i].getMenu_size()) == false) {
-									menuSizes.push(menus[i].getMenu_size());
-								}
-							}
-						}
+						menuSizes = loadMenuSizes(menus, menuName);
 						
 						$(menuOrderModalForm).find(".modal-body").find(".form-group").text("");
 						
-						for(var i=0; i<menuSizes.length; i++) {
-							str = str + '<button class="btn btn-default dpos-btn-menu-size">' + menuSizes[i] + '</button>'; 								
-						}
+						menuSizes.forEach(function(value) {
+							str = str + '<button class="btn btn-default dpos-btn-menu-size">' + value + '</button>';
+						});
 						
 						$(menuOrderModalForm).find(".modal-body").find(".form-group").append(str);
 						
 						// TODO 주문된 목록에 객체 어떻게 넣을지 고민하기
 						$(menuOrderModalForm).find("button").click(function() {
-							
 							var menuSize = $(this).text();
-							for(var i=0; i<tempMenu.length; i++) {
-								// FIXME price group name 동적으로 맞게끔 수정하기
-								if(menuSize == tempMenu[i].getMenu_size() && menuName == tempMenu[i].getMenu_name() && tempMenu[i].getMenu_price_group_name() == "Normal") {
+							
+							for(var i=0; i<menus.length; i++) {
+								if(menuSize == menus[i].getMenu_size() && menuName == menus[i].getMenu_name() && menus[i].getMenu_price_group_name() == "Normal") {
 									var orderMenu = new OrderMenu();
+									
+									if(ordered_menu.length == 0) {
+										orderMenu.setMenu_order_seq(ordered_menu.length);
+									}
+									else {
+										orderMenu.setMenu_order_seq(ordered_menu[ordered_menu.length - 1].getMenu_order_seq() + 1);
+									}
+
 									orderMenu.setMenu_order_quantity(1);
-									orderMenu.setMenu(tempMenu[i]);
+									orderMenu.setMenu(menus[i]);
 									ordered_menu.push(orderMenu);
-									// break;
+									break;
 								}
 							}
 							
-							var om = ordered_menu[ordered_menu.length - 1];
-							
-							str = "";
-							str = str + "<tr>";
-								str = str + "<td class='col-sm-2'>";
-									str = str + "1";						
-								str = str + "</td>";
-								str = str + "<td class='col-sm-7'>";
-									str = str + om.getMenu().getMenu_name();							
-								str = str + "</td>";
-								str = str + "<td class='col-sm-3'>";
-									str = str + om.sum();
-								str = str + "</td>";
-							str = str + "</tr>";
-							str = str + "<tr>";
-								str = str + "<td class='col-sm-2'>";
-								str = str + "</td>";
-								
-								str = str + "<td class='col-sm-7'>";
-									str = str + " - " + om.getMenu().getMenu_size();
-								str = str + "</td>";
-								str = str + "<td class='col-sm-3'>";
-									if(om.getMenu_order_quantity() != 1) {
-										str = str + om.getMenu().getMenu_price();	
-									}
-								str = str + "</td>";
-							str = str + "</tr>";
-							$(".table-orderlist").find("tbody").prepend(str);
+							writeOrder($(".table-orderlist"));
 							
 							
 							
 							$("#menuOrderModalForm").modal('toggle');
 						});
-						// 아래 코드는 사이즈 선택후에 실행되야 함
-						/* var str = "";
-						str = str + "<tr>";
-							str = str + "<td>";
-								str = str + "1";						
-							str = str + "</td>";
-							str = str + "<td>";
-								str = str + $(this).text();							
-							str = str + "</td>";
-							str = str + "<td>";
-								str = str + "0.99";							
-							str = str + "</td>";
-						str = str + "</tr>";
-						$(".table-orderlist").find("tbody").prepend(str);	 */		    	
 			    	});
 			    });
 				
-				/* $(".swiper-slide").click(function() {
-			    	var sum = 0;
-			    	$(".table-orderlist").find("tbody").find("tr td:last-child").each(function() {
-			    		var value = $(this).text();
-			    		if(!isNaN(value) && value.length != 0) {
-			    			sum += parseFloat(value);
-			    		}
-			    	});
-			    	$("#cost").text(sum.toFixed(2));
-			    }); */
+			    function loadTenkeysFunc() {
+					var order_table = $(".table-orderlist");	
+					var tenKeys_table = $(".dpos-tenkeys-pad");
+					var input_text = $(this).text();
+					
+					$(tenKeys_table).find("tbody").on('click','button', function() {
+				    	var key_input = $(this).text();
+				    	var display_th = $(tenKeys_table).find("thead").find("th");
+				    	
+				    	if($.isNumeric(key_input)) {
+							if($(display_th).text() != 0 || $(display_th).text() == "0.") {
+								$(display_th).append(key_input);
+							}
+							else {
+					    		$(display_th).text(key_input);
+							}
+				    	}
+				    	else if(key_input.toLowerCase() == ".") {
+				    		if($(display_th).text().indexOf(".") == -1) {
+					    		$(display_th).append(key_input);
+				    		}
+				    	}
+				    	
+				    	else if(key_input.toLowerCase() == "x") {
+				    		changeOrderQuantity(order_table, display_th);
+				    	}
+				    	else if(key_input.toLowerCase() == "clear") {
+				    		$(display_th).text("0");
+				    	}
+					});
+			    }
+			    
 			    
 			    /* Return an array of the menu */
 			    function loadAllMenu() {
@@ -363,12 +303,121 @@
 			    }
 			    
 			    function loadMenuCategoryName(menus) {
+					var menu_category = [];
 			    	for(var i=0; i<menus.length; i++) {
 				    	if(!menu_category.includes(menus[i].getMenu_type())) {
 				    		menu_category.push(menus[i].getMenu_type());
 				    	}
 				    }	
+			    	return menu_category;
 			    }
+			    
+			    function loadMenuName(menus, menu_category) {
+					var menu_names_by_category = new Map();
+			    	
+					for(var i=0; i<menu_category.length; i++) {
+						menu_names_by_category.set(menu_category[i], new Set());
+					}
+					
+					for(var i=0; i<menus.length; i++) {
+						menu_names_by_category.get(menus[i].getMenu_type()).add(menus[i].getMenu_name());
+					}
+					
+			    	return menu_names_by_category;
+			    }
+			    
+			    function loadMenuSizes(menus, menuName) {
+					var menuSizes = new Set();
+					
+					for(var i=0; i<menus.length; i++) {
+						if(menus[i].getMenu_name() == menuName) {
+							menuSizes.add(menus[i].getMenu_size());
+						}
+					}
+					
+					return menuSizes;
+				}
+			    
+			    /* Write menu categories on a target */
+			    function writeMenuCategories(target, menu_category) {
+					var str = "";			    	
+			    	for(var i=0, j=0; i<menu_category.length; i++, j++) {
+				    	if(i % 5 == 0) {
+				    		str = str + '<div class="swiper-slide">';
+				    			str = str + '<div class="row">';
+				    				str = str + '<div class="col-sm-2 col-sm-offset-1">';
+				    	}
+				    	else {
+				    				str = str + '<div class="col-sm-2">';
+				    	}
+				    					str = str + '<button class="btn btn-default btn-lg btn-block" data-toggle="button">' + menu_category[i] + '</button>';
+						    		str = str + '</div>';
+					    		
+						
+			    		if(j == 4 && j != 0) {
+			    			j = 0;
+			    				str = str + '</div>';
+				    		str = str + '</div>';
+			    		}
+				    }
+					$(target).html(str);
+			    }
+			    
+			    function writeOrder(target_table) {
+					var om = ordered_menu[ordered_menu.length - 1];
+					
+					str = "";
+					str = str + "<tr>";
+						str = str + "<td class='hidden'>";
+						str = str + om.getMenu_order_seq();
+						str = str + "</td>";
+						str = str + "<td class='col-sm-2 text-primary'>";
+							str = str + om.getMenu_order_quantity();						
+						str = str + "</td>";
+						str = str + "<td class='col-sm-7'>";
+							str = str + om.getMenu().getMenu_name();							
+						str = str + "</td>";
+						str = str + "<td class='col-sm-3 text-primary'>";
+							str = str + om.sum();
+						str = str + "</td>";
+					str = str + "</tr>";
+					str = str + "<tr>";
+						str = str + "<td class='hidden'>";
+						str = str + "</td>";
+						str = str + "<td class='col-sm-2'>";
+						str = str + "</td>";
+						str = str + "<td class='col-sm-7'>";
+							str = str + " - " + om.getMenu().getMenu_size();
+						str = str + "</td>";
+						str = str + "<td class='col-sm-3'>";
+							if(om.getMenu_order_quantity() != 1) {
+								str = str + om.getMenu().getMenu_price();	
+							}
+						str = str + "</td>";
+					str = str + "</tr>";
+					$(target_table).find("tbody").prepend(str);
+				}
+			    
+				function changeOrderQuantity(target_table, display_th) {
+					
+					$(target_table).find("tbody").find(".bg-danger").each(function() {
+						var target_seq = $(this).find("td:nth-child(1)").text();
+						var quantity = parseInt($(display_th).text());
+						
+						ordered_menu[target_seq].setMenu_order_quantity(quantity);
+		    			$(this).find("td:nth-child(2)").text(quantity);
+		    			$(this).find("td:nth-child(4)").text(ordered_menu[target_seq].sum());
+		    			$(this).next().find("td:nth-child(4)").text(ordered_menu[target_seq].getMenu().getMenu_price());
+		    		});
+		    		$(display_th).text("0");
+		    		$(target_table).find("tbody").find(".bg-danger").each(function() {
+		    			$(this).removeClass("bg-danger").fadeOut(100).fadeIn(600);
+		    		});
+				}			    
+			    
+			    
+			    
+			    
 	    	});
 	    </script>
 	</body>

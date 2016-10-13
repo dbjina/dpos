@@ -39,6 +39,9 @@
 					<div class="row dpos-table-fixed-header">
 						<table class="table table-orderlist">
 						  	<thead>
+						  		<tr>
+						  			<th colspan="3"><h4><small>Table : </small><span id="dpos-table_number">0</span></h4></th>
+						  		</tr>
 							    <tr>
 							    	<th class="hidden">Order Seq</th>
 							        <th class="col-sm-2">Qty</th>
@@ -56,7 +59,7 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-8">
 					<div class="row text-center bg-info dpos-cost-info">
-						<p>Cost</p>
+						<h3 class="dpos-text-middle"><span id="dpos-cost">$ 0</span></h3>
 					</div>
 					<div class="row dpos-function-pad">
 						<button class="col-md-2 btn btn-default">Table</button>
@@ -136,7 +139,7 @@
 			    
 			    makeTableHightlightByClick($(".table-orderlist"),"bg-danger");
 			    
-			    loadTenkeysFunc();
+			    loadTenkeysFunc($(".table-orderlist"), $(".dpos-tenkeys-pad"));
 			    writeMenuCategories(".menu-category-parent", menu_category);
 			    
 				/* Initialize Swiper */
@@ -213,7 +216,6 @@
 						
 						$(menuOrderModalForm).find(".modal-body").find(".form-group").append(str);
 						
-						// TODO 주문된 목록에 객체 어떻게 넣을지 고민하기
 						$(menuOrderModalForm).find("button").click(function() {
 							var menuSize = $(this).text();
 							
@@ -236,7 +238,7 @@
 							}
 							
 							writeOrder($(".table-orderlist"));
-							
+							writeTotalCost($("#dpos-cost"));
 							
 							
 							$("#menuOrderModalForm").modal('toggle');
@@ -244,9 +246,7 @@
 			    	});
 			    });
 				
-			    function loadTenkeysFunc() {
-					var order_table = $(".table-orderlist");	
-					var tenKeys_table = $(".dpos-tenkeys-pad");
+			    function loadTenkeysFunc(order_table, tenKeys_table) {
 					var input_text = $(this).text();
 					
 					$(tenKeys_table).find("tbody").on('click','button', function() {
@@ -266,12 +266,14 @@
 					    		$(display_th).append(key_input);
 				    		}
 				    	}
-				    	
 				    	else if(key_input.toLowerCase() == "x") {
 				    		changeOrderQuantity(order_table, display_th);
 				    	}
 				    	else if(key_input.toLowerCase() == "clear") {
 				    		$(display_th).text("0");
+				    	}
+				    	else if(key_input == "$ 5" || key_input == "$ 10" || key_input == "$ 20" || key_input == "$ 50" || key_input.toLowerCase() == "cash") {
+				    		alert(1);
 				    	}
 					});
 			    }
@@ -413,11 +415,20 @@
 		    		$(target_table).find("tbody").find(".bg-danger").each(function() {
 		    			$(this).removeClass("bg-danger").fadeOut(100).fadeIn(600);
 		    		});
+		    		
+		    		writeTotalCost($("#dpos-cost"));
 				}			    
 			    
-			    
-			    
-			    
+				// TODO 세금, 할인 금액 등 다른 정보도 표시
+			    function writeTotalCost(target) {
+			    	var cost = 0;
+			    	
+			    	ordered_menu.forEach(function(value) {
+			    		cost = cost + (value.getMenu_order_quantity() * value.getMenu().getMenu_price()); 
+			    	});
+			    	
+			    	$(target).text("$ " + cost);
+			    }
 	    	});
 	    </script>
 	</body>

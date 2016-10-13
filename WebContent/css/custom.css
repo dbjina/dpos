@@ -4,10 +4,7 @@ footer {
 	padding: 100px 0;
 }
 
-.center-horizontal {
-	top: 50%;
-	transform:translateY(25%);
-}
+
 
 .modal {
   text-align: center;
@@ -133,7 +130,16 @@ footer {
 }
 
 .dpos-cost-info {
-	height: 100px;
+	line-height: 100px;
+}
+
+.dpos-cost-info h3{
+	margin: 0;
+}
+
+.dpos-text-middle {
+	vertical-align: middle;
+    display: inline-block;
 }
 
 .dpos-function-pad button {

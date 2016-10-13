@@ -64,7 +64,7 @@ function OrderMenu() {
 
 OrderMenu.prototype = new Menu();
 OrderMenu.prototype.constructor = OrderMenu;
+
 OrderMenu.prototype.sum = function() {
 	return this.getMenu_order_quantity() * this.getMenu().getMenu_price();
 }
-

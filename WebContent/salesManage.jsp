@@ -305,7 +305,7 @@
 							var input_money;
 							var cost = $("#dpos-cost").text();
 
-							if(key_inputtoLowerCase() != "cash") {
+							if(key_input.toLowerCase() != "cash") {
 								input_money = key_input.substr(key_input.indexOf(" ") + 1);
 							}
 							else {

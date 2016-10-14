@@ -133,7 +133,7 @@ CREATE TABLE supplier_type_tag (
 CREATE TABLE `table` (
        table_seq            int NOT NULL AUTO_INCREMENT PRIMARY KEY,
        table_hold_customer_amount int NULL,
-       table_name           varchar(50) NULL
+       table_name           varchar(50) UNIQUE NULL
 );
 
 
@@ -357,8 +357,22 @@ CREATE OR REPLACE VIEW v_menu AS
 				ON mp.menu_price_group_seq = mpg.menu_price_group_seq
 		ORDER BY m.menu_name, m.menu_seq, mp.menu_price;
 		
+# Table view
+CREATE OR REPLACE VIEW v_table AS
+	SELECT t.table_seq,
+			 t.table_hold_customer_amount,
+			 t.table_name,
+			 tco.order_seq,
+			 tco.menu_seq,
+			 tco.order_date,
+			 tco.emp_seq
+		FROM `table` t
+			LEFT JOIN table_current_order tco
+				ON t.table_seq = tco.table_seq
+			ORDER BY cast(t.table_name as unsigned), t.table_seq;
 
-	
+
+
 /*************************************************************************************************************
 	Initialize default values
 *************************************************************************************************************/
@@ -491,4 +505,4 @@ SELECT * FROM menu_ingredients;
 
 SELECT * FROM v_menu;
 
-
+SELECT * FROM v_table;

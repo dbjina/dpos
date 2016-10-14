@@ -43,12 +43,10 @@ function OrderMenu() {
 	
 	var menu_order_seq;
 	var menu_order_quantity;
-	var menu_order_table;
 	var menu;
 	
 	this.getMenu_order_seq = function() { return this.menu_order_seq; };
 	this.getMenu_order_quantity = function() { return this.menu_order_quantity; };
-	this.getMenu_order_table = function() { return this.menu_order_table; };
 	this.getMenu = function() { return this.menu; };
 	
     this.setMenu_order_seq = function(value) { this.menu_order_seq = value; };
@@ -58,7 +56,6 @@ function OrderMenu() {
     	}
     	this.menu_order_quantity = value;
     };
-    this.setMenu_order_table = function(value) { this.menu_order_table = value; };
     this.setMenu = function(value) { this.menu = value; };
 }
 

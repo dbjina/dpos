@@ -182,16 +182,23 @@ public class DBTableDefine {
 	+ " LEFT JOIN " + MENU_PRICE_GROUP_TABLE + " mpg ON mp." + MENU_PRICE_GROUP_SEQ_COLUMN + " = mpg." + MENU_PRICE_GROUP_SEQ_COLUMN
 	+ " LEFT JOIN " + MENU_SIZE_TABLE + " ms ON mp." + MENU_SIZE_SEQ_COLUMN + " = ms." + MENU_SIZE_SEQ_COLUMN ;
 	
-	/* SELECT *
-	FROM menu m
-		LEFT JOIN menu_type mt
-			ON m.menu_type_seq = mt.menu_type_seq
-		LEFT JOIN menu_price mp
-			ON m.menu_seq = mp.menu_seq
-		LEFT JOIN menu_price_group mpg
-			ON mp.menu_price_group_seq = mpg.menu_price_group_seq
-		LEFT JOIN menu_size ms
-			ON mp.menu_size_seq = ms.menu_size_seq
-	WHERE m.menu_seq = 1;
-*/
+	
+	/**********************************************************************
+	 * table table
+	 ***********************************************************************/
+	// Table names
+		public static final String TABLE_TABLE = "`table`";
+		
+	// Columns names
+	public static final String TABLE_SEQ_COLUMN = "table_seq";
+	public static final String TABLE_HOLD_CUSTOMER_AMOUNT_COLUMN = "table_hold_customer_amount"; 
+	public static final String TABLE_NAME_COLUMN = "table_name"; 
+	
+	// Group of columns
+	public static final String ALL_TABLE_COLUMNS = TABLE_SEQ_COLUMN + ", " + TABLE_HOLD_CUSTOMER_AMOUNT_COLUMN + ", " + TABLE_NAME_COLUMN;
+	
+	// table view
+	public static final String TABLE_ALL_VIEW = "v_table";
+	
+		
 }

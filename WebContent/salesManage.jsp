@@ -40,7 +40,7 @@
 						<table class="table table-orderlist">
 						  	<thead>
 						  		<tr>
-						  			<th colspan="3"><h4><small>Table : </small><span id="dpos-table_number">0</span></h4></th>
+						  			<th colspan="3"><h4>Table : <span class="text-danger" id="dpos-table_number">0</span></h4></th>
 						  		</tr>
 							    <tr>
 							    	<th class="hidden">Order Seq</th>
@@ -62,7 +62,7 @@
 						<h3 class="dpos-text-middle">$ <span id="dpos-cost">0</span></h3>
 					</div>
 					<div class="row dpos-function-pad">
-						<button class="col-md-2 btn btn-default disabled">Table</button>
+						<button class="col-md-2 btn btn-default" data-toggle="modal" data-target="#tableModalForm">Table</button>
 						<button class="col-md-2 btn btn-default disabled">Pre print</button>
 						<button class="col-md-2 btn btn-default disabled">Re print</button>
 						<button class="col-md-2 btn btn-default disabled">Discount</button>
@@ -120,23 +120,29 @@
 			</div>
 		</div>
 		<c:import url="/include/menuOrderModalForm.jsp"></c:import>
+		<c:import url="/include/tableModalForm.jsp"></c:import>
 		<c:import url="/include/jsLoad.jsp"></c:import>
+		<script src="${ rootPath }/js/Menu.js"></script>
+		<script src="${ rootPath }/js/Table.js"></script>
 		 
 	    <script type="text/javascript">
 	    	$(function() {
 	    		
 	    		// Field
 	    		var ordered_menu = [];
-	    		var menus = [];						// it stores all menu objects
-			    var menu_category = [];				// the names of menu category without duplication
+	    		var menus = [];							// it stores all menu objects
+			    var menu_category = [];					// the names of menu category without duplication
 			    var menu_names_by_category = new Map();	// the menu names without duplication ("menu category name", Set({[], []}) )
+			    var tables = [];						// it sotres all table objects			
 			    var str = "";
 			    
 			    var ordered_list_table = $(".table-orderlist");
+			    var table_modal_form = $("#tableModalForm");
 			    
-			    menus = loadAllMenu();
-			    menu_category = loadMenuCategoryName(menus);
-			    menu_names_by_category = loadMenuName(menus, menu_category);
+			    menus = getAllMenus();
+			    menu_category = getMenuCategoryName(menus);
+			    menu_names_by_category = getMenuName(menus, menu_category);
+			    tables = getAllTables();
 			    
 			    makeOrderHightlightByClick(ordered_list_table,"bg-danger");
 			    
@@ -149,6 +155,25 @@
 			        paginationClickable: false
 			    });
 			    
+				/* Initialize Table */
+				$(table_modal_form).find(".modal-title").text(tables.length + " Tables");
+				
+				
+				tables.forEach(function(value, index) {
+					if(index % 5 == 0) {
+						str = str + '<br>';							
+					}
+					str = str + '<button class="btn btn-default btn-lg dpos-table-button">' + value.getTable_name() + '</button>';
+				});
+				$(table_modal_form).find(".modal-body").html(str);
+				
+				$(table_modal_form).find(".modal-body").on('click','button', function() {
+					$("#dpos-table_number").text($(this).text());
+					$(table_modal_form).modal('hide');
+				});
+				
+				
+				/* Initialize Menus */
 				$(".menu-category-parent").on('click', 'button', function() {
 					var current_category_name = $(this).text();
 					$(this).addClass("active");
@@ -207,7 +232,7 @@
 						str = "";
 						
 						$(menuOrderModalForm).find(".modal-title").text(menuName);
-						menuSizes = loadMenuSizes(menus, menuName);
+						menuSizes = getMenuSizes(menus, menuName);
 						
 						$(menuOrderModalForm).find(".modal-body").find(".form-group").text("");
 						
@@ -329,7 +354,7 @@
 			    
 			    
 			    /* Return an array of the menu */
-			    function loadAllMenu() {
+			    function getAllMenus() {
 			    	var menus = [];
 			    	var menu = null;
 			    	<c:forEach var="m" items="${ listMenu }">
@@ -353,17 +378,36 @@
 			    	return menus;
 			    }
 			    
-			    function loadMenuCategoryName(menus) {
+			    function getAllTables() {
+			    	var tables = [];
+			    	var table = null;
+			    	
+			    	<c:forEach var="t" items="${ listTable }">
+			    		table = new Table();
+			    		
+			    		table.setTable_seq("${ t.table_seq }");
+			    		table.setTable_hold_customer_amount("${ t.table_hold_customer_amount }");
+			    		table.setTable_name("${ t.table_name }");
+			    		
+			    		tables.push(table);
+			    	</c:forEach>
+			    	
+			    	return tables;
+			    } 
+			    
+			    function getMenuCategoryName(menus) {
 					var menu_category = [];
+					
 			    	for(var i=0; i<menus.length; i++) {
 				    	if(!menu_category.includes(menus[i].getMenu_type())) {
 				    		menu_category.push(menus[i].getMenu_type());
 				    	}
-				    }	
+				    }
+			    	
 			    	return menu_category;
 			    }
 			    
-			    function loadMenuName(menus, menu_category) {
+			    function getMenuName(menus, menu_category) {
 					var menu_names_by_category = new Map();
 			    	
 					for(var i=0; i<menu_category.length; i++) {
@@ -377,7 +421,7 @@
 			    	return menu_names_by_category;
 			    }
 			    
-			    function loadMenuSizes(menus, menuName) {
+			    function getMenuSizes(menus, menuName) {
 					var menuSizes = new Set();
 					
 					for(var i=0; i<menus.length; i++) {
@@ -524,8 +568,13 @@
 		    		});
 			    }
 			    
-			    function sendAllOrder(order_list_table) {
-			    	// TODO 만들기
+			    // TODO
+			    function sendAllOrder() {
+			    	var table_number = $("#dpos-table_number").text();
+			    	
+			    	ordered_menu.forEach(function(value, index) {
+			    		
+			    	});
 			    }
 	    	});
 	    </script>

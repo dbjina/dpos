@@ -20,11 +20,13 @@ import com.dbjina.pos.listener.CommonContextListener;
 import com.dbjina.pos.model.EmployeeModel;
 import com.dbjina.pos.model.MenuModel;
 import com.dbjina.pos.model.SupplierModel;
+import com.dbjina.pos.model.TableModel;
 
 public class ManageController extends HttpServlet {
 	private EmployeeModel empModel;
 	private SupplierModel supModel;
 	private MenuModel menuModel;
+	private TableModel tableModel;
 	private RequestDispatcher rd;
 	private PrintWriter out;
 	
@@ -74,9 +76,10 @@ public class ManageController extends HttpServlet {
 		}
 		else if(servletPath.equals("/Manage/SalesManage.do")) {
 			menuModel = new MenuModel(req);
+			tableModel = new TableModel(req);
 			
-			List<JoinedMenu> list = menuModel.findAllByJoinTable();
-			req.setAttribute("listMenu", list);
+			req.setAttribute("listMenu", menuModel.findAllByJoinTable());
+			req.setAttribute("listTable", tableModel.findAll());
 			
 			rd = req.getRequestDispatcher("/salesManage.jsp");
 			rd.forward(req, resp);

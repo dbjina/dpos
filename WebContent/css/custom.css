@@ -185,3 +185,12 @@ footer {
 .dpos-btn-menu-size + .dpos-btn-menu-size {
 	margin-left: 15px;	
 }
+
+.dpos-table-button {
+	width: 110px;
+	height: 85px;
+}
+
+.dpos-table-button + .dpos-table-button {
+	margin: 10px 10px;
+}

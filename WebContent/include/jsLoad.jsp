@@ -10,9 +10,5 @@
 		<script src="${ rootPath }/vendor/creative/js/creative.min.js"></script>
 		<script src="${ rootPath }/vendor/Swiper-3.3.1/dist/js/swiper.min.js"></script>
 		
-		<!-- Class -->
-		<script src="${ rootPath }/js/Menu.js"></script>
-		
-		
 		<!-- My own custom js -->
 		<script src="${ rootPath }/js/custom.js"></script>

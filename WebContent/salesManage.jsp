@@ -525,7 +525,7 @@
 			    }
 			    
 			    function sendAllOrder(order_list_table) {
-			    	// TODO
+			    	// TODO 만들기
 			    }
 	    	});
 	    </script>

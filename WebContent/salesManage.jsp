@@ -16,7 +16,7 @@
 				<div class="col-xs-12 col-sm-8 menu-category">
 					<div class="row">
 						<!-- Swiper -->
-						<div class="swiper-container">
+						<div class="swiper-container swiper-parent">
 						    <div class="swiper-wrapper menu-category-parent">
 						        
 						    </div>
@@ -26,7 +26,7 @@
 					</div>
 					<div class="row">
 						<!-- Swiper -->
-						<div class="swiper-container">
+						<div class="swiper-container swiper-child">
 						    <div class="swiper-wrapper menu-category-child">
 						        
 						    </div>
@@ -59,14 +59,14 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-8">
 					<div class="row text-center bg-info dpos-cost-info">
-						<h3 class="dpos-text-middle"><span id="dpos-cost">$ 0</span></h3>
+						<h3 class="dpos-text-middle">$ <span id="dpos-cost">0</span></h3>
 					</div>
 					<div class="row dpos-function-pad">
-						<button class="col-md-2 btn btn-default">Table</button>
-						<button class="col-md-2 btn btn-default">Pre print</button>
-						<button class="col-md-2 btn btn-default">Re print</button>
-						<button class="col-md-2 btn btn-default">Discount</button>
-						<button class="col-md-2 btn btn-default">Surcharge</button>
+						<button class="col-md-2 btn btn-default disabled">Table</button>
+						<button class="col-md-2 btn btn-default disabled">Pre print</button>
+						<button class="col-md-2 btn btn-default disabled">Re print</button>
+						<button class="col-md-2 btn btn-default disabled">Discount</button>
+						<button class="col-md-2 btn btn-default disabled">Surcharge</button>
 					</div>
 				</div>
 				<!-- Ten keys UI start -->
@@ -75,16 +75,16 @@
 						<table class="table table-bordered dpos-tenkeys-pad">
 							<thead>
 								<tr>
-									<th colspan="5" class="text-right">0</th>
+									<th colspan="5" class="text-right" id="display-input">0</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
 									<td><button class="btn btn-default btn-block">Void</button></td>
 						    		<td><button class="btn btn-default btn-block">Void All</button></td>
-						    		<td><button class="btn btn-default btn-block">Cancel</button></td>
-						    		<td><button class="btn btn-default btn-block">Recall</button></td>
-						    		<td><button class="btn btn-default btn-block">Send Order</button></td>
+						    		<td><button class="btn btn-default btn-block disabled">Cancel</button></td>
+						    		<td><button class="btn btn-default btn-block disabled">Recall</button></td>
+						    		<td><button class="btn btn-default btn-block disabled">Send Order</button></td>
 								</tr>
 								<tr>
 									<td><button class="btn btn-default btn-block">$ 5</button></td>
@@ -128,22 +128,23 @@
 	    		// Field
 	    		var ordered_menu = [];
 	    		var menus = [];						// it stores all menu objects
-			    var swiper = null;					// Swiper object (ref /vendor/Swiper-3.3.1)
 			    var menu_category = [];				// the names of menu category without duplication
 			    var menu_names_by_category = new Map();	// the menu names without duplication ("menu category name", Set({[], []}) )
 			    var str = "";
+			    
+			    var ordered_list_table = $(".table-orderlist");
 			    
 			    menus = loadAllMenu();
 			    menu_category = loadMenuCategoryName(menus);
 			    menu_names_by_category = loadMenuName(menus, menu_category);
 			    
-			    makeOrderHightlightByClick($(".table-orderlist"),"bg-danger");
+			    makeOrderHightlightByClick(ordered_list_table,"bg-danger");
 			    
-			    loadTenkeysFunc($(".table-orderlist"), $(".dpos-tenkeys-pad"));
+			    loadTenkeysFunc(ordered_list_table, $(".dpos-tenkeys-pad"));
 			    writeMenuCategories(".menu-category-parent", menu_category);
 			    
 				/* Initialize Swiper */
-				swiper = new Swiper('.swiper-container', {
+				var swiper = new Swiper('.swiper-parent', {
 			        pagination: '.swiper-pagination',
 			        paginationClickable: false
 			    });
@@ -191,7 +192,7 @@
 				    $(".menu-category-child").html(str);
 					
 					/* Initialize Swiper */
-					swiper = new Swiper('.swiper-container', {
+					var swiper2 = new Swiper('.swiper-child', {
 				        pagination: '.swiper-pagination',
 				        paginationClickable: false
 				    });
@@ -237,7 +238,7 @@
 								}
 							}
 							
-							writeOrder($(".table-orderlist"));
+							writeOrder(ordered_list_table);
 							writeTotalCost($("#dpos-cost"));
 							
 							
@@ -251,7 +252,8 @@
 					
 					$(tenKeys_table).find("tbody").on('click','button', function() {
 				    	var key_input = $(this).text();
-				    	var display_th = $(tenKeys_table).find("thead").find("th");
+				    	var display_th = $(tenKeys_table).find("#display-input");
+				    	
 				    	
 				    	if($.isNumeric(key_input)) {
 							if($(display_th).text() != 0 || $(display_th).text() == "0.") {
@@ -272,19 +274,16 @@
 				    	else if(key_input.toLowerCase() == "clear") {
 				    		$(display_th).text("0");
 				    	}
-				    	else if(key_input == "$ 5" || key_input == "$ 10" || key_input == "$ 20" || key_input == "$ 50" || key_input.toLowerCase() == "cash") {
-				    		alert("the function hasn't been made");
-				    	}
 				    	else if(key_input.toLowerCase() == "void") {
-				    		$(order_table).find(".bg-danger").each(function() {
-				    			// TODO
-				    			deleteOrder(target_table, display_th);
-				    			$(this).fadeOut(500);
-				    			$(this).next().fadeOut(500);
-				    		});
+			    			deleteOrder(order_table);
 				    	}
 				    	else if(key_input.toLowerCase() == "void all") {
-							alert("the function hasn't been made");
+				    		var check = confirm("Are you sure to delete all items?");
+				    		
+				    		if(check == true) {
+					    		makeHightlightAll(order_table, "bg-danger");
+					    		deleteAllOrder(order_table);
+				    		}
 						}
 				    	else if(key_input.toLowerCase() == "cancel") {
 				    		alert("the function hasn't been made");
@@ -297,6 +296,33 @@
 				    	}
 						else if(key_input.toLowerCase() == "card") {
 							alert("the function hasn't been made");
+				    	}
+						else if(key_input.toLowerCase() == "cash" || key_input == "$ 5" || key_input == "$ 10" || key_input == "$ 20" || key_input == "$ 50") {
+							if($(order_table).find("tbody").find("tr").length == 0) {
+								return;	
+							}
+							
+							var input_money;
+							var cost = $("#dpos-cost").text();
+
+							if(key_input != "cash") {
+								input_money = key_input.substr(key_input.indexOf(" ") + 1);
+							}
+							else {
+								input_money = $(display_th).text();
+							}
+				    		
+							if(input_money == 0) {
+				    			alert("paid all");
+				    		}
+				    		else {
+				    			alert(input_money + " - " + cost + " = " + (input_money - cost));
+				    			$(display_th).text(0);
+				    		}
+				    			
+							// TODO
+				    			// sendOrder();
+				    			deleteAllOrder(order_table);
 				    	}
 					});
 			    }
@@ -443,10 +469,24 @@
 		    		writeTotalCost($("#dpos-cost"));
 				}			  
 				
-				// TODO
-				function deleteOrder(target_table, display_th) {
-					
+				function deleteOrder(target_table) {
+					$(target_table).find("tbody").find(".bg-danger").each(function() {
+						var seq = $(this).find("td:nth-child(1)").text();
+						ordered_menu.splice(seq, 1);
+						$(this).next().fadeOut(500).remove();
+		    			$(this).fadeOut(500).remove();
+					});
 				}
+				
+				function deleteAllOrder(target_table) {
+					$(target_table).find("tbody").find("tr").each(function() {
+						ordered_menu = [];
+						$(this).next().fadeOut(500).remove();
+		    			$(this).fadeOut(500).remove();
+		    			writeTotalCost($("#dpos-cost"));
+					});
+				}
+				
 			    
 				// TODO 세금, 할인 금액 등 다른 정보도 표시
 			    function writeTotalCost(target) {
@@ -456,12 +496,20 @@
 			    		cost = cost + (value.getMenu_order_quantity() * value.getMenu().getMenu_price()); 
 			    	});
 			    	
-			    	$(target).text("$ " + cost);
+			    	$(target).text(cost);
 			    }
 				
+				function makeHightlightAll(table, cls) {
+					$(table).find("tbody").find("tr").each(function() {
+		    			var order_seq = $(this).find("td:nth-child(1)").text();
+		    			
+		    			if(order_seq) {
+		    				$(this).addClass(cls);
+		    			}
+		    		});
+				}
+				
 			    function makeOrderHightlightByClick(table, cls) {
-
-			    	
 		    		$(table).find("tbody").on('click', 'tr', function() {
 		    			var order_seq = $(this).find("td:nth-child(1)").text();
 		    			
@@ -474,6 +522,10 @@
 			    			}	
 		    			}
 		    		});
+			    }
+			    
+			    function sendAllOrder(order_list_table) {
+			    	// TODO
 			    }
 	    	});
 	    </script>

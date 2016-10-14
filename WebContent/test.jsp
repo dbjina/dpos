@@ -8,12 +8,11 @@
 		<title>Test</title>
 	</head>
 	<body>
+		
 		<script type="text/javascript">
-			var arr = ["a", "b", "c"];
+			str = "123";
 			
-			arr.forEach(function(index, value) {
-				alert(value + ", " + index);
-			});
+			alert(str.substr(str.indexOf(2)));
 		</script>
 	</body>
 </html>

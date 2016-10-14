@@ -2,10 +2,13 @@ package com.dbjina.pos.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,19 +17,22 @@ import javax.servlet.http.HttpServletResponse;
 import com.dbjina.pos.bean.Employee;
 import com.dbjina.pos.bean.Supplier;
 import com.dbjina.pos.bean.menu.JoinedMenu;
-import com.dbjina.pos.bean.menu.Menu;
-import com.dbjina.pos.dao.EmployeeDAO;
-import com.dbjina.pos.listener.CommonContextListener;
+import com.dbjina.pos.bean.order.Order;
 import com.dbjina.pos.model.EmployeeModel;
 import com.dbjina.pos.model.MenuModel;
+import com.dbjina.pos.model.OrderModel;
 import com.dbjina.pos.model.SupplierModel;
 import com.dbjina.pos.model.TableModel;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+
 
 public class ManageController extends HttpServlet {
 	private EmployeeModel empModel;
 	private SupplierModel supModel;
 	private MenuModel menuModel;
 	private TableModel tableModel;
+	private OrderModel orderModel;
 	private RequestDispatcher rd;
 	private PrintWriter out;
 	
@@ -41,9 +47,9 @@ public class ManageController extends HttpServlet {
 		String servletPath = req.getServletPath();
 		empModel = new EmployeeModel(req);
 		
-		/*out = resp.getWriter();*/
-		
 		resp.setCharacterEncoding("UTF-8");
+		out = resp.getWriter();
+		
 		
 		if(servletPath.equals("/Manage/EmpManage.do")) {
 			
@@ -83,6 +89,12 @@ public class ManageController extends HttpServlet {
 			
 			rd = req.getRequestDispatcher("/salesManage.jsp");
 			rd.forward(req, resp);
+		}
+		else if(servletPath.equals("/Manage/SalesManage/SendOrder.do")) {
+			orderModel = new OrderModel(req);			
+			int[] result = orderModel.saveOrder();
+			
+			out.println(result);
 		}
 		else if(servletPath.equals("/Manage/FoodManage.do")) {
 			menuModel = new MenuModel(req);

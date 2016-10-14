@@ -84,7 +84,7 @@
 						    		<td><button class="btn btn-default btn-block">Void All</button></td>
 						    		<td><button class="btn btn-default btn-block disabled">Cancel</button></td>
 						    		<td><button class="btn btn-default btn-block disabled">Recall</button></td>
-						    		<td><button class="btn btn-default btn-block disabled">Send Order</button></td>
+						    		<td><button class="btn btn-default btn-block">Send Order</button></td>
 								</tr>
 								<tr>
 									<td><button class="btn btn-default btn-block">$ 5</button></td>
@@ -119,6 +119,9 @@
 				</div>
 			</div>
 		</div>
+		<form id="form">
+		
+		</form>
 		<c:import url="/include/menuOrderModalForm.jsp"></c:import>
 		<c:import url="/include/tableModalForm.jsp"></c:import>
 		<c:import url="/include/jsLoad.jsp"></c:import>
@@ -317,7 +320,7 @@
 							alert("the function hasn't been made");
 				    	}
 						else if(key_input.toLowerCase() == "send order") {
-							alert("the function hasn't been made");
+							sendAllOrder();
 				    	}
 						else if(key_input.toLowerCase() == "card") {
 							alert("the function hasn't been made");
@@ -337,6 +340,11 @@
 								input_money = $(display_th).text();
 							}
 				    		
+							if(input_money - cost < 0) {
+								alert("The money is not enough to pay for it");
+								return;
+							}
+							
 							if(input_money == 0) {
 				    			alert("paid all");
 				    		}
@@ -570,11 +578,18 @@
 			    
 			    // TODO
 			    function sendAllOrder() {
-			    	var table_number = $("#dpos-table_number").text();
-			    	
-			    	ordered_menu.forEach(function(value, index) {
-			    		
+			    	var table_name = $("#dpos-table_number").text();
+			    	ordered_menu.forEach(function(value) {
+			    		value.setTable_name(table_name);
 			    	});
+			    	$.post("${ rootPath }/Manage/SalesManage/SendOrder.do", {"order":JSON.stringify(ordered_menu)})
+			    		.done(function(result) {
+			    			deleteAllOrder();			
+			    			alert("Success");
+			    		})
+			    		.fail(function() {
+			    			alert("Failed to send the order");
+			    		});
 			    }
 	    	});
 	    </script>

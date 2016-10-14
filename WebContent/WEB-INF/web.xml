@@ -82,6 +82,11 @@
   
   <servlet-mapping>
   	<servlet-name>Management</servlet-name>
+  	<url-pattern>/Manage/SalesManage/SendOrder.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>Management</servlet-name>
   	<url-pattern>/Manage/EmpManage/DeleteEmp.do</url-pattern>
   </servlet-mapping>
   
@@ -124,6 +129,8 @@
   	<servlet-name>Management</servlet-name>
   	<url-pattern>/Manage/SupManage/ModifySup.do</url-pattern>
   </servlet-mapping>
+  
+  
   
   <servlet-mapping>
   	<servlet-name>Util</servlet-name>

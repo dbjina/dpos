@@ -1,17 +1,31 @@
 package com.dbjina.pos.bean.menu;
 
+import com.google.gson.annotations.SerializedName;
+
 public class JoinedMenu {
+	@SerializedName("menu_seq")
 	private int menu_seq;
+	@SerializedName("menu_name")
 	private String menu_name;
+	@SerializedName("menu_description")
 	private String menu_description;
+	@SerializedName("menu_recipe")
 	private String menu_recipe;
+	@SerializedName("menu_type_seq")
 	private int menu_type_seq;
+	@SerializedName("menu_type")
 	private String menu_type;
+	@SerializedName("menu_price_seq")
 	private int menu_price_seq;
+	@SerializedName("menu_price")
 	private float menu_price;
+	@SerializedName("menu_size_seq")
 	private int menu_size_seq;
+	@SerializedName("menu_size")
 	private String menu_size;
+	@SerializedName("menu_price_group_seq")
 	private int menu_price_group_seq;
+	@SerializedName("menu_price_group_name")
 	private String menu_price_group_name;
 	
 	public int getMenu_price_seq() {

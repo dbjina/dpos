@@ -43,10 +43,12 @@ function OrderMenu() {
 	
 	var menu_order_seq;
 	var menu_order_quantity;
+	var table_name;
 	var menu;
 	
 	this.getMenu_order_seq = function() { return this.menu_order_seq; };
 	this.getMenu_order_quantity = function() { return this.menu_order_quantity; };
+	this.getTable_name = function() { return this.table_name; };
 	this.getMenu = function() { return this.menu; };
 	
     this.setMenu_order_seq = function(value) { this.menu_order_seq = value; };
@@ -56,6 +58,7 @@ function OrderMenu() {
     	}
     	this.menu_order_quantity = value;
     };
+    this.setTable_name = function(value) { this.table_name = value };
     this.setMenu = function(value) { this.menu = value; };
 }
 

@@ -55,7 +55,7 @@ CREATE TABLE ingredient_order (
        ing_seq              int NOT NULL,
        ing_amount           int NOT NULL,
        unit_seq             int NOT NULL,
-       ing_order_date       datetime NOT NULL,
+       ing_order_date       datetime NOT NULL DEFAULT CURRENT_TIMESTAMP(),
        emp_seq              int NOT NULL
 );
 
@@ -139,8 +139,9 @@ CREATE TABLE `table` (
 
 CREATE TABLE table_current_order (
        order_seq            int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		 order_quantity		 int NOT NULL DEFAULT 1,
        menu_seq             int NOT NULL,
-       order_date           datetime NOT NULL,
+       order_date           datetime NOT NULL DEFAULT CURRENT_TIMESTAMP(),
        emp_seq              int NOT NULL,
        table_seq            int NULL
 );
@@ -357,8 +358,8 @@ CREATE OR REPLACE VIEW v_menu AS
 				ON mp.menu_price_group_seq = mpg.menu_price_group_seq
 		ORDER BY m.menu_name, m.menu_seq, mp.menu_price;
 		
-# Table view
-CREATE OR REPLACE VIEW v_table AS
+# Order view (TODO : employee, menu 테이블 조인되야 함)
+CREATE OR REPLACE VIEW v_order AS
 	SELECT t.table_seq,
 			 t.table_hold_customer_amount,
 			 t.table_name,
@@ -371,7 +372,7 @@ CREATE OR REPLACE VIEW v_table AS
 				ON t.table_seq = tco.table_seq
 			ORDER BY cast(t.table_name as unsigned), t.table_seq;
 
-
+			
 
 /*************************************************************************************************************
 	Initialize default values

@@ -1,13 +1,5 @@
 package com.dbjina.pos.bean;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-
-
 public class Employee {
 	private int emp_seq;
 	private String emp_name;
@@ -21,6 +13,7 @@ public class Employee {
 	public String getEmp_password() {
 		return emp_password;
 	}
+	@SuppressWarnings("unused")
 	private void setEmp_password(String emp_password) {
 		this.emp_password = emp_password;
 	}

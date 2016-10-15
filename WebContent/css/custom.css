@@ -187,10 +187,10 @@ footer {
 }
 
 .dpos-table-button {
-	width: 110px;
+	width: 115px;
 	height: 85px;
 }
 
-.dpos-table-button + .dpos-table-button {
-	margin: 10px 10px;
+.dpos-table-button{
+	margin: 10px 15px;
 }

@@ -14,6 +14,10 @@ import com.dbjina.pos.bean.Employee;
 import com.dbjina.pos.model.SignModel;
 
 public class SignController extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1779281467482224915L;
 	private SignModel signModel;
 	private PrintWriter out;
 

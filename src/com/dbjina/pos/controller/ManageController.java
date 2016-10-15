@@ -21,6 +21,10 @@ import com.dbjina.pos.model.TableModel;
 
 
 public class ManageController extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2580792874117137770L;
 	private EmployeeModel empModel;
 	private SupplierModel supModel;
 	private MenuModel menuModel;
@@ -56,8 +60,8 @@ public class ManageController extends HttpServlet {
 			rd.forward(req, resp);
 		}
 		else if(servletPath.equals("/Manage/EmpManage/DeleteEmp.do")) {
-			int result = empModel.deleteEmpBySeq();
-			
+//			int result = empModel.deleteEmpBySeq();	result 활용하면 쓸것
+			empModel.deleteEmpBySeq();
 			resp.sendRedirect(rootPath + "/Manage/EmpManage.do");
 		}
 		else if(servletPath.equals("/Manage/EmpManage/ModifyFormEmp.do")) {
@@ -101,14 +105,16 @@ public class ManageController extends HttpServlet {
 		else if(servletPath.equals("/Manage/FoodManage/DeleteFood.do")) {
 			menuModel = new MenuModel(req);
 			
-			int[] result = menuModel.deleteFoodByMenuSeq();
+//			int[] result = menuModel.deleteFoodByMenuSeq();
+			menuModel.deleteFoodByMenuSeq();
 			
 			resp.sendRedirect(rootPath + "/Manage/FoodManage.do");
 		}
 		else if(servletPath.equals("/Manage/FoodManage/DeleteFoodPrice.do")) {
 			menuModel = new MenuModel(req);
 			
-			int[] result = menuModel.deleteFoodByMenuPriceSeq();
+//			int[] result = menuModel.deleteFoodByMenuPriceSeq();
+			menuModel.deleteFoodByMenuPriceSeq();
 			
 			resp.sendRedirect(rootPath + "/Manage/FoodManage.do");
 		}
@@ -123,13 +129,15 @@ public class ManageController extends HttpServlet {
 		}
 		else if(servletPath.equals("/Manage/SupManage/DeleteSup.do")) {
 			supModel = new SupplierModel(req);
-			int[] result = supModel.deleteSupBySeq();
+//			int[] result = supModel.deleteSupBySeq();
+			supModel.deleteSupBySeq();
 			
 			resp.sendRedirect(rootPath + "/Manage/SupManage.do");
 		}
 		else if(servletPath.equals("/Manage/SupManage/ModifySup.do")) {
 			supModel = new SupplierModel(req);
-			int[] result = supModel.updateSupBySeq();
+//			int[] result = supModel.updateSupBySeq();
+			supModel.updateSupBySeq();
 			
 			resp.sendRedirect(rootPath + "/Manage/SupManage.do");
 		}

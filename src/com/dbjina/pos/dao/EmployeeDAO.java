@@ -16,6 +16,7 @@ public class EmployeeDAO {
 	private Connection con = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
+	@SuppressWarnings("unused")
 	private HttpServletRequest req = null;
 	private String sql = null;
 	

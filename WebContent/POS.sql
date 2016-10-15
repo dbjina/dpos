@@ -132,8 +132,8 @@ CREATE TABLE supplier_type_tag (
 
 CREATE TABLE `table` (
        table_seq            int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-       table_hold_customer_amount int NULL,
-       table_name           varchar(50) UNIQUE NULL
+       table_hold_customer_amount int NOT NULL DEFAULT 0,
+       table_name           varchar(50) UNIQUE NOT NULL
 );
 
 
@@ -491,6 +491,26 @@ INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, men
 
 INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (14, 5, 8.5, 1, 1); # Greenwish, $8.5, Normal size, Normal day
 INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, menu_price_group_seq) VALUES (15, 5, 9.5, 1, 3); # Greenwish, $9.5, Normal size, Public holiday
+
+
+
+# Table
+INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (1, 0, "1");
+INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (2, 0, "2");
+INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (3, 0, "3");
+INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (4, 0, "4");
+INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (5, 0, "5");
+INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (6, 0, "6");
+INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (7, 0, "7");
+INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (8, 0, "8");
+INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (9, 0, "9");
+INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (10, 0, "10");
+INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (11, 0, "11");
+INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (12, 0, "12");
+INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (13, 0, "13");
+INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (14, 0, "14");
+
+
 
 SELECT * FROM unit;
 SELECT * FROM supplier;

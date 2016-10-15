@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.dbjina.pos.bean.order.Order;
 import com.dbjina.pos.dao.OrderDAO;
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class OrderModel {
 	private HttpServletRequest req = null;

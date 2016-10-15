@@ -92,3 +92,25 @@ Object.equals = function( x, y ) {
 	  }
 	  return true;
 }
+
+/***********************************************************
+ * Jquery custom
+ ***********************************************************/
+
+/* Add comma to numbers every three digits */
+$.fn.digits = function(){ 
+    return this.each(function(){ 
+    	var str;
+    	var str2 = "";
+    	
+    	str = $(this).text().replace(/,/g,"");
+    	if(str.indexOf(".") != -1) {
+    		str2 = str.substring(str.indexOf("."));
+    		str = str.substring(0, str.indexOf(".")).replace(/(\d)(?=(\d{3})+$)/g, "$1,");
+    	}
+    	else {
+    		str = str.replace(/(\d)(?=(\d{3})+$)/g, "$1,");
+    	}
+    	$(this).text(str+str2);
+    })
+}

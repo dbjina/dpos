@@ -168,9 +168,9 @@
 					}
 					str = str + '<button class="btn btn-default btn-lg dpos-table-button">' + value.getTable_name() + '</button>';
 				});
-				$(table_modal_form).find(".modal-body").html(str);
+				$(table_modal_form).find(".modal-body").find("div div").html(str);
 				
-				$(table_modal_form).find(".modal-body").on('click','button', function() {
+				$(table_modal_form).find(".modal-body").find("div div").on('click','button', function() {
 					$("#dpos-table_number").text($(this).text());
 					$(table_modal_form).modal('hide');
 				});
@@ -290,6 +290,8 @@
 							else {
 					    		$(display_th).text(key_input);
 							}
+							$(display_th).digits();
+							
 				    	}
 				    	else if(key_input.toLowerCase() == ".") {
 				    		if($(display_th).text().indexOf(".") == -1) {

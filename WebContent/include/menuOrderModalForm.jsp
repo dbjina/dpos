@@ -5,7 +5,7 @@
     <div class="modal-content">
       <div class="modal-header">
       	<!-- FIXME span 부분 수정해야 함 -->
-        <input type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title text-center" id="myModalLabel"></h4>
       </div>
       <div class="modal-body">

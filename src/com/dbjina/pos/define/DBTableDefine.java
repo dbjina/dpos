@@ -203,11 +203,11 @@ public class DBTableDefine {
 	 ***********************************************************************/
 	// TODO 테이블 이름 table_current_order 에서 order_current 로 바꿔야함 디비에서도
 	// Table names
-	public static final String ORDER_TABLE = "`table_current_order`";
+	public static final String ORDER_TABLE = "`order_current`";
 			
 	// Columns names
 	public static final String ORDER_SEQ_COLUMN = "order_seq";
-//	public static final String MENU_SEQ_COLUMN = "menu_seq";	Already exist
+//	public static final String MENU_PRICE_SEQ_COLUMN = "menu_price_seq";	Already exist
 	public static final String ORDER_DATE_COLUMN = "order_date";
 //	public static final STRING EMP_SEQ_COLUMN = "emp_seq";		Already exist
 //	public static final STRING TABLE_SEQ_COLUMN = "talbe_seq";	Already exist
@@ -215,7 +215,7 @@ public class DBTableDefine {
 	
 	// Group of columns
 	public static final String ALL_ORDER_COLUMNS = ORDER_SEQ_COLUMN + ", " + MENU_SEQ_COLUMN + ", " + ORDER_DATE_COLUMN + ", " + EMP_SEQ_COLUMN + ", "+ TABLE_SEQ_COLUMN + ", " + ORDER_QUANTITY_COLUMN;
-	public static final String ALL_ORDER_COLUMNS_EXCEPT_ORDER_DATE_COLUMN = ORDER_SEQ_COLUMN + ", " + MENU_SEQ_COLUMN + ", " + EMP_SEQ_COLUMN + ", "+ TABLE_SEQ_COLUMN + ", " + ORDER_QUANTITY_COLUMN;
+	public static final String ALL_ORDER_COLUMNS_EXCEPT_ORDER_DATE_COLUMN = MENU_PRICE_SEQ_COLUMN + ", " + EMP_SEQ_COLUMN + ", "+ TABLE_SEQ_COLUMN + ", " + ORDER_QUANTITY_COLUMN;
 	// table view
 	public static final String ORDER_ALL_VIEW = "v_order";
 }

@@ -1,6 +1,8 @@
 package com.dbjina.pos.util;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Map;
 
@@ -47,6 +49,25 @@ public class Common {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
+			}
+		}
+	}
+	
+	// TODO Test 필드 다 출력하기
+	public static void printAllFields(Object obj) {
+		if(obj == null) {
+			System.out.println("The object should not be null");
+			return;
+		}
+		
+		Method[] methods = obj.getClass().getMethods();
+		for(Method method : methods) {
+			if(method.getName().startsWith("get")) {
+				try {
+					System.out.println(method.getName() + " : " + method.invoke(obj));
+				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

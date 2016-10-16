@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.dbjina.pos.bean.order.Order;
 import com.dbjina.pos.dao.OrderDAO;
+import com.dbjina.pos.util.Common;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -38,9 +39,7 @@ public class OrderModel {
 		
 		Iterator<Order> e = collection.iterator();
 		while(e.hasNext()) {
-			Order o = e.next();
-			// TODO 완성하기
-			System.out.println(o.getMenu().getMenu_name());
+			list.add(e.next());
 		}
 		
 		return dao.saveOrder(list);

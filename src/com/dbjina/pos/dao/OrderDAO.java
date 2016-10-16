@@ -59,14 +59,15 @@ public class OrderDAO {
 	public int[] saveOrder(List<Order> order) {
 		int[] result = null;
 		
-		sql = String.format(DBTableDefine.INSERT_TEMPLATE, DBTableDefine.ORDER_TABLE, DBTableDefine.ALL_ORDER_COLUMNS_EXCEPT_ORDER_DATE_COLUMN, "?, ?, ?, ?, ?");
+		sql = String.format(DBTableDefine.INSERT_TEMPLATE, DBTableDefine.ORDER_TABLE, DBTableDefine.ALL_ORDER_COLUMNS_EXCEPT_ORDER_DATE_COLUMN, "?, ?, ?, ?");
 		try {
 			pstmt = con.prepareStatement(sql);
 			
 			for(Order o : order) {
-				pstmt.setInt(1, o.getOrder_seq());
-				pstmt.setInt(2, o.getMenu().getMenu_seq());
-				pstmt.setInt(3, 0);	// TODO emp_seq 로 바꿔줄것
+				pstmt.setInt(1, o.getMenu().getMenu_price_seq());
+				pstmt.setInt(2, 1);	// TODO emp_seq 로 바꿔줄것
+				pstmt.setInt(3, o.getTable_seq());
+				pstmt.setInt(4, o.getOrder_quantity());
 				
 				pstmt.addBatch();
 			}

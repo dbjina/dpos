@@ -155,29 +155,17 @@
 				/* Initialize Swiper */
 				var swiper = new Swiper('.swiper-parent', {
 			        pagination: '.swiper-pagination',
-			        paginationClickable: false
+			        paginationClickable: false,
+			        grabCursor: true,
 			    });
-			    
+				
 				/* Initialize Table */
-				$(table_modal_form).find(".modal-title").text(tables.length + " Tables");
-				
-				
-				tables.forEach(function(value, index) {
-					if(index % 5 == 0) {
-						str = str + '<br>';							
-					}
-					str = str + '<button class="btn btn-default btn-lg dpos-table-button">' + value.getTable_name() + '</button>';
-				});
-				$(table_modal_form).find(".modal-body").find("div div").html(str);
-				
-				$(table_modal_form).find(".modal-body").find("div div").on('click','button', function() {
-					$("#dpos-table_number").text($(this).text());
-					$(table_modal_form).modal('hide');
-				});
+				writeTable();
 				
 				
 				/* Initialize Menus */
-				$(".menu-category-parent").on('click', 'button', function() {
+				/* $(".menu-category-parent").on('click', 'button', function() { */
+				$(".menu-category-parent").find("button").click(function() {
 					var current_category_name = $(this).text();
 					$(this).addClass("active");
 					
@@ -220,13 +208,13 @@
 				    $(".menu-category-child").html(str);
 					
 					/* Initialize Swiper */
-					var swiper2 = new Swiper('.swiper-child', {
+					var swiper2 = null
+					swiper2 = new Swiper('.swiper-child', {
 				        pagination: '.swiper-pagination',
-				        paginationClickable: false
+				        paginationClickable: false,
 				    });
-					
+
 					// .on 대신에 .click 써야함
-					 
 					$(".menu-category-child").find("button").click(function() {
 						var menuOrderModalForm = $("#menuOrderModalForm"); 
 						var menuSizes = new Set();
@@ -274,7 +262,10 @@
 						});
 			    	});
 			    });
-				
+			    
+/******************************************************************************************
+	functions
+******************************************************************************************/				
 			    function loadTenkeysFunc(order_table, tenKeys_table) {
 					var input_text = $(this).text();
 					
@@ -322,7 +313,7 @@
 							alert("the function hasn't been made");
 				    	}
 						else if(key_input.toLowerCase() == "send order") {
-							sendAllOrder();
+							sendAllOrderToCurrentOrder();
 				    	}
 						else if(key_input.toLowerCase() == "card") {
 							alert("the function hasn't been made");
@@ -339,12 +330,12 @@
 								input_money = key_input.substr(key_input.indexOf(" ") + 1);
 							}
 							else {
-								input_money = $(display_th).text();
-							}
-				    		
-							if(input_money - cost < 0) {
-								alert("The money is not enough to pay for it");
-								return;
+								if($(display_th).text() == 0) {
+									input_money = cost;									
+								}
+								else {
+									input_money = $(display_th).text();
+								}
 							}
 							
 							if(input_money == 0) {
@@ -361,7 +352,7 @@
 				    	}
 					});
 			    }
-			    
+
 			    
 			    /* Return an array of the menu */
 			    function getAllMenus() {
@@ -578,20 +569,45 @@
 		    		});
 			    }
 			    
+			    /* Initialize Table */
+				function writeTable() {
+					$(table_modal_form).find(".modal-title").text(tables.length + " Tables");
+					
+					tables.forEach(function(value, index) {
+						if(index % 5 == 0) {
+							str = str + '<br>';							
+						}
+						str = str + '<button class="btn btn-default btn-lg dpos-table-button" value="' + value.getTable_seq() + '">' + value.getTable_name() + '</button>';
+					});
+					$(table_modal_form).find(".modal-body").find("div div").html(str);
+					
+					$(table_modal_form).find(".modal-body").find("div div").on('click','button', function() {
+						$("#dpos-table_number").text($(this).text());
+						$("#dpos-table_number").data("table_seq",$(this).attr("value"));
+						$(table_modal_form).modal('hide');
+					});
+				}
+			    
 			    // TODO
-			    function sendAllOrder() {
-			    	var table_name = $("#dpos-table_number").text();
+			    function sendAllOrderToCurrentOrder() {
+			    	/* var table_name = $("#dpos-table_number").text(); */
+			    	var table_seq = $("#dpos-table_number").data("table_seq");
 			    	ordered_menu.forEach(function(value) {
-			    		value.setTable_name(table_name);
+			    		value.setTable_seq(table_seq);									    		
+			    		/* value.setTable_name(table_name); */
 			    	});
 			    	$.post("${ rootPath }/Manage/SalesManage/SendOrder.do", {"order":JSON.stringify(ordered_menu)})
 			    		.done(function(result) {
-			    			deleteAllOrder();			
+			    			//deleteAllOrder(ordered_list_table);
 			    			alert("Success");
 			    		})
 			    		.fail(function() {
 			    			alert("Failed to send the order");
 			    		});
+			    }
+			    
+			    function makeHightLight(target_table, color_class) {
+			    	
 			    }
 	    	});
 	    </script>

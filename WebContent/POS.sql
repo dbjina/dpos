@@ -137,25 +137,25 @@ CREATE TABLE `table` (
 );
 
 
-CREATE TABLE table_current_order (
+CREATE TABLE order_current (
        order_seq            int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		 order_quantity		 int NOT NULL DEFAULT 1,
-       menu_seq             int NOT NULL,
+       menu_price_seq       int NOT NULL,
        order_date           datetime NOT NULL DEFAULT CURRENT_TIMESTAMP(),
        emp_seq              int NOT NULL,
        table_seq            int NULL
 );
 
 
-CREATE TABLE table_order_payment_history (
-       table_order_payment_history_se int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-       payment_type_seq     int NULL,
-       table_order_payment  FLOAT NOT NULL,
-       table_seq            int NULL,
-       emp_seq              int NULL,
-       menu_seq             int NOT NULL,
-       order_seq            int NULL,
-       table_order_payment_date datetime NULL
+CREATE TABLE order_payment_history (
+       order_payment_history_seq	int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+       payment_type_seq     		int NULL,
+       order_payment  			   FLOAT NOT NULL,
+       table_seq            		int NULL,
+       emp_seq             		int NULL,
+       menu_price_seq            int NOT NULL,
+       order_seq            		int NULL,
+       rder_payment_date 			datetime NULL
 );
 
 
@@ -269,42 +269,42 @@ ALTER TABLE supplier_type_tag
 									  		ON UPDATE CASCADE ;
 
 
-ALTER TABLE table_current_order
+ALTER TABLE order_current
        ADD  FOREIGN KEY (table_seq)
                              REFERENCES `table`(table_seq) ;
 
 
-ALTER TABLE table_current_order
-       ADD  FOREIGN KEY (menu_seq)
-                             REFERENCES menu(menu_seq) ;
+ALTER TABLE order_current
+       ADD  FOREIGN KEY (menu_price_seq)
+                             REFERENCES menu_price(menu_price_seq) ;
 
 
-ALTER TABLE table_current_order
+ALTER TABLE order_current
        ADD  FOREIGN KEY (emp_seq)
                              REFERENCES employee(emp_seq) ;
 
 
-ALTER TABLE table_order_payment_history
-       ADD  FOREIGN KEY (menu_seq)
-                             REFERENCES menu(menu_seq) ;
+ALTER TABLE order_payment_history
+       ADD  FOREIGN KEY (menu_price_seq)
+                             REFERENCES menu_price(menu_price_seq) ;
 
 
-ALTER TABLE table_order_payment_history
+ALTER TABLE order_payment_history
        ADD  FOREIGN KEY (order_seq)
-                             REFERENCES table_current_order(order_seq) ;
+                             REFERENCES order_current(order_seq) ;
 
 
-ALTER TABLE table_order_payment_history
+ALTER TABLE order_payment_history
        ADD  FOREIGN KEY (emp_seq)
                              REFERENCES employee(emp_seq) ;
 
 
-ALTER TABLE table_order_payment_history
+ALTER TABLE order_payment_history
        ADD  FOREIGN KEY (table_seq)
                              REFERENCES `table`(table_seq) ;
 
 
-ALTER TABLE table_order_payment_history
+ALTER TABLE order_payment_history
        ADD  FOREIGN KEY (payment_type_seq)
                              REFERENCES payment_type(payment_type_seq) ;
 
@@ -363,16 +363,20 @@ CREATE OR REPLACE VIEW v_order AS
 	SELECT t.table_seq,
 			 t.table_hold_customer_amount,
 			 t.table_name,
-			 tco.order_seq,
-			 tco.menu_seq,
-			 tco.order_date,
-			 tco.emp_seq
-		FROM `table` t
-			LEFT JOIN table_current_order tco
-				ON t.table_seq = tco.table_seq
+			 oc.order_seq,
+			 oc.order_date,
+			 oc.emp_seq,
+			 oc.menu_price_seq,
+			 vm.menu_name,
+			 vm.menu_description,
+			 vm.menu_recipe,
+			 vm.menu_type_seq
+		FROM order_current oc
+			LEFT JOIN `table` t
+				ON oc.table_seq = t.table_seq
+			LEFT JOIN v_menu vm
+				ON oc.menu_price_seq = vm.menu_price_seq
 			ORDER BY cast(t.table_name as unsigned), t.table_seq;
-
-			
 
 /*************************************************************************************************************
 	Initialize default values
@@ -526,4 +530,4 @@ SELECT * FROM menu_ingredients;
 
 SELECT * FROM v_menu;
 
-SELECT * FROM v_table;
+SELECT * FROM v_order;

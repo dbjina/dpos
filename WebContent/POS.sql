@@ -359,18 +359,22 @@ CREATE OR REPLACE VIEW v_menu AS
 		ORDER BY m.menu_name, m.menu_seq, mp.menu_price;
 		
 # Order view (TODO : employee, menu 테이블 조인되야 함)
+select * from v_order;
 CREATE OR REPLACE VIEW v_order AS
 	SELECT t.table_seq,
 			 t.table_hold_customer_amount,
 			 t.table_name,
 			 oc.order_seq,
+			 oc.order_quantity,
 			 oc.order_date,
 			 oc.emp_seq,
 			 oc.menu_price_seq,
+			 vm.menu_seq,
 			 vm.menu_name,
 			 vm.menu_description,
 			 vm.menu_recipe,
-			 vm.menu_type_seq
+			 vm.menu_type_seq,
+			 vm.menu_type
 		FROM order_current oc
 			LEFT JOIN `table` t
 				ON oc.table_seq = t.table_seq

@@ -40,7 +40,12 @@
 						<table class="table table-orderlist">
 						  	<thead>
 						  		<tr>
-						  			<th colspan="3"><h4>Table : <span class="text-danger" id="dpos-table_number">0</span></h4></th>
+						  			<th colspan="3"><h4>Table : <span class="text-danger" id="dpos-table_number" data-table_seq="99">Take away</span></h4></th>
+						  		</tr>
+						  		<tr>
+						  			<!-- 테스트 끝나면 hidden 있는걸로 바꿀것 -->
+						  			<!-- <th colspan="3" class="hidden"></th> -->
+						  			<th colspan="3" id="dpos-menu-group-seq">0</th>
 						  		</tr>
 							    <tr>
 							    	<th class="hidden">Order Seq</th>
@@ -139,7 +144,7 @@
 			    var tables = [];						// it sotres all table objects			
 			    var str = "";
 			    
-			    var ordered_list_table = $(".table-orderlist");
+			    var order_list_table = $(".table-orderlist");
 			    var table_modal_form = $("#tableModalForm");
 			    
 			    menus = getAllMenus();
@@ -147,9 +152,9 @@
 			    menu_names_by_category = getMenuName(menus, menu_category);
 			    tables = getAllTables();
 			    
-			    makeOrderHightlightByClick(ordered_list_table,"bg-danger");
+			    makeOrderHightlightByClick(order_list_table,"bg-danger");
 			    
-			    loadTenkeysFunc(ordered_list_table, $(".dpos-tenkeys-pad"));
+			    loadTenkeysFunc(order_list_table, $(".dpos-tenkeys-pad"));
 			    writeMenuCategories(".menu-category-parent", menu_category);
 			    
 				/* Initialize Swiper */
@@ -236,27 +241,9 @@
 						$(menuOrderModalForm).find("button").click(function() {
 							var menuSize = $(this).text();
 							
-							for(var i=0; i<menus.length; i++) {
-								if(menuSize == menus[i].getMenu_size() && menuName == menus[i].getMenu_name() && menus[i].getMenu_price_group_name() == "Normal") {
-									var orderMenu = new OrderMenu();
-									
-									if(ordered_menu.length == 0) {
-										orderMenu.setMenu_order_seq(ordered_menu.length);
-									}
-									else {
-										orderMenu.setMenu_order_seq(ordered_menu[ordered_menu.length - 1].getMenu_order_seq() + 1);
-									}
-
-									orderMenu.setMenu_order_quantity(1);
-									orderMenu.setMenu(menus[i]);
-									ordered_menu.push(orderMenu);
-									break;
-								}
-							}
-							
-							writeOrder(ordered_list_table);
+							addOrder(menuName, menuSize, "Normal", 1);
+							writeOrder(order_list_table);
 							writeTotalCost($("#dpos-cost"));
-							
 							
 							$("#menuOrderModalForm").modal('toggle');
 						});
@@ -319,6 +306,7 @@
 							alert("the function hasn't been made");
 				    	}
 						else if(key_input.toLowerCase() == "cash" || key_input == "$ 5" || key_input == "$ 10" || key_input == "$ 20" || key_input == "$ 50") {
+							
 							if($(order_table).find("tbody").find("tr").length == 0) {
 								return;	
 							}
@@ -345,14 +333,31 @@
 				    			alert(input_money + " - " + cost + " = " + (input_money - cost));
 				    			$(display_th).text(0);
 				    		}
-				    			
-							// TODO
-				    			// sendOrder();
-				    			deleteAllOrder(order_table);
+							
+			    			var result = sendAllOrderToCurrentOrder();
+			    			if(result == true) {
+								result = false;			    				
+			    				result = moveAllOrderToOrderPaymentHistory();
+			    			}
+			    			
+			    			if(result == true) {
+			    				deleteAllOrder(order_table);
+			    			}
 				    	}
 					});
 			    }
 
+				// TODO
+				function moveAllOrderToOrderPaymentHistory() {
+					$.post("${ rootPath }/Manage/SalesManage/MoveOrder.do", {"order":JSON.stringify(ordered_menu)})
+		    		.done(function(result) {
+		    			alert("Success");
+		    			return true;
+		    		})
+		    		.fail(function() {
+		    			alert("Failed to send the order");
+		    		});
+				}
 			    
 			    /* Return an array of the menu */
 			    function getAllMenus() {
@@ -459,6 +464,41 @@
 					$(target).html(str);
 			    }
 			    
+			    function writeAllOrder(target_table) {
+			    	for(var i=0; i<ordered_menu.length; i++) {
+			    		str = "";
+						str = str + "<tr>";
+							str = str + "<td class='hidden'>";
+							str = str + ordered_menu[i].getMenu_order_seq();
+							str = str + "</td>";
+							str = str + "<td class='col-sm-2 text-primary'>";
+								str = str + ordered_menu[i].getMenu_order_quantity();						
+							str = str + "</td>";
+							str = str + "<td class='col-sm-7'>";
+								str = str + ordered_menu[i].getMenu().getMenu_name();							
+							str = str + "</td>";
+							str = str + "<td class='col-sm-3 text-primary'>";
+								str = str + ordered_menu[i].sum();
+							str = str + "</td>";
+						str = str + "</tr>";
+						str = str + "<tr>";
+							str = str + "<td class='hidden'>";
+							str = str + "</td>";
+							str = str + "<td class='col-sm-2'>";
+							str = str + "</td>";
+							str = str + "<td class='col-sm-7'>";
+								str = str + " - " + ordered_menu[i].getMenu().getMenu_size();
+							str = str + "</td>";
+							str = str + "<td class='col-sm-3'>";
+								if(ordered_menu[i].getMenu_order_quantity() != 1) {
+									str = str + ordered_menu[i].getMenu().getMenu_price();	
+								}
+							str = str + "</td>";
+						str = str + "</tr>";
+						$(target_table).find("tbody").prepend(str);
+			    	}
+			    }
+			    
 			    function writeOrder(target_table) {
 					var om = ordered_menu[ordered_menu.length - 1];
 					
@@ -492,6 +532,7 @@
 						str = str + "</td>";
 					str = str + "</tr>";
 					$(target_table).find("tbody").prepend(str);
+					
 				}
 			    
 				function changeOrderQuantity(target_table, display_th) {
@@ -513,6 +554,26 @@
 		    		
 		    		writeTotalCost($("#dpos-cost"));
 				}			  
+				
+				function addOrder(menu_name, menu_size, menu_price_group_name, menu_order_quantity) {
+					for(var i=0; i<menus.length; i++) {
+						if(menu_size == menus[i].getMenu_size() && menu_name == menus[i].getMenu_name() && menus[i].getMenu_price_group_name() == menu_price_group_name) {
+							var orderMenu = new OrderMenu();
+							
+							if(ordered_menu.length == 0) {
+								orderMenu.setMenu_order_seq(ordered_menu.length);
+							}
+							else {
+								orderMenu.setMenu_order_seq(ordered_menu[ordered_menu.length - 1].getMenu_order_seq() + 1);
+							}
+
+							orderMenu.setMenu_order_quantity(menu_order_quantity);
+							orderMenu.setMenu(menus[i]);
+							ordered_menu.push(orderMenu);
+							break;
+						}
+					}
+				}
 				
 				function deleteOrder(target_table) {
 					$(target_table).find("tbody").find(".bg-danger").each(function() {
@@ -585,30 +646,124 @@
 						$("#dpos-table_number").text($(this).text());
 						$("#dpos-table_number").data("table_seq",$(this).attr("value"));
 						$(table_modal_form).modal('hide');
+						getOrderByTable($(this).attr("value"));
+						/* ordered_menu = getOrderByTable($(this).attr("value")); */
 					});
 				}
 			    
 			    // TODO
 			    function sendAllOrderToCurrentOrder() {
-			    	/* var table_name = $("#dpos-table_number").text(); */
 			    	var table_seq = $("#dpos-table_number").data("table_seq");
-			    	ordered_menu.forEach(function(value) {
-			    		value.setTable_seq(table_seq);									    		
-			    		/* value.setTable_name(table_name); */
+			    	var menu_order_group_seq = $("#dpos-menu-group-seq").text();
+			    	var alreadySentOrder_seq = [];
+			    	
+			    	$(order_list_table).find("tbody").find("tr").each(function() {
+			    		if(isOrderSuccess($(this).find("td:nth-child(2)"))) {
+			    			alreadySentOrder_seq.push($(this).find("td:nth-child(1)").text());
+			    		}
 			    	});
+			    	
+		    		for(var j=0; j<alreadySentOrder_seq.length; j++) {
+				    	for(var i=0; i<ordered_menu.length; i++) {
+			    			if(ordered_menu[i].getMenu_order_seq() == alreadySentOrder_seq[j]) {
+			    				ordered_menu.splice(i,1);
+			    			}
+			    		}
+			    	}
+			    	
+			    	/* if(ordered_menu.length <= 0) {
+			    		alert("Please add an order");
+			    		return;
+			    	} */
+			    	
+			    	ordered_menu.forEach(function(value) {
+			    		value.setTable_seq(table_seq);		
+			    		value.setMenu_order_group_seq(menu_order_group_seq);
+			    	});
+			    	
 			    	$.post("${ rootPath }/Manage/SalesManage/SendOrder.do", {"order":JSON.stringify(ordered_menu)})
 			    		.done(function(result) {
-			    			//deleteAllOrder(ordered_list_table);
+			    			markOrderSuccess(order_list_table);
 			    			alert("Success");
+			    			return true;
 			    		})
 			    		.fail(function() {
+			    			return false;
 			    			alert("Failed to send the order");
 			    		});
 			    }
 			    
-			    function makeHightLight(target_table, color_class) {
+			    function markOrderSuccess(target_table) {
+			    	$(target_table).find("tr").each(function() {
+				    	var order_seq = $(this).find("td:nth-child(1)").text();
+				    	if(order_seq) {
+							if(isOrderSuccess($(this).find("td:nth-child(2)")) == false) {
+					    		var str = '<span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>';
+				    			$(this).find("td:nth-child(2)").append(str);
+							}
+				    	}
+			    	});
+			    }
+			    
+			    function isOrderSuccess(target_td) {
+			    	var result = false;
+			    	
+			    	var t = $(target_td).find("span");
+			    	if(t.length != 0) {
+			    		result = true;
+			    	}
+			    	
+			    	return result;
+			    }
+			    
+			    function payOrder() {
 			    	
 			    }
+			    
+			    function getOrderByTable(table_seq) {
+			    	$.post("${ rootPath }/Manage/SalesManage/GetOrderByTable.do", {"table_seq":table_seq})
+		    		.done(function(result) {
+		    			var data = JSON.parse(result);
+		    			var order = null;
+		    			var menu = null;
+		    			deleteAllOrder(order_list_table);
+						
+		    			data.forEach(function(value, index) {
+							order = new OrderMenu();
+							menu = new Menu();
+							
+							order.setMenu_order_seq(value.menu_order_seq);
+							order.setMenu_order_quantity(value.menu_order_quantity);
+							order.setTable_seq(value.table_seq);
+							
+							menu.setMenu_description(value.menu.menu_description);
+							menu.setMenu_name(value.menu.menu_name);
+							menu.setMenu_price(value.menu.menu_price);
+							menu.setMenu_price_group_name(value.menu.menu_price_group_name);
+							menu.setMenu_price_group_seq(value.menu.menu_price_group_seq);
+							menu.setMenu_price_seq(value.menu.menu_price_seq);
+							menu.setMenu_recipe(value.menu.menu_recipe);
+							menu.setMenu_seq(value.menu.menu_seq);
+							menu.setMenu_size(value.menu.menu_size);
+							menu.setMenu_size_seq(value.menu.menu_size_seq);
+							menu.setMenu_type(value.menu.menu_type);
+							menu.setMenu_type_seq(value.menu.menu_type_seq);
+							
+							order.setMenu(menu);
+							
+							ordered_menu.push(order);
+						});
+						
+						writeAllOrder(order_list_table);		
+						markOrderSuccess(order_list_table);
+		    		})
+		    		.fail(function() {
+		    			alert("Failed to get the order");
+		    		});
+			    }
+			    
+			    
+			    
 	    	});
 	    </script>
 	</body>

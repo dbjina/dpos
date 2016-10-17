@@ -93,6 +93,20 @@ public class ManageController extends HttpServlet {
 			
 			out.println(result);
 		}
+		// TODO 작업 중
+		else if(servletPath.equals("/Manage/SalesManage/MoveOrder.do")) {
+			orderModel = new OrderModel(req);			
+			int[] result = orderModel.moveOrder();
+			
+			out.println(result);
+		}
+		// TODO 작업 중
+		else if(servletPath.equals("/Manage/SalesManage/GetOrderByTable.do")) {
+			orderModel = new OrderModel(req);
+			
+			out.println(orderModel.findOrderByTableSeq());
+		}
+		
 		else if(servletPath.equals("/Manage/FoodManage.do")) {
 			menuModel = new MenuModel(req);
 			List<JoinedMenu> listMenu = menuModel.findAllByJoinTable();

@@ -201,12 +201,12 @@ public class DBTableDefine {
 	/**********************************************************************
 	 * order table
 	 ***********************************************************************/
-	// TODO 테이블 이름 table_current_order 에서 order_current 로 바꿔야함 디비에서도
 	// Table names
 	public static final String ORDER_TABLE = "`order_current`";
 			
 	// Columns names
 	public static final String ORDER_SEQ_COLUMN = "order_seq";
+	public static final String ORDER_GROUP_SEQ_COLUMN = "order_group_seq";
 //	public static final String MENU_PRICE_SEQ_COLUMN = "menu_price_seq";	Already exist
 	public static final String ORDER_DATE_COLUMN = "order_date";
 //	public static final STRING EMP_SEQ_COLUMN = "emp_seq";		Already exist
@@ -214,8 +214,29 @@ public class DBTableDefine {
 	public static final String ORDER_QUANTITY_COLUMN = "order_quantity";
 	
 	// Group of columns
-	public static final String ALL_ORDER_COLUMNS = ORDER_SEQ_COLUMN + ", " + MENU_SEQ_COLUMN + ", " + ORDER_DATE_COLUMN + ", " + EMP_SEQ_COLUMN + ", "+ TABLE_SEQ_COLUMN + ", " + ORDER_QUANTITY_COLUMN;
-	public static final String ALL_ORDER_COLUMNS_EXCEPT_ORDER_DATE_COLUMN = MENU_PRICE_SEQ_COLUMN + ", " + EMP_SEQ_COLUMN + ", "+ TABLE_SEQ_COLUMN + ", " + ORDER_QUANTITY_COLUMN;
+	public static final String ALL_ORDER_COLUMNS = ORDER_SEQ_COLUMN + ", " + ORDER_GROUP_SEQ_COLUMN + ", " + MENU_SEQ_COLUMN + ", " + ORDER_DATE_COLUMN + ", " + EMP_SEQ_COLUMN + ", "+ TABLE_SEQ_COLUMN + ", " + ORDER_QUANTITY_COLUMN;
+	public static final String ALL_ORDER_COLUMNS_EXCEPT_ORDER_DATE_COLUMN = ORDER_GROUP_SEQ_COLUMN + ", " + MENU_PRICE_SEQ_COLUMN + ", " + EMP_SEQ_COLUMN + ", "+ TABLE_SEQ_COLUMN + ", " + ORDER_QUANTITY_COLUMN;
+	public static final String ALL_ORDER_VIEW_COLUMNS = TABLE_SEQ_COLUMN + ", "
+																		+ TABLE_HOLD_CUSTOMER_AMOUNT_COLUMN + ", "
+																		+ TABLE_NAME_COLUMN + ", "
+																		+ ORDER_SEQ_COLUMN + ", "
+																		+ ORDER_GROUP_SEQ_COLUMN + ", "
+																		+ ORDER_QUANTITY_COLUMN + ", "
+																		+ ORDER_DATE_COLUMN + ", "
+																		+ EMP_SEQ_COLUMN + ", "
+																		+ MENU_PRICE_SEQ_COLUMN + ", "
+																		+ MENU_SEQ_COLUMN + ", "
+																		+ MENU_NAME_COLUMN + ", "
+																		+ MENU_DESCRIPTION_COLUMN + ", "
+																		+ MENU_RECIPE_COLUMN + ", "
+																		+ MENU_TYPE_SEQ_COLUMN  + ", "
+																		+ MENU_TYPE_COLUMN + ", "
+																		+ MENU_SIZE_SEQ_COLUMN + ", "
+																		+ MENU_SIZE_COLUMN  + ", "
+																		+ MENU_PRICE_COLUMN + ", "
+																		+ MENU_PRICE_GROUP_SEQ_COLUMN + ", "
+																		+ MENU_PRICE_GROUP_NAME_COLUMN;
+
 	// table view
-	public static final String ORDER_ALL_VIEW = "v_order";
+	public static final String ORDER_VIEW = "v_order";
 }

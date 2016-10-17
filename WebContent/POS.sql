@@ -139,10 +139,11 @@ CREATE TABLE `table` (
 
 CREATE TABLE order_current (
        order_seq            int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+       order_group_seq	  	 int NOT NULL,
 		 order_quantity		 int NOT NULL DEFAULT 1,
        menu_price_seq       int NOT NULL,
        order_date           datetime NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-       emp_seq              int NOT NULL,
+       emp_seq              int NULL,
        table_seq            int NULL
 );
 
@@ -150,12 +151,15 @@ CREATE TABLE order_current (
 CREATE TABLE order_payment_history (
        order_payment_history_seq	int NOT NULL AUTO_INCREMENT PRIMARY KEY,
        payment_type_seq     		int NULL,
-       order_payment  			   FLOAT NOT NULL,
-       table_seq            		int NULL,
-       emp_seq             		int NULL,
+       order_payment  			   FLOAT NULL,
+       order_seq            		int NOT NULL,
+       order_group_seq				int NOT NULL,
+       order_quantity				int NOT NULL,
        menu_price_seq            int NOT NULL,
-       order_seq            		int NULL,
-       rder_payment_date 			datetime NULL
+       order_date 					datetime NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+       emp_seq             		int NULL,
+ 	    table_seq            		int NULL,
+       order_payment_date 			datetime NOT NULL DEFAULT CURRENT_TIMESTAMP()
 );
 
 
@@ -170,6 +174,10 @@ CREATE TABLE wage_payment (
        pay_amount           FLOAT NULL,
        pay_date             datetime NULL,
        emp_seq              int NULL
+);
+
+CREATE TABLE order_group (
+		order_group_seq		 int NOT NULL PRIMARY KEY
 );
 
 
@@ -359,7 +367,6 @@ CREATE OR REPLACE VIEW v_menu AS
 		ORDER BY m.menu_name, m.menu_seq, mp.menu_price;
 		
 # Order view (TODO : employee, menu 테이블 조인되야 함)
-select * from v_order;
 CREATE OR REPLACE VIEW v_order AS
 	SELECT t.table_seq,
 			 t.table_hold_customer_amount,
@@ -374,7 +381,12 @@ CREATE OR REPLACE VIEW v_order AS
 			 vm.menu_description,
 			 vm.menu_recipe,
 			 vm.menu_type_seq,
-			 vm.menu_type
+			 vm.menu_type,
+			 vm.menu_size_seq,
+			 vm.menu_size,
+			 vm.menu_price,
+			 vm.menu_price_group_seq,
+			 vm.menu_price_group_name
 		FROM order_current oc
 			LEFT JOIN `table` t
 				ON oc.table_seq = t.table_seq
@@ -385,6 +397,9 @@ CREATE OR REPLACE VIEW v_order AS
 /*************************************************************************************************************
 	Initialize default values
 *************************************************************************************************************/
+# Order_group
+INSERT INTO order_group VALUES(1);
+
 # Employee_Position
 INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (99, "Standby");
 INSERT INTO employee_position (emp_position_seq, emp_position) VALUES (1, "CEO");
@@ -503,6 +518,7 @@ INSERT INTO menu_price (menu_price_seq, menu_seq, menu_price, menu_size_seq, men
 
 
 # Table
+INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (99, 0, "Take away");
 INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (1, 0, "1");
 INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (2, 0, "2");
 INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (3, 0, "3");
@@ -517,6 +533,12 @@ INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (
 INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (12, 0, "12");
 INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (13, 0, "13");
 INSERT INTO `table` (table_seq, table_hold_customer_amount, table_name) VALUES (14, 0, "14");
+
+# Payment_type
+INSERT INTO payment_type VALUES(1, 'Cash');
+INSERT INTO payment_type VALUES(2, 'Visa');
+INSERT INTO payment_type VALUES(3, 'Master');
+INSERT INTO payment_type VALUES(4, 'American express');
 
 
 
@@ -535,3 +557,15 @@ SELECT * FROM menu_ingredients;
 SELECT * FROM v_menu;
 
 SELECT * FROM v_order;
+
+SELECT * FROM order_current;
+SELECT * FROM order_payment_history;
+SELECT * FROM order_group;
+
+# Test queries
+INSERT INTO order_payment_history (order_seq, order_group_seq, order_quantity, menu_price_seq, order_date, emp_seq, table_seq) SELECT * FROM order_current;
+
+INSERT INTO order_current (order_group_seq, order_quantity, menu_price_seq, emp_seq, table_seq) VALUES ((SELECT (order_group_seq+1) FROM order_group), 3, 4, 1, 1);
+UPDATE order_group t1, (SELECT order_group_seq FROM order_group) t2 SET t1.order_group_seq = (t2.order_group_seq + 1);
+
+# TODO Trigger 만들기 : order_current에 값이 insert 될 때 order_group_seq 값이 0이면 order_group 테이블에서 값 가져와서 업데이트하기

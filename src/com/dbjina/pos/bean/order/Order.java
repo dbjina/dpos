@@ -15,8 +15,14 @@ public class Order {
 //	@SerializedName("table_name")
 //	private String table_name;
 	
+//	@SerializedName("emp_seq")
+//	private int emp_seq;
+	
 	@SerializedName("menu_order_seq")
 	private int order_seq;
+	
+	@SerializedName("menu_order_group_seq")
+	private int order_group_seq;
 	
 	@SerializedName("menu_order_quantity")
 	private int order_quantity;
@@ -42,6 +48,12 @@ public class Order {
 //	public void setTable_name(String table_name) {
 //		this.table_name = table_name;
 //	}
+	public int getOrder_group_seq() {
+		return order_group_seq;
+	}
+	public void setOrder_group_seq(int order_group_seq) {
+		this.order_group_seq = order_group_seq;
+	}
 	public int getOrder_seq() {
 		return order_seq;
 	}

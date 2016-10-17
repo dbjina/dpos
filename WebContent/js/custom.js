@@ -42,6 +42,12 @@ function deleteItem(table, cls, seq_depth, name_depth, form, paramName, action) 
 	$(selected_trs).find("td:nth-child(" + name_depth + ")").each(function() {
 		names.push($(this).text());
 	})
+	
+	if(names.length <= 0) {
+		alert("Please click at least one item");
+		return;
+	}
+	
 	var isContinue = confirm("Would you like to delete the items below?\n" + names);
 	
 	if(isContinue == false) {

@@ -81,6 +81,14 @@ public class SignController extends HttpServlet {
 				System.out.println("로그인 실패");
 			}
 		}
+		else if(servletPath.equals("/Sign/SignOut.do")) {
+			session = req.getSession(false);
+			if(session != null) {
+				session.invalidate();
+			}
+			
+			resp.sendRedirect(rootPath);
+		}
 		else {
 			System.out.println("매칭 없음");
 		}

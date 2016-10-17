@@ -66,12 +66,29 @@
 					<div class="row text-center bg-info dpos-cost-info">
 						<h3 class="dpos-text-middle">$ <span id="dpos-cost">0</span></h3>
 					</div>
-					<div class="row dpos-function-pad">
-						<button class="col-md-2 btn btn-default" data-toggle="modal" data-target="#tableModalForm">Table</button>
-						<button class="col-md-2 btn btn-default disabled">Pre print</button>
-						<button class="col-md-2 btn btn-default disabled">Re print</button>
-						<button class="col-md-2 btn btn-default disabled">Discount</button>
-						<button class="col-md-2 btn btn-default disabled">Surcharge</button>
+					<div class="row text-center">
+						<!-- Swiper -->
+						<div class="swiper-container swiper-function-pad">
+						    <div class="swiper-wrapper dpos-function-pad">
+						    		<div class="col-md-2 col-md-offset-1">
+								    	<button class="btn btn-default btn-block" data-toggle="modal" data-target="#tableModalForm">Table</button>
+						    		</div>
+						    		<div class="col-md-2">
+										<button class="btn btn-default btn-block disabled">Pre print</button>
+						    		</div>
+						    		<div class="col-md-2">
+										<button class="btn btn-default btn-block disabled">Discount</button>
+						    		</div>
+						    		<div class="col-md-2">
+										<button class="btn btn-default btn-block disabled">Re print</button>
+						    		</div>
+						    		<div class="col-md-2">
+										<button class="btn btn-default btn-block disabled">Surcharge</button>    
+						    		</div>
+						    </div>
+						    <!-- Add Pagination -->
+						    <div class="swiper-pagination"></div>
+						</div> <!-- End Swiper -->
 					</div>
 				</div>
 				<!-- Ten keys UI start -->
@@ -159,6 +176,13 @@
 			    
 				/* Initialize Swiper */
 				var swiper = new Swiper('.swiper-parent', {
+			        pagination: '.swiper-pagination',
+			        paginationClickable: false,
+			        grabCursor: true,
+			    });
+				
+				/* Initialize Swiper the function pad*/
+				var swiperFunctionpad = new Swiper('.swiper-function-pad', {
 			        pagination: '.swiper-pagination',
 			        paginationClickable: false,
 			        grabCursor: true,

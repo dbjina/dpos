@@ -25,14 +25,17 @@
                     <li>
                         <a href="${ rootPath }/Manage/FoodManage.do">Food Menu</a>
                     </li>
-                    <li>
+                    <li class="disabled">
                         <a href="#">Stock</a>
                     </li>
                     <li>
                          <a href="${ rootPath }/Manage/SupManage.do">Supplier</a>
                     </li>
-                    <li>
+                    <li class="disabled">
                         <a href="#">Statistics</a>
+                    </li>
+                    <li>
+                    	<a href="${ rootPath }/Sign/SignOut.do">Sign out</a>
                     </li>
                 </ul>
             </div>

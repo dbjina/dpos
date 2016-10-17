@@ -67,6 +67,11 @@
   
   <servlet-mapping>
   	<servlet-name>Sign</servlet-name>
+  	<url-pattern>/Sign/SignOut.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>Sign</servlet-name>
   	<url-pattern>/Sign/CheckValidSignUp.do</url-pattern>
   </servlet-mapping>
   

@@ -60,40 +60,42 @@
 					</div>
 				</div>
 			</div>
-			
-			<div class="row functions">
-				<div class="swiper-container">
-				    <div class="swiper-wrapper text-center">
-				        <div class="swiper-slide">
-				        	<button class="btn btn-default btn-lg" onclick="del()">Delete</button>
-				        	<button class="btn btn-default btn-lg" id="btnModify" onclick="modifySup()">Modify</button>
-				        	<button class="btn btn-default btn-lg">Register</button>
-				        </div>
+			<div class="row text-center">
+				<!-- Swiper -->
+				<div class="swiper-container swiper-function-pad">
+				    <div class="swiper-wrapper dpos-function-pad">
+				    		<div class="col-md-2 col-md-offset-3">
+						    	<button class="btn btn-default btn-block" onclick="del()">Delete</button>
+				    		</div>
+				    		<div class="col-md-2">
+								<button class="btn btn-default btn-block disabled">Modify</button>
+				    		</div>
+				    		<div class="col-md-2">
+								<button class="btn btn-default btn-block disabled">Register</button>
+				    		</div>
 				    </div>
 				    <!-- Add Pagination -->
-				    <!-- <div class="swiper-pagination"></div> -->
+				    <div class="swiper-pagination"></div>
 				</div> <!-- End Swiper -->
 			</div>
 		</div>
 		
 		<c:import url="/include/jsLoad.jsp"></c:import>
 		<script type="text/javascript">
-			function JoinedMenu() {
-				this.menu_seq;
-				this.menu_price_seq;
-				this.menu_price;
-				this.menu_price_group_name;
-				this.menu_size;
-			};
-			
-			JoinedMenu.prototype.getMenu_seq = function() { return this.menu_seq; };
-			JoinedMenu.prototype.getMenu_price_seq = function() { return this.menu_price_seq; };
-			JoinedMenu.prototype.getMenu_price = function() { return this.menu_price; };
-			JoinedMenu.prototype.getMenu_price_group_name = function() { return this.menu_price_group_name; };
-			JoinedMenu.prototype.getMenu_size = function() { return this.menu_size; };
-			
-			
 			$(function() {
+				function JoinedMenu() {
+					this.menu_seq;
+					this.menu_price_seq;
+					this.menu_price;
+					this.menu_price_group_name;
+					this.menu_size;
+				};
+				
+				JoinedMenu.prototype.getMenu_seq = function() { return this.menu_seq; };
+				JoinedMenu.prototype.getMenu_price_seq = function() { return this.menu_price_seq; };
+				JoinedMenu.prototype.getMenu_price = function() { return this.menu_price; };
+				JoinedMenu.prototype.getMenu_price_group_name = function() { return this.menu_price_group_name; };
+				JoinedMenu.prototype.getMenu_size = function() { return this.menu_size; };
 				
 				var menus = new Array();
 				
@@ -148,6 +150,15 @@
 						makeTableHightlightByClick($("#menuTableDetail"), "bg-primary");
 					}
 				});
+				
+				/* Initialize Swiper the function pad*/
+				var swiperFunctionpad = new Swiper('.swiper-function-pad', {
+			        pagination: '.swiper-pagination',
+			        paginationClickable: false,
+			        grabCursor: true,
+			    });
+				
+				
 			});
 			
 			function del() {

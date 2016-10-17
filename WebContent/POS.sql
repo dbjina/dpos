@@ -274,7 +274,8 @@ ALTER TABLE supplier_type_tag
 ALTER TABLE supplier_type_tag
        ADD  FOREIGN KEY (sup_seq)
                              REFERENCES supplier(sup_seq)
-									  		ON UPDATE CASCADE ;
+									  		ON UPDATE CASCADE
+											ON DELETE CASCADE;
 
 
 ALTER TABLE order_current

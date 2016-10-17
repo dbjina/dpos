@@ -10,10 +10,10 @@
 	</head>
 	<body>
 		<div class="container">
-			<div class="table-responsive center-horizontal">
-				<table class="table table-bordered text-center table-menu">
+			<div class="row">
+				<table class="table table-bordered text-center dpos-table-menu">
 					<tr>
-						<td><h4 class="text-info">${ emp["emp_name"] }</h4></td>
+						<td><h4 class="text-info">${ sessionScope.emp.emp_name }</h4></td>
 					</tr>
 	  				<tr onclick="location.href='${ rootPath }/Manage/SalesManage.do'">
 	  					<td><h4>Sales</h4></td>
@@ -32,6 +32,9 @@
 	  				</tr>
 	  				<tr>
 	  					<td><h4>Statistics</h4></td>
+	  				</tr>
+	  				<tr onclick="location.href='${ rootPath }/Sign/SignOut.do'">
+	  					<td><h4>Sign out</h4></td>
 	  				</tr>
 	  				<tr>
 	  					<td><h4 id="time"></h4></td>

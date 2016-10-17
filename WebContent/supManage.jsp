@@ -65,63 +65,50 @@
 				</table>		
 				</form>
 			</div>
-			<div class="row functions">
-				<div class="swiper-container">
-				    <div class="swiper-wrapper text-center">
-				        <div class="swiper-slide">
-				        	<button class="btn btn-default btn-lg" onclick="deleteSup()">Delete</button>
-				        	<button class="btn btn-default btn-lg" id="btnModify" onclick="modifySup()">Modify</button>
-				        	<button class="btn btn-default btn-lg">Register</button>
-				        </div>
+			<div class="row text-center">
+				<!-- Swiper -->
+				<div class="swiper-container swiper-function-pad">
+				    <div class="swiper-wrapper dpos-function-pad">
+				    		<div class="col-md-2 col-md-offset-3">
+						    	<button class="btn btn-default btn-block" onclick="deleteSup()">Delete</button>
+				    		</div>
+				    		<div class="col-md-2">
+								<button class="btn btn-default btn-block" id="btnModify" onclick="modifySup()">Modify</button>
+				    		</div>
+				    		<div class="col-md-2">
+								<button class="btn btn-default btn-block disabled">Register</button>
+				    		</div>
 				    </div>
 				    <!-- Add Pagination -->
-				    <!-- <div class="swiper-pagination"></div> -->
+				    <div class="swiper-pagination"></div>
 				</div> <!-- End Swiper -->
 			</div>
 		</div>
 		
 		<c:import url="/include/jsLoad.jsp"></c:import>
 		<script type="text/javascript">
-		
 			$(function() {
-				
+				var table = $("#supTable");
 				makeTableHightlightByClick($(".table-list"), "bg-danger");
 				
+				/* Initialize Swiper the function pad*/
+				var swiperFunctionpad = new Swiper('.swiper-function-pad', {
+			        pagination: '.swiper-pagination',
+			        paginationClickable: false,
+			        grabCursor: true,
+			    });
 			});
 			
 			function deleteSup() {
-				var array_name = new Array();
-				if(array_name.length <= 0) {
-					alert("Please click at least one supplier on the table");
-					return;
-				}
-				
-				$("#supTable").find(".bg-danger").find("td:nth-child(2)").each(function(index) {
-					array_name[index] = $(this).text();
-				});
-				var isContinue = confirm("Would you like to delete below suppliers?\n" + array_name);
-				
-				if(isContinue == false) {
-					return;
-				}
-				
-				$("#supTable").find(".bg-danger").find("td:first-child").each(function(index) {
-					$("<input type='hidden' value='" + $(this).text() + "' />")
-				     .attr("name", "sup_seq")
-				     .appendTo("#supForm");
-				});
-				
-				
-				     
-				$("#supForm").attr("action", "${ rootPath }/Manage/SupManage/DeleteSup.do");
-				$("#supForm").submit();
+				deleteItem($("#supTable"), "bg-danger", 1, 2, $("#supForm"), "sup_seqs", "${ rootPath }/Manage/SupManage/DeleteSup.do");
 			}
 			
 			function modifySup() {
 				var btnText = $("#btnModify").text();
 				var array_name = new Array();
+				var table = $("#supTable");				
 				
-				$("#supTable").find(".bg-danger").find("td:nth-child(2)").each(function(index) {
+				$(table).find(".bg-danger").find("td:nth-child(2)").each(function(index) {
 					array_name[index] = $(this).text().replace(/\s+/g, " ").trim();
 				});
 				
@@ -130,7 +117,7 @@
 					return;
 				}
 				
-				if(btnText.toUpperCase() == "MODIFY") {
+				if(btnText.toLowerCase() == "modify") {
 					$("#btnModify").text("Save");
 					
 					var isContinue = confirm("Would you like to modify below suppliers?\n" + array_name);
@@ -149,7 +136,7 @@
 					array_columns.push("sup_memo");
 					
 					
-					$("#supTable").find(".bg-danger").each(function() {
+					$(table).find(".bg-danger").each(function() {
 						$(this).find("td").each(function(index) {
 							var idx = index;
 							if(index != 5) {

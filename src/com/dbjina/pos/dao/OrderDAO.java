@@ -57,25 +57,18 @@ public class OrderDAO {
 
 		return list;
 	}*/
-	public int[] saveOrder(List<Order> order) {
-		int[] result = null;
+	private int findOneGroupOrderSeq() {
+		int result = 0;
 		
-		sql = String.format(DBTableDefine.INSERT_TEMPLATE, DBTableDefine.ORDER_TABLE, DBTableDefine.ALL_ORDER_COLUMNS_EXCEPT_ORDER_DATE_COLUMN, "?, ?, ?, ?, ?");
+		sql = String.format(DBTableDefine.SELECT_TEMPLATE, DBTableDefine.ORDER_GROUP_SEQ_COLUMN, "order_group");
+		
 		try {
 			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
 			
-			for(Order o : order) {
-				pstmt.setInt(1, o.getOrder_group_seq());	// 값이 0일 경우 디비에 등록된 Trigger가 처리함
-				pstmt.setInt(2, o.getMenu().getMenu_price_seq());
-				pstmt.setInt(3, 1);	// TODO emp_seq 로 바꿔줄것
-				pstmt.setInt(4, o.getTable_seq());
-				pstmt.setInt(5, o.getOrder_quantity());
-				
-				pstmt.addBatch();
+			while(rs.next()) {
+				result = rs.getInt(1);
 			}
-			
-			result = pstmt.executeBatch();
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -85,19 +78,97 @@ public class OrderDAO {
 		return result;
 	}
 	
+	private void saveOneGroupOrderSeq() {
+		
+		sql = String.format(DBTableDefine.ALL_UPDATE_TEMPLATE, "order_group t1, (SELECT order_group_seq FROM order_group) t2", "t1.order_group_seq = (t2.order_group_seq + 1)");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			destory();
+		}
+		
+	}
+	
+	public int[] saveOrder(List<Order> order) {
+		int[] result = null;
+		
+		int order_group_seq = findOneGroupOrderSeq() + 1;
+		sql = String.format(DBTableDefine.INSERT_TEMPLATE, DBTableDefine.ORDER_TABLE, DBTableDefine.ALL_ORDER_COLUMNS_EXCEPT_ORDER_DATE_COLUMN, "?, ?, ?, ?, ?");
+		try {
+			con.setAutoCommit(false);
+			
+			pstmt = con.prepareStatement(sql);
+			
+			for(Order o : order) {
+				pstmt.setInt(1, order_group_seq);
+				pstmt.setInt(2, o.getMenu().getMenu_price_seq());
+				pstmt.setInt(3, 1);	// TODO emp_seq 로 바꿔줄것
+				pstmt.setInt(4, o.getTable_seq());
+				pstmt.setInt(5, o.getOrder_quantity());
+				
+				pstmt.addBatch();
+			}
+			
+			result = pstmt.executeBatch();
+			saveOneGroupOrderSeq();
+			
+			con.commit();
+		} catch (SQLException e) {
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			destory();
+		}
+		
+		return result;
+	}
+	
 	// TODO 작업중 10.17 5:18 PM
 	public int[] moveOrder(List<Order> order) {
 		int[] result = null;
-		sql = String.format(DBTableDefine.INSERT_TEMPLATE, DBTableDefine.ORDER_TABLE, DBTableDefine.ALL_ORDER_COLUMNS_EXCEPT_ORDER_DATE_COLUMN, "?, ?, ?, ?");
+		sql = String.format(DBTableDefine.INSERT_TEMPLATE, DBTableDefine.ORDER_PAYMENT_HISTORY_TABLE, DBTableDefine.ALL_ORDER_COLUMNS_EXCEPT_ORDER_DATE_COLUMN, "?, ?, ?, ?, ?");
+		
+
 		try {
 			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(sql);
 			
 			for(Order o : order) {
-				pstmt.setInt(1, o.getMenu().getMenu_price_seq());
-				pstmt.setInt(2, 1);	// TODO emp_seq 로 바꿔줄것
-				pstmt.setInt(3, o.getTable_seq());
-				pstmt.setInt(4, o.getOrder_quantity());
+				if(o.getOrder_group_seq() != 0) {
+					pstmt.setInt(1, o.getOrder_group_seq());
+				}
+				else {
+					String sql2 = String.format(DBTableDefine.SELECT_TEMPLATE, DBTableDefine.ORDER_GROUP_SEQ_COLUMN, "order_group");
+					PreparedStatement pstmt2 = con.prepareStatement(sql2);
+					rs = pstmt2.executeQuery();
+					
+					while(rs.next()) {
+						pstmt.setInt(1, rs.getInt(1));
+					}
+					
+					sql2 = String.format(DBTableDefine.UPDATE_TEMPLATE, "order_group t1, (SELECT order_group_seq FROM order_group) t2", "t1.order_group_seq = (t2.order_group_seq + 1)", "1=1");
+					pstmt2 = con.prepareStatement(sql2);
+					pstmt2.executeUpdate();
+				}
+				pstmt.setInt(2, o.getMenu().getMenu_price_seq());
+				pstmt.setInt(3, 1);	// TODO emp_seq 로 바꿔줄것
+				pstmt.setInt(4, o.getTable_seq());
+				pstmt.setInt(5, o.getOrder_quantity());
 				
 				pstmt.addBatch();
 			}

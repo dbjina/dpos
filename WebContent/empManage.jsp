@@ -60,72 +60,29 @@
 			</div>
 		</div>
 		<div class="container-fluid">
-			<div class="row">
-				<div class="col-xs-8 center-horizontal text-center center-block dpos-function-pad">
-					<button class="col-md-2 btn btn-default" onclick="deleteEmp()">Delete</button>
-					<button class="col-md-2 btn btn-default" onclick="modifyEmp()">Modify</button>
-					<button class="col-md-2 btn btn-default">Punch in</button>
-					<button class="col-md-2 btn btn-default">Punch out</button>
-					<button class="col-md-2 btn btn-default">Register</button>
-				</div>
-				<div class="col-xs-4" id="keyPad">
-					<div class="row">
-						<div class="col-xs-3">
-							$
-						</div>
-						<div class="col-xs-3">
-							1
-						</div>
-						<div class="col-xs-3">
-							2
-						</div>
-						<div class="col-xs-3">
-							3
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-3">
-							$
-						</div>
-						<div class="col-xs-3">
-							4
-						</div>
-						<div class="col-xs-3">
-							5
-						</div>
-						<div class="col-xs-3">
-							6
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-3">
-							$
-						</div>
-						<div class="col-xs-3">
-							7
-						</div>
-						<div class="col-xs-3">
-							8
-						</div>
-						<div class="col-xs-3">
-							9
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-3">
-							$
-						</div>
-						<div class="col-xs-3">
-							.
-						</div>
-						<div class="col-xs-3">
-							0
-						</div>
-						<div class="col-xs-3">
-							,
-						</div>
-					</div>
-				</div>
+			<div class="row text-center">
+				<!-- Swiper -->
+				<div class="swiper-container swiper-function-pad">
+				    <div class="swiper-wrapper dpos-function-pad">
+				    		<div class="col-md-2 col-md-offset-1">
+						    	<button class="btn btn-default btn-block" onclick="deleteEmp()">Delete</button>
+				    		</div>
+				    		<div class="col-md-2">
+								<button class="btn btn-default btn-block disabled" onclick="modifyEmp()">Modify</button>
+				    		</div>
+				    		<div class="col-md-2">
+								<button class="btn btn-default btn-block disabled">Punch in</button>
+				    		</div>
+				    		<div class="col-md-2">
+								<button class="btn btn-default btn-block disabled">Punch out</button>
+				    		</div>
+				    		<div class="col-md-2">
+								<button class="btn btn-default btn-block disabled">Register</button>    
+				    		</div>
+				    </div>
+				    <!-- Add Pagination -->
+				    <div class="swiper-pagination"></div>
+				</div> <!-- End Swiper -->
 			</div>
 		</div>
 		<form action="" method="post" id="empForm">
@@ -134,6 +91,13 @@
 		<c:import url="/include/jsLoad.jsp"></c:import>
 		<script type="text/javascript">
 			$(document).ready(function() {
+				var table = $("#empTable");
+				var selected_color_class = "bg-danger";
+				var name_depth = 3;
+				var seq_depth = 1;
+				var form = $("#empForm");
+				
+				
 				if($(window).width() <= 765) {
 					$("thead").find("tr").find("th:first-child").addClass("hidden-xs");
 					/* $("thead").find("tr").find("th:nth-child(2)").addClass("hidden-xs"); */
@@ -164,39 +128,74 @@
 							},500);
 						  return false; 
 				});
-			});
-			
-			
-			
-			// Manage Employees Functions
-			function deleteEmp() {
-				deleteItem($("#empTable"), "bg-danger", 1, 3, $("#empForm"), "emp_seqs", "${ rootPath }/Manage/EmpManage/DeleteEmp.do");
-			}
-			
-			function modifyEmp() {
-				var array_name = new Array();
 				
-				$("#empTable").find(".bg-danger").find("td:nth-child(3)").each(function(index) {
-					array_name[index] = $(this).text();
-				})
-
-				var isContinue = confirm("Would you like to modify below employees?\n" + array_name);
+				/* Initialize Swiper the function pad*/
+				var swiperFunctionpad = new Swiper('.swiper-function-pad', {
+			        pagination: '.swiper-pagination',
+			        paginationClickable: false,
+			        grabCursor: true,
+			    });
 				
-				if(isContinue == false) {
-					return;
+				function registerEmp() {
+				
 				}
 				
-				$("#empTable").find(".bg-danger").find("td:first-child").each(function(index) {
-					$("<input type='hidden' value='" + $(this).text() + "' />")
-				     .attr("name", "emp_seqs")
-				     .appendTo("#empForm");
-				})
+				// Manage Employees Functions
+				function deleteEmp() {
+					var paramName = "emp_seqs";
+					var action = "${ rootPath }/Manage/EmpManage/DeleteEmp.do";
+					
+					var selected_trs = $(table).find("tbody").find("." + selected_color_class);
+					var names = new Array();
+					
+					$(selected_trs).find("td:nth-child(" + name_depth + ")").each(function() {
+						names.push($(this).text());
+					})
+					
+					if(names.length == 0) {
+						alert("Please click at least one employee");
+						return;
+					}
+					
+					var isContinue = confirm("Would you like to delete the items below?\n" + names);
+					
+					if(isContinue == false) {
+						return;
+					}
+					
+					$(selected_trs).find("td:nth-child(" + seq_depth + ")").each(function() {
+						$("<input type='hidden' value='" + $(this).text() + "' />")
+					     .attr("name", paramName)
+					     .appendTo(form);
+					})
+					     
+					$(form).attr("action", action);
+					$(form).submit();
+				}
 				
-				$("#empForm").attr("action", "${ rootPath }/Manage/EmpManage/ModifyFormEmp.do");
-				$("#empForm").submit();
-			}
-			
-			
+				function modifyEmp() {
+					var array_name = new Array();
+					
+					$("#empTable").find(".bg-danger").find("td:nth-child(3)").each(function(index) {
+						array_name[index] = $(this).text();
+					})
+
+					var isContinue = confirm("Would you like to modify below employees?\n" + array_name);
+					
+					if(isContinue == false) {
+						return;
+					}
+					
+					$("#empTable").find(".bg-danger").find("td:first-child").each(function(index) {
+						$("<input type='hidden' value='" + $(this).text() + "' />")
+					     .attr("name", "emp_seqs")
+					     .appendTo("#empForm");
+					})
+					
+					$("#empForm").attr("action", "${ rootPath }/Manage/EmpManage/ModifyFormEmp.do");
+					$("#empForm").submit();
+				}
+			});
 		</script>
 	</body>
 </html>
